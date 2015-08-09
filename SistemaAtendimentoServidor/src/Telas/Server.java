@@ -1,5 +1,6 @@
 package Telas;
 
+import Bean.ServidorBean;
 import ComRede.Mensagem.Action;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -13,6 +14,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import ComRede.Mensagem;
+import DAO.ServidorDAO;
 import Impressao.Imprimir;
 import java.awt.print.PrinterException;
 import java.io.FileInputStream;
@@ -28,8 +30,10 @@ import java.awt.event.ActionListener;
 
 public class Server {
 
-    static Image image = Toolkit.getDefaultToolkit().getImage("C:/SistemaAtendimentoServidor/3D.png");
-    static TrayIcon trayIcon = new TrayIcon(image, "..:: 3D Server ::.. Status: ATIVO!");
+    ServidorDAO servidorDAO = new ServidorDAO();
+    ServidorBean servidorBean = new ServidorBean();
+    static Image image = Toolkit.getDefaultToolkit().getImage("C:/Users/EngComp/Documents/NetBeansProjects/Sanar/SistemaAtendimentoCliente/src/Imagens/3D.png");
+    static TrayIcon trayIcon = new TrayIcon(image, "..:: Inove Systems ::.. Status: ATIVO!");
     private Socket socket;
     private ServerSocket serverSocket;
     private Map<String, ObjectOutputStream> mapOnlines = new HashMap<String, ObjectOutputStream>();
@@ -502,7 +506,7 @@ public class Server {
             trayIcon.setImageAutoSize(true);
             trayIcon.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    trayIcon.displayMessage("3D Soluções Tecnológicas", "Servidor ONLINE!", TrayIcon.MessageType.INFO);
+                    trayIcon.displayMessage("Inove Systems - www.inovesystems.com.br", "Servidor ONLINE!", TrayIcon.MessageType.INFO);
                 }
             }
             );
