@@ -1,0 +1,897 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><title>Rome - Syndication Java Utilities for Atom/RSS - Javadoc Report</title><style type="text/css" media="all">
+          @import url("./style/maven-base.css");
+          
+			    @import url("./style/maven-theme.css");</style><link rel="stylesheet" href="./style/print.css" type="text/css" media="print"></link><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta></head><body class="composite"><div id="banner"><a href="https://rome.dev.java.net/" id="projectLogo"><span>ROME, RSS and atOM utilitiEs for Java</span></a><div class="clear"><hr></hr></div></div><div id="breadcrumbs"><div class="xleft">
+                	Last published: 11 December 2006
+                  | Doc for 0.9</div><div class="xright"></div><div class="clear"><hr></hr></div></div><div id="leftColumn"><div id="navcolumn"><div id="menuOverview"><h5>Overview</h5><ul><li class="none"><a href="introduction.html">Introduction</a></li><li class="none"><a href="quickstart.html">Quickstart</a></li><li class="none"><a href="faq.html">FAQ</a></li><li class="none"><a href="status.html">News and Status</a></li><li class="none"><a href="apidocs/index.html">Javadoc</a></li><li class="none"><a href="../builds/rome/distributions/">Download</a></li><li class="none"><a href="rss_libraries.html">Other Libraries</a></li></ul></div><div id="menuProject_Documentation"><h5>Project Documentation</h5><ul><li class="none"><a href="index.html">About ROME, RSS and atOM utilitiEs for Java</a></li><li class="collapsed"><a href="project-info.html">Project Info</a></li><li class="expanded"><a href="maven-reports.html">Project Reports</a><ul><li class="none"><a href="jdepend-report.html">Metrics</a></li><li class="none"><a href="checkstyle-report.html">Checkstyle</a></li><li class="none"><a href="changelog-report.html">Change Log</a></li><li class="none"><a href="developer-activity-report.html">Developer Activity</a></li><li class="none"><a href="file-activity-report.html">File Activity</a></li><li class="none"><a href="license.html">Project License</a></li><li class="none"><a href="apidocs/index.html" class="newWindow" title="New Window" target="_blank">JavaDocs</a></li><li class="none"><strong><a href="javadoc.html">JavaDoc Report</a></strong></li><li class="none"><a href="javadoc-warnings-report.html">JavaDoc Warnings Report</a></li><li class="none"><a href="xref/index.html" class="newWindow" title="New Window" target="_blank">Source Xref</a></li><li class="none"><a href="xref-test/index.html" class="newWindow" title="New Window" target="_blank">Test Xref</a></li><li class="none"><a href="junit-report.html">Unit Tests</a></li><li class="none"><a href="linkcheck.html">Link Check Report</a></li><li class="none"><a href="task-list.html">Task List</a></li></ul></li><li class="none"><a href="http://maven.apache.org/development-process.html" class="externalLink" title="External Link">Development Process</a></li></ul></div><a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy"><img alt="Built by Maven" src="./images/logos/maven-button-1.png"></img></a></div></div><div id="bodyColumn"><div class="contentBox"><div class="section"><a name="Javadoc_Report"></a><h2>Javadoc Report</h2><p></p>
+    <div class="source"><pre>  Generating Javadoc
+  Javadoc execution
+  Loading source files for package com.sun.syndication.feed...
+  Loading source files for package com.sun.syndication.feed.atom...
+  Loading source files for package com.sun.syndication.feed.module...
+  Loading source files for package com.sun.syndication.feed.rss...
+  Loading source files for package com.sun.syndication.feed.synd...
+  Loading source files for package com.sun.syndication.io...
+  Constructing Javadoc information...
+  Standard Doclet version 1.4.2_09
+  Generating target/docs/apidocs/constant-values.html...
+  Copying file /Users/dave/.maven/cache/maven-javadoc-plugin-1.7/plugin-resources/stylesheet.css to file target/docs/apidocs/stylesheet.css...
+  Building tree for all the packages and classes...
+  src/java/com/sun/syndication/feed/module/DCModule.java:31: warning - Tag @see: missing final &gt;: "&lt;a href="http://web.resource.org/rss/1.0/modules/dc/"&gt;Dublin Core module&lt;/a&gt;."
+  src/java/com/sun/syndication/feed/module/DCSubject.java:28: warning - Tag @see: missing final &gt;: "&lt;a href="http://web.resource.org/rss/1.0/modules/dc/"&gt;Dublin Core module&lt;/a&gt;."
+  src/java/com/sun/syndication/feed/module/SyModule.java:28: warning - Tag @see: missing final &gt;: "&lt;a href="http://web.resource.org/rss/1.0/modules/syndication/"&gt;Syndication module&lt;/a&gt;."
+  Generating target/docs/apidocs/com/sun/syndication/feed/atom/class-use/Feed.html...
+  "Returns the source
+   "
+  src/java/com/sun/syndication/feed/module/DCModuleImpl.java:32: warning - Tag @see: missing final &gt;: "&lt;a href="http://web.resource.org/rss/1.0/modules/dc/"&gt;Dublin Core module&lt;/a&gt;."
+  This sentence is different from what will be interpreted as the first sentence in the
+  src/java/com/sun/syndication/feed/module/DCSubjectImpl.java:34: warning - Tag @see: missing final &gt;: "&lt;a href="http://web.resource.org/rss/1.0/modules/dc/"&gt;Dublin Core module&lt;/a&gt;."
+  next major release (when that interpretation will be internationalized), which is:
+  "Returns the source
+   &lt;p&gt;"
+  To avoid this note, change the doc comment to make this a proper first sentence, then
+  use -breakiterator from that point forward, which will output this new sentence.
+  "Set the source
+   "
+  src/java/com/sun/syndication/feed/module/SyModuleImpl.java:30: warning - Tag @see: missing final &gt;: "&lt;a href="http://web.resource.org/rss/1.0/modules/syndication/"&gt;Syndication module&lt;/a&gt;."
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the source
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Entry.java:433: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Entry.java:442: warning - The first sentence is interpreted to be:
+  Generating target/docs/apidocs/com/sun/syndication/feed/atom/class-use/Content.html...
+  "Returns the feed info (Atom 0.3 only)
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:224: warning - Tag @link: missing #: "getSubtitle()"
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the feed info (Atom 0.3 only)
+   &lt;p&gt;"
+  "Returns the subtitle
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:300: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the subtitle
+   &lt;p&gt;"
+  "Sets the feed info (Atom 0.3 only)
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:471: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Sets the feed info (Atom 0.3 only)
+   &lt;p&gt;"
+  "Set the subtitle
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:233: warning - Tag @link: missing #: "getSubtitle()"
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the subtitle
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Feed.java:309: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Feed.java:481: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Entry.java:472: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Feed.java:391: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Feed.java:282: warning - Tag @link: missing #: "getRights()"
+  src/java/com/sun/syndication/feed/atom/Entry.java:303: warning - The first sentence is interpreted to be:
+  Building index for all the packages and classes...
+  Generating target/docs/apidocs/index-all.html...
+  "Returns the categories
+   "
+  src/java/com/sun/syndication/feed/atom/Link.java:180: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the categories
+   &lt;p&gt;"
+  "Returns the categories
+   "
+  src/java/com/sun/syndication/feed/synd/SyndLink.java:129: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the categories
+   &lt;p&gt;"
+  "Returns the entry created date (Atom 0.3 only)
+   "
+  src/java/com/sun/syndication/feed/synd/SyndLinkImpl.java:179: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the entry created date (Atom 0.3 only)
+   &lt;p&gt;"
+  "Returns the hreflang
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:411: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the hreflang
+   &lt;p&gt;"
+  "Returns the hreflang
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:300: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the hreflang
+   &lt;p&gt;"
+  "Returns the hreflang
+   "
+  src/java/com/sun/syndication/feed/atom/Entry.java:285: warning - Tag @link: missing #: "getPublished()"
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the hreflang
+   &lt;p&gt;"
+  "Returns the icon
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:81: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the icon
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Link.java:199: warning - The first sentence is interpreted to be:
+  "Returns the feed info (Atom 0.3 only)
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  src/java/com/sun/syndication/feed/synd/SyndLink.java:143: warning - The first sentence is interpreted to be:
+  "Returns the feed info (Atom 0.3 only)
+   &lt;p&gt;"
+  "Returns the feed language (Atom 0.3 only)
+   "
+  src/java/com/sun/syndication/feed/synd/SyndLinkImpl.java:197: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the feed language (Atom 0.3 only)
+   &lt;p&gt;"
+  "Returns the length
+   "
+  src/java/com/sun/syndication/feed/synd/SyndEntry.java:114: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the length
+   &lt;p&gt;"
+  "Returns the length
+   "
+  src/java/com/sun/syndication/feed/synd/SyndEntryImpl.java:427: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the length
+   &lt;p&gt;"
+  "Returns the length
+   "
+  src/java/com/sun/syndication/feed/synd/SyndFeed.java:224: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the length
+   &lt;p&gt;"
+  "Returns the entry links
+   "
+  src/java/com/sun/syndication/feed/synd/SyndFeedImpl.java:656: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the entry links
+   &lt;p&gt;"
+  "Returns the links
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:431: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the links
+   &lt;p&gt;"
+  "Returns the entry links
+   "
+  src/java/com/sun/syndication/feed/atom/Entry.java:267: warning - Tag @link: missing #: "getUpdated()"
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the entry links
+   &lt;p&gt;"
+  "Returns the links
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:318: warning - Tag @link: missing #: "getUpdated()"
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the links
+   &lt;p&gt;"
+  "Returns the logo
+   "
+  src/java/com/sun/syndication/feed/atom/Entry.java:394: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the logo
+   &lt;p&gt;"
+  "Returns the published
+   "
+  src/java/com/sun/syndication/feed/atom/Entry.java:414: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the published
+   &lt;p&gt;"
+  "Returns the rights
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:451: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  src/java/com/sun/syndication/feed/atom/Entry.java:433: warning - The first sentence is interpreted to be:
+  "Returns the rights
+   &lt;p&gt;"
+  "Returns the rights
+   "
+  src/java/com/sun/syndication/feed/atom/Content.java:197: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the rights
+   &lt;p&gt;"
+  "Returns the source
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:471: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the source
+   &lt;p&gt;"
+  "Returns the src
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:224: warning - Tag @link: missing #: "getSubtitle()"
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the src
+   &lt;p&gt;"
+  "Returns the subtitle
+   "
+  src/java/com/sun/syndication/feed/atom/Entry.java:452: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the subtitle
+   &lt;p&gt;"
+  "Returns the updated
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:491: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the updated
+   &lt;p&gt;"
+  "Returns the updated
+   "
+  src/java/com/sun/syndication/feed/synd/SyndEntryImpl.java:445: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the updated
+   &lt;p&gt;"
+  "Returns the updatedDate
+   "
+  src/java/com/sun/syndication/feed/atom/Person.java:154: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the updatedDate
+   &lt;p&gt;"
+  "Returns the uri
+   "
+  src/java/com/sun/syndication/feed/atom/Person.java:115: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the uri
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Person.java:115: warning - Tag @link: missing #: "getUri()"
+  "Returns the person URL (same as {@link getUri()})
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  src/java/com/sun/syndication/feed/atom/Entry.java:492: warning - The first sentence is interpreted to be:
+  "Returns the person URL (same as {@link getUri()})
+   &lt;p&gt;"
+  "Returns the xmlBase
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  src/java/com/sun/syndication/feed/atom/Feed.java:511: warning - The first sentence is interpreted to be:
+  "Returns the xmlBase
+   &lt;p&gt;"
+  "Returns the xmlBase
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  src/java/com/sun/syndication/feed/atom/Entry.java:482: warning - The first sentence is interpreted to be:
+  "Returns the xmlBase
+   &lt;p&gt;"
+  "Set the categories
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  src/java/com/sun/syndication/feed/atom/Feed.java:401: warning - The first sentence is interpreted to be:
+  "Set the categories
+   &lt;p&gt;"
+  "Set the categories
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  src/java/com/sun/syndication/feed/atom/Feed.java:291: warning - Tag @link: missing #: "setRights()"
+  "Set the categories
+   &lt;p&gt;"
+  "Sets the entry created date (Atom 0.3 only)
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:291: warning - Tag @link: can't find setRights() in com.sun.syndication.feed.atom.Feed
+  This sentence is different from what would be generated using -breakiterator: 
+  "Sets the entry created date (Atom 0.3 only)
+   &lt;p&gt;"
+  "Set the hreflang
+   "
+  src/java/com/sun/syndication/feed/atom/Entry.java:312: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the hreflang
+   &lt;p&gt;"
+  "Set the hreflang
+  src/java/com/sun/syndication/feed/atom/Link.java:190: warning - The first sentence is interpreted to be:
+   "
+  src/java/com/sun/syndication/feed/synd/SyndLink.java:136: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the hreflang
+   &lt;p&gt;"
+  "Set the hreflang
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the hreflang
+   &lt;p&gt;"
+  "Set the icon
+   "
+  src/java/com/sun/syndication/feed/synd/SyndLinkImpl.java:188: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the icon
+   &lt;p&gt;"
+  "Sets the feed info (Atom 0.3 only)
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:421: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Sets the feed info (Atom 0.3 only)
+   &lt;p&gt;"
+  "Sets the feed language (Atom 0.3 only)
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:309: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Sets the feed language (Atom 0.3 only)
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Entry.java:294: warning - Tag @link: missing #: "setPublished()"
+  "Set the length
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the length
+   &lt;p&gt;"
+  "Set the length
+  src/java/com/sun/syndication/feed/atom/Entry.java:294: warning - Tag @link: can't find setPublished() in com.sun.syndication.feed.atom.Entry
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the length
+   &lt;p&gt;"
+  "Set the length
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:91: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the length
+   &lt;p&gt;"
+  "Set the links
+   "
+  src/java/com/sun/syndication/feed/atom/Link.java:208: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the links
+   &lt;p&gt;"
+  "Set the links
+   "
+  src/java/com/sun/syndication/feed/synd/SyndLink.java:150: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the links
+   &lt;p&gt;"
+  "Set the logo
+   "
+  src/java/com/sun/syndication/feed/synd/SyndLinkImpl.java:206: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the logo
+   &lt;p&gt;"
+  "Set the published
+   "
+  src/java/com/sun/syndication/feed/synd/SyndEntryImpl.java:436: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the published
+   &lt;p&gt;"
+  "Set the rights
+   "
+  src/java/com/sun/syndication/feed/synd/SyndFeedImpl.java:665: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the rights
+   &lt;p&gt;"
+  "Set the rights
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:441: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the rights
+   &lt;p&gt;"
+  "Set the source
+   "
+  src/java/com/sun/syndication/feed/atom/Entry.java:276: warning - Tag @link: missing #: "setUpdated()"
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the source
+   &lt;p&gt;"
+  "Set the src
+   "
+  src/java/com/sun/syndication/feed/atom/Entry.java:276: warning - Tag @link: can't find setUpdated() in com.sun.syndication.feed.atom.Entry
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the src
+   &lt;p&gt;"
+  "Set the subtitle
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  src/java/com/sun/syndication/feed/atom/Feed.java:327: warning - Tag @link: missing #: "setUpdated()"
+  "Set the subtitle
+   &lt;p&gt;"
+  "Set the updated
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  src/java/com/sun/syndication/feed/atom/Feed.java:327: warning - Tag @link: can't find setUpdated() in com.sun.syndication.feed.atom.Feed
+  "Set the updated
+   &lt;p&gt;"
+  "Set the updated
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  src/java/com/sun/syndication/feed/atom/Entry.java:404: warning - The first sentence is interpreted to be:
+  "Set the updated
+   &lt;p&gt;"
+  "Set the updatedDate
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  src/java/com/sun/syndication/feed/atom/Entry.java:424: warning - The first sentence is interpreted to be:
+  "Set the updatedDate
+   &lt;p&gt;"
+  "Set the uri
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the uri
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Feed.java:461: warning - The first sentence is interpreted to be:
+  "Sets the person URL (same as {@link setUri()})
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  src/java/com/sun/syndication/feed/atom/Entry.java:442: warning - The first sentence is interpreted to be:
+  "Sets the person URL (same as {@link setUri()})
+   &lt;p&gt;"
+  "Set the xmlBase
+   "
+  src/java/com/sun/syndication/feed/atom/Content.java:207: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the xmlBase
+   &lt;p&gt;"
+  "Set the xmlBase
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:481: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the xmlBase
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Feed.java:233: warning - Tag @link: missing #: "getSubtitle()"
+  Building index for all classes...
+  src/java/com/sun/syndication/feed/atom/Entry.java:462: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Feed.java:501: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/synd/SyndEntryImpl.java:454: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Person.java:164: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Person.java:124: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Person.java:124: warning - Tag @link: missing #: "setUri()"
+  src/java/com/sun/syndication/feed/atom/Person.java:124: warning - Tag @link: can't find setUri() in com.sun.syndication.feed.atom.Person
+  src/java/com/sun/syndication/feed/atom/Entry.java:502: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Feed.java:521: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Category.java:103: warning - @param argument "Label" is not a parameter name.
+  src/java/com/sun/syndication/feed/atom/Category.java:121: warning - @param argument "Scheme" is not a parameter name.
+  src/java/com/sun/syndication/feed/atom/Category.java:139: warning - @param argument "Term" is not a parameter name.
+  src/java/com/sun/syndication/feed/atom/Content.java:197: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Content.java:207: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Entry.java:472: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Entry.java:303: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Entry.java:285: warning - Tag @link: missing #: "getPublished()"
+  src/java/com/sun/syndication/feed/atom/Entry.java:285: warning - Tag @link: missing #: "getPublished()"
+  src/java/com/sun/syndication/feed/atom/Entry.java:267: warning - Tag @link: missing #: "getUpdated()"
+  src/java/com/sun/syndication/feed/atom/Entry.java:267: warning - Tag @link: missing #: "getUpdated()"
+  src/java/com/sun/syndication/feed/atom/Entry.java:394: warning - The first sentence is interpreted to be:
+  Generating target/docs/apidocs/com/sun/syndication/feed/atom/Content.html...
+  "Returns the src
+   "
+  src/java/com/sun/syndication/feed/atom/Entry.java:414: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the src
+   &lt;p&gt;"
+  "Set the src
+   "
+  src/java/com/sun/syndication/feed/atom/Entry.java:433: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the src
+   &lt;p&gt;"
+  Generating target/docs/apidocs/com/sun/syndication/feed/atom/Entry.html...
+  "Returns the categories
+   "
+  src/java/com/sun/syndication/feed/atom/Entry.java:452: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the categories
+   &lt;p&gt;"
+  "Returns the entry created date (Atom 0.3 only)
+   "
+  src/java/com/sun/syndication/feed/atom/Entry.java:492: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the entry created date (Atom 0.3 only)
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Entry.java:482: warning - The first sentence is interpreted to be:
+  "Returns the published
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the published
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Entry.java:312: warning - The first sentence is interpreted to be:
+  "Returns the rights
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the rights
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Entry.java:294: warning - Tag @link: missing #: "setPublished()"
+  "Returns the source
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the source
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Entry.java:294: warning - Tag @link: can't find setPublished() in com.sun.syndication.feed.atom.Entry
+  "Returns the updated
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the updated
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Entry.java:294: warning - Tag @link: missing #: "setPublished()"
+  "Returns the xmlBase
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the xmlBase
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Entry.java:294: warning - Tag @link: can't find setPublished() in com.sun.syndication.feed.atom.Entry
+  "Set the categories
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the categories
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Entry.java:276: warning - Tag @link: missing #: "setUpdated()"
+  "Sets the entry created date (Atom 0.3 only)
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  src/java/com/sun/syndication/feed/atom/Entry.java:276: warning - Tag @link: can't find setUpdated() in com.sun.syndication.feed.atom.Entry
+  "Sets the entry created date (Atom 0.3 only)
+   &lt;p&gt;"
+  "Set the published
+   "
+  src/java/com/sun/syndication/feed/atom/Entry.java:276: warning - Tag @link: missing #: "setUpdated()"
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the published
+   &lt;p&gt;"
+  "Set the rights
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the rights
+   &lt;p&gt;"
+  "Set the source
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  src/java/com/sun/syndication/feed/atom/Entry.java:276: warning - Tag @link: can't find setUpdated() in com.sun.syndication.feed.atom.Entry
+  "Set the source
+   &lt;p&gt;"
+  "Set the updated
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  src/java/com/sun/syndication/feed/atom/Entry.java:404: warning - The first sentence is interpreted to be:
+  "Set the updated
+   &lt;p&gt;"
+  "Set the xmlBase
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  src/java/com/sun/syndication/feed/atom/Entry.java:424: warning - The first sentence is interpreted to be:
+  "Set the xmlBase
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Entry.java:442: warning - The first sentence is interpreted to be:
+  Generating target/docs/apidocs/com/sun/syndication/feed/atom/Feed.html...
+  "Returns the categories
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the categories
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Entry.java:462: warning - The first sentence is interpreted to be:
+  "Returns the icon
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the icon
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Entry.java:502: warning - The first sentence is interpreted to be:
+  "Returns the feed info (Atom 0.3 only)
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  src/java/com/sun/syndication/feed/atom/Entry.java:216: warning - @param argument "author" is not a parameter name.
+  "Returns the feed info (Atom 0.3 only)
+   &lt;p&gt;"
+  "Returns the feed language (Atom 0.3 only)
+   "
+  src/java/com/sun/syndication/feed/atom/Entry.java:267: warning - Tag @link: missing #: "getUpdated()"
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the feed language (Atom 0.3 only)
+   &lt;p&gt;"
+  "Returns the logo
+   "
+  src/java/com/sun/syndication/feed/atom/Entry.java:267: warning - Tag @link: missing #: "getUpdated()"
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the logo
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Entry.java:267: warning - Tag @link: missing #: "getUpdated()"
+  "Returns the rights
+   "
+  src/java/com/sun/syndication/feed/atom/Entry.java:276: warning - Tag @link: missing #: "setUpdated()"
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the rights
+   &lt;p&gt;"
+  "Returns the subtitle
+   "
+  src/java/com/sun/syndication/feed/atom/Entry.java:276: warning - Tag @link: can't find setUpdated() in com.sun.syndication.feed.atom.Entry
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the subtitle
+   &lt;p&gt;"
+  "Returns the updated
+   "
+  src/java/com/sun/syndication/feed/atom/Entry.java:276: warning - Tag @link: missing #: "setUpdated()"
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the updated
+   &lt;p&gt;"
+  "Returns the xmlBase
+   "
+  src/java/com/sun/syndication/feed/atom/Entry.java:276: warning - Tag @link: can't find setUpdated() in com.sun.syndication.feed.atom.Entry
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the xmlBase
+   &lt;p&gt;"
+  "Set the categories
+   "
+  src/java/com/sun/syndication/feed/atom/Entry.java:276: warning - Tag @link: missing #: "setUpdated()"
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the categories
+   &lt;p&gt;"
+  "Set the icon
+   "
+  src/java/com/sun/syndication/feed/atom/Entry.java:276: warning - Tag @link: can't find setUpdated() in com.sun.syndication.feed.atom.Entry
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the icon
+   &lt;p&gt;"
+  "Sets the feed info (Atom 0.3 only)
+   "
+  src/java/com/sun/syndication/feed/atom/Entry.java:285: warning - Tag @link: missing #: "getPublished()"
+  This sentence is different from what would be generated using -breakiterator: 
+  "Sets the feed info (Atom 0.3 only)
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Entry.java:285: warning - Tag @link: missing #: "getPublished()"
+  "Sets the feed language (Atom 0.3 only)
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  "Sets the feed language (Atom 0.3 only)
+  src/java/com/sun/syndication/feed/atom/Entry.java:285: warning - Tag @link: missing #: "getPublished()"
+   &lt;p&gt;"
+  "Set the logo
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the logo
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Entry.java:294: warning - Tag @link: missing #: "setPublished()"
+  "Set the rights
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the rights
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Entry.java:294: warning - Tag @link: can't find setPublished() in com.sun.syndication.feed.atom.Entry
+  "Set the subtitle
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the subtitle
+   &lt;p&gt;"
+  "Set the updated
+   "
+  src/java/com/sun/syndication/feed/atom/Entry.java:294: warning - Tag @link: missing #: "setPublished()"
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the updated
+   &lt;p&gt;"
+  "Set the xmlBase
+   "
+  src/java/com/sun/syndication/feed/atom/Entry.java:294: warning - Tag @link: can't find setPublished() in com.sun.syndication.feed.atom.Entry
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the xmlBase
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Entry.java:294: warning - Tag @link: missing #: "setPublished()"
+  src/java/com/sun/syndication/feed/atom/Entry.java:294: warning - Tag @link: can't find setPublished() in com.sun.syndication.feed.atom.Entry
+  Generating target/docs/apidocs/com/sun/syndication/feed/atom/Link.html...
+  "Returns the hreflang
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:391: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the hreflang
+   &lt;p&gt;"
+  "Returns the length
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:282: warning - Tag @link: missing #: "getRights()"
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the length
+   &lt;p&gt;"
+  "Set the hreflang
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:282: warning - Tag @link: missing #: "getRights()"
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the hreflang
+   &lt;p&gt;"
+  "Set the length
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:411: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the length
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Feed.java:300: warning - The first sentence is interpreted to be:
+  Generating target/docs/apidocs/com/sun/syndication/feed/atom/Person.html...
+  "Returns the uri
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the uri
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Feed.java:81: warning - The first sentence is interpreted to be:
+  "Returns the person URL (same as {@link getUri()})
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:431: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Feed.java:318: warning - Tag @link: missing #: "getUpdated()"
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the person URL (same as {@link getUri()})
+   &lt;p&gt;"
+  "Set the uri
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:318: warning - Tag @link: missing #: "getUpdated()"
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the uri
+   &lt;p&gt;"
+  "Sets the person URL (same as {@link setUri()})
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:451: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Sets the person URL (same as {@link setUri()})
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Feed.java:471: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Feed.java:224: warning - Tag @link: missing #: "getSubtitle()"
+  src/java/com/sun/syndication/feed/atom/Feed.java:224: warning - Tag @link: missing #: "getSubtitle()"
+  src/java/com/sun/syndication/feed/atom/Feed.java:491: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Feed.java:511: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Feed.java:401: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Feed.java:291: warning - Tag @link: missing #: "setRights()"
+  src/java/com/sun/syndication/feed/atom/Feed.java:291: warning - Tag @link: can't find setRights() in com.sun.syndication.feed.atom.Feed
+  src/java/com/sun/syndication/feed/atom/Feed.java:291: warning - Tag @link: missing #: "setRights()"
+  src/java/com/sun/syndication/feed/atom/Feed.java:291: warning - Tag @link: can't find setRights() in com.sun.syndication.feed.atom.Feed
+  src/java/com/sun/syndication/feed/atom/Feed.java:421: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Feed.java:309: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Feed.java:91: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Feed.java:441: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Feed.java:327: warning - Tag @link: missing #: "setUpdated()"
+  src/java/com/sun/syndication/feed/atom/Feed.java:327: warning - Tag @link: can't find setUpdated() in com.sun.syndication.feed.atom.Feed
+  src/java/com/sun/syndication/feed/atom/Feed.java:327: warning - Tag @link: missing #: "setUpdated()"
+  src/java/com/sun/syndication/feed/atom/Feed.java:327: warning - Tag @link: can't find setUpdated() in com.sun.syndication.feed.atom.Feed
+  src/java/com/sun/syndication/feed/atom/Feed.java:461: warning - The first sentence is interpreted to be:
+  Generating target/docs/apidocs/com/sun/syndication/feed/synd/SyndEntry.html...
+  "Returns the entry links
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the entry links
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Feed.java:481: warning - The first sentence is interpreted to be:
+  Generating target/docs/apidocs/com/sun/syndication/feed/synd/SyndFeed.html...
+  "Returns the entry links
+  src/java/com/sun/syndication/feed/atom/Feed.java:233: warning - Tag @link: missing #: "getSubtitle()"
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the entry links
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Feed.java:233: warning - Tag @link: missing #: "getSubtitle()"
+  src/java/com/sun/syndication/feed/atom/Feed.java:501: warning - The first sentence is interpreted to be:
+  Generating target/docs/apidocs/com/sun/syndication/feed/synd/SyndLink.html...
+  "Returns the hreflang
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:521: warning - The first sentence is interpreted to be:
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the hreflang
+   &lt;p&gt;"
+  "Returns the length
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:193: warning - @param argument "author" is not a parameter name.
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the length
+   &lt;p&gt;"
+  "Set the hreflang
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:224: warning - Tag @link: missing #: "getSubtitle()"
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the hreflang
+   &lt;p&gt;"
+  "Set the length
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:224: warning - Tag @link: missing #: "getSubtitle()"
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the length
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Feed.java:224: warning - Tag @link: missing #: "getSubtitle()"
+  src/java/com/sun/syndication/feed/atom/Feed.java:233: warning - Tag @link: missing #: "getSubtitle()"
+  src/java/com/sun/syndication/feed/atom/Feed.java:233: warning - Tag @link: missing #: "getSubtitle()"
+  src/java/com/sun/syndication/feed/atom/Feed.java:233: warning - Tag @link: missing #: "getSubtitle()"
+  Generating target/docs/apidocs/com/sun/syndication/feed/synd/SyndEntryImpl.html...
+  "Returns the links
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:282: warning - Tag @link: missing #: "getRights()"
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the links
+   &lt;p&gt;"
+  "Returns the updatedDate
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:282: warning - Tag @link: missing #: "getRights()"
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the updatedDate
+   &lt;p&gt;"
+  "Set the links
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:282: warning - Tag @link: missing #: "getRights()"
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the links
+   &lt;p&gt;"
+  "Set the updatedDate
+   "
+  src/java/com/sun/syndication/feed/atom/Feed.java:291: warning - Tag @link: missing #: "setRights()"
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the updatedDate
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Feed.java:291: warning - Tag @link: can't find setRights() in com.sun.syndication.feed.atom.Feed
+  src/java/com/sun/syndication/feed/atom/Feed.java:291: warning - Tag @link: missing #: "setRights()"
+  Generating target/docs/apidocs/com/sun/syndication/feed/synd/SyndFeedImpl.html...
+  "Returns the links
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the links
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/atom/Feed.java:291: warning - Tag @link: can't find setRights() in com.sun.syndication.feed.atom.Feed
+  src/java/com/sun/syndication/feed/atom/Feed.java:291: warning - Tag @link: missing #: "setRights()"
+  src/java/com/sun/syndication/feed/atom/Feed.java:291: warning - Tag @link: can't find setRights() in com.sun.syndication.feed.atom.Feed
+  src/java/com/sun/syndication/feed/atom/Feed.java:318: warning - Tag @link: missing #: "getUpdated()"
+  src/java/com/sun/syndication/feed/atom/Feed.java:318: warning - Tag @link: missing #: "getUpdated()"
+  src/java/com/sun/syndication/feed/atom/Feed.java:318: warning - Tag @link: missing #: "getUpdated()"
+  src/java/com/sun/syndication/feed/atom/Feed.java:327: warning - Tag @link: missing #: "setUpdated()"
+  src/java/com/sun/syndication/feed/atom/Feed.java:327: warning - Tag @link: can't find setUpdated() in com.sun.syndication.feed.atom.Feed
+  src/java/com/sun/syndication/feed/atom/Feed.java:327: warning - Tag @link: missing #: "setUpdated()"
+  src/java/com/sun/syndication/feed/atom/Feed.java:327: warning - Tag @link: can't find setUpdated() in com.sun.syndication.feed.atom.Feed
+  src/java/com/sun/syndication/feed/atom/Feed.java:327: warning - Tag @link: missing #: "setUpdated()"
+  src/java/com/sun/syndication/feed/atom/Feed.java:327: warning - Tag @link: can't find setUpdated() in com.sun.syndication.feed.atom.Feed
+  src/java/com/sun/syndication/feed/atom/Link.java:180: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Link.java:199: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Link.java:190: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Link.java:208: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Person.java:154: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Person.java:115: warning - Tag @link: missing #: "getUri()"
+  src/java/com/sun/syndication/feed/atom/Person.java:115: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Person.java:115: warning - Tag @link: missing #: "getUri()"
+  src/java/com/sun/syndication/feed/atom/Person.java:164: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Person.java:124: warning - Tag @link: missing #: "setUri()"
+  src/java/com/sun/syndication/feed/atom/Person.java:124: warning - Tag @link: can't find setUri() in com.sun.syndication.feed.atom.Person
+  src/java/com/sun/syndication/feed/atom/Person.java:124: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/atom/Person.java:124: warning - Tag @link: missing #: "setUri()"
+  src/java/com/sun/syndication/feed/atom/Person.java:124: warning - Tag @link: can't find setUri() in com.sun.syndication.feed.atom.Person
+  src/java/com/sun/syndication/feed/atom/Person.java:115: warning - Tag @link: missing #: "getUri()"
+  src/java/com/sun/syndication/feed/atom/Person.java:115: warning - Tag @link: missing #: "getUri()"
+  src/java/com/sun/syndication/feed/atom/Person.java:115: warning - Tag @link: missing #: "getUri()"
+  src/java/com/sun/syndication/feed/atom/Person.java:124: warning - Tag @link: missing #: "setUri()"
+  src/java/com/sun/syndication/feed/atom/Person.java:124: warning - Tag @link: can't find setUri() in com.sun.syndication.feed.atom.Person
+  src/java/com/sun/syndication/feed/atom/Person.java:124: warning - Tag @link: missing #: "setUri()"
+  src/java/com/sun/syndication/feed/atom/Person.java:124: warning - Tag @link: can't find setUri() in com.sun.syndication.feed.atom.Person
+  src/java/com/sun/syndication/feed/atom/Person.java:124: warning - Tag @link: missing #: "setUri()"
+  src/java/com/sun/syndication/feed/atom/Person.java:124: warning - Tag @link: can't find setUri() in com.sun.syndication.feed.atom.Person
+  src/java/com/sun/syndication/feed/synd/SyndContent.java:54: warning - @param argument "type" is not a parameter name.
+  src/java/com/sun/syndication/feed/synd/SyndContent.java:61: warning - @param argument "type" is not a parameter name.
+  src/java/com/sun/syndication/feed/synd/SyndEntry.java:114: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/synd/SyndEntry.java:210: warning - @param argument "publishedDate" is not a parameter name.
+  src/java/com/sun/syndication/feed/synd/SyndEntry.java:234: warning - @param argument "author" is not a parameter name.
+  src/java/com/sun/syndication/feed/synd/SyndEntry.java:278: warning - @param argument "author" is not a parameter name.
+  src/java/com/sun/syndication/feed/synd/SyndFeed.java:224: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/synd/SyndFeed.java:308: warning - @param argument "author" is not a parameter name.
+  src/java/com/sun/syndication/feed/synd/SyndFeed.java:353: warning - @param argument "author" is not a parameter name.
+  src/java/com/sun/syndication/feed/synd/SyndLink.java:129: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/synd/SyndLink.java:143: warning - The first sentence is interpreted to be:
+  "Set the links
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the links
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/synd/SyndLink.java:136: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/synd/SyndLink.java:150: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/synd/SyndContentImpl.java:131: warning - @param argument "type" is not a parameter name.
+  src/java/com/sun/syndication/feed/synd/SyndEntryImpl.java:427: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/synd/SyndEntryImpl.java:445: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/synd/SyndEntryImpl.java:436: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/synd/SyndEntryImpl.java:454: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/synd/SyndFeedImpl.java:656: warning - The first sentence is interpreted to be:
+  src/java/com/sun/syndication/feed/synd/SyndFeedImpl.java:665: warning - The first sentence is interpreted to be:
+  Generating target/docs/apidocs/com/sun/syndication/feed/synd/SyndLinkImpl.html...
+  "Returns the hreflang
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the hreflang
+  src/java/com/sun/syndication/feed/synd/SyndLinkImpl.java:179: warning - The first sentence is interpreted to be:
+   &lt;p&gt;"
+  "Returns the length
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  "Returns the length
+  src/java/com/sun/syndication/feed/synd/SyndLinkImpl.java:197: warning - The first sentence is interpreted to be:
+   &lt;p&gt;"
+  "Set the hreflang
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the hreflang
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/synd/SyndLinkImpl.java:188: warning - The first sentence is interpreted to be:
+  "Set the length
+   "
+  This sentence is different from what would be generated using -breakiterator: 
+  "Set the length
+   &lt;p&gt;"
+  src/java/com/sun/syndication/feed/synd/SyndLinkImpl.java:206: warning - The first sentence is interpreted to be:
+  Generating target/docs/apidocs/help-doc.html...
+  245 warnings
+</pre></div>
+  </div></div></div><div class="clear"><hr></hr></div><div id="footer"><div class="xright">© 2004-2006, Sun Microsystems</div><div class="clear"><hr></hr></div></div></body></html>
