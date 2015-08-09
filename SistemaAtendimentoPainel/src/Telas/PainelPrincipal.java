@@ -41,7 +41,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
     LeitorXmlTemp1 temperatura = new LeitorXmlTemp1();
     int inicio;
     int fim;
-    PainelPrincipal.FilaComum f1 = new PainelPrincipal.FilaComum();
+    PainelPrincipal.Fila f1 = new PainelPrincipal.Fila();
     String teste = " ";
 
     /**
@@ -90,9 +90,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
                 } catch (InterruptedException ex1) {
                     Logger.getLogger(PainelPrincipal.class.getName()).log(Level.SEVERE, null, ex1);
                 }
-
             } catch (IOException ex) {
-
                 Logger.getLogger(PainelPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -213,25 +211,25 @@ public class PainelPrincipal extends javax.swing.JFrame {
         return true;
     }
 
-    class FilaComum {
+    class Fila {
 
         int inicio;
         int fim;
         int tamanho;
         int qtdeElementos;
-        String filaComum[];
+        String fila[];
 
-        public FilaComum() {
+        public Fila() {
             add = leitor.adicionar();
             inicio = fim = -1;
             tamanho = add.length();
-            filaComum = new String[tamanho];
+            fila = new String[tamanho];
 
             qtdeElementos = 0;
         }
 
         public String primeiro() {
-            return filaComum[inicio];
+            return fila[inicio];
         }
 
         public boolean estaVazia() {
@@ -255,7 +253,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
                 }
 //                filaComum[fim] = e;
                 for (int i = 0; i < add.length(); i++) {
-                    filaComum[i] = String.valueOf(add.charAt(i));
+                    fila[i] = String.valueOf(add.charAt(i));
                     fim++;
                     qtdeElementos++;
                 }
@@ -277,7 +275,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
                 teste = "";
                 for (int i = inicio; i < fim; i++) {
 
-                    teste = teste + filaComum[i];
+                    teste = teste + fila[i];
 
                 }
                 inicio++;
@@ -310,7 +308,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
                 fim = 0;
                 tamanho = 0;
                 for (int i = 0; i < add.length(); i++) {
-                    filaComum[i] = "";
+                    fila[i] = "";
                 }
                 new Thread() {
                     @Override
