@@ -5,17 +5,21 @@
  */
 package Telas;
 
+import Bean.ServidorBean;
+import DAO.ServidorDAO;
+import java.sql.SQLException;
+
 /**
  *
  * @author EngComp
  */
 public class TesteBanco extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TesteBanco
-     */
+    ServidorDAO fornecedorDAO = new ServidorDAO();
+    ServidorBean fornecedorBean = new ServidorBean();
+
     public TesteBanco() {
-        initComponents();
+        initComponents();      
     }
 
     /**

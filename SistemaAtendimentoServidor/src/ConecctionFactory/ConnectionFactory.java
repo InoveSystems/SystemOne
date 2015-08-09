@@ -30,13 +30,13 @@ public class ConnectionFactory {
                 System.out.println("asdnasudsad");
             }
             try {
-                con = DriverManager.getConnection("jdbc:postgresql://SERVER:5432/bancoRiti", "postgres", "12345678+");
+                con = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/inovesystems", "inovesystems", "inove+1052");
+                JOptionPane.showMessageDialog(null, "CONECTADO COM SUCESSO!");
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Erro ao conectar com o banco de dados!", "", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(ConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return con;
-
     }
 }
