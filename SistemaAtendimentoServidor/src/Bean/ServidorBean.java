@@ -11,7 +11,7 @@ import java.sql.Date;
  *
  * @author EngComp
  */
-public class ClienteBean {
+public class ServidorBean {
 
     private int codigo,nFotos,tentativas,validaFoto;
     private String obs,profissao,sexo,status,t1,t2,tipo,bairro,cep,estado,cidade,complemento,caminhoFoto,nome,EstadoCivil,email,logradouro,CPF,RG,filiacao;
@@ -27,7 +27,7 @@ public class ClienteBean {
         this.estado = estado;
     }
     
-    public ClienteBean(){
+    public ServidorBean(){
         
     }
 

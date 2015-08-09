@@ -5,7 +5,7 @@
  */
 package DAO;
 
-import Bean.ClienteBean;
+import Bean.ServidorBean;
 import ConecctionFactory.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -22,12 +22,13 @@ import javax.swing.JOptionPane;
  *
  * @author EngComp
  */
-public class ClienteDAO {
+public class ServidorDAO {
 
     Connection conexao;
     Logger logs;
-     public int numeroLinhas;
-    public ClienteDAO() {
+    public int numeroLinhas;
+
+    public ServidorDAO() {
         this.conexao = ConnectionFactory.openConnection();
     }
 
@@ -47,7 +48,7 @@ public class ClienteDAO {
             return id;
 
         } catch (SQLException ex) {
-            Logger.getLogger(DAO.ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAO.ServidorDAO.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco de dados!", "Erro", JOptionPane.INFORMATION_MESSAGE);
             System.exit(0);
 
@@ -56,14 +57,14 @@ public class ClienteDAO {
         return 0;
     }
 
-    public List<ClienteBean> getCliente(int codigo) throws SQLException {
-        List<ClienteBean> lista = new ArrayList<ClienteBean>();
+    public List<ServidorBean> getCliente(int codigo) throws SQLException {
+        List<ServidorBean> lista = new ArrayList<ServidorBean>();
         String sql = "select dtCadastro,satus,nome,tipo,rg,cpf,sexo,estadocivil,filiacao,dtNascimento,cep,cidade,estado,t1,t2,email,logradouro,bairro,complemento,profissao,renda,limiteCompras,obs,nFotos,caminhoFoto,validaFoto,tentativas,codigo from cliente where codigo=" + codigo + " order by codigo";
         Statement st = this.conexao.createStatement();
         ResultSet rs = st.executeQuery(sql);
-        numeroLinhas=0;
+        numeroLinhas = 0;
         while (rs.next()) {
-            ClienteBean clienteBean = new ClienteBean();
+            ServidorBean clienteBean = new ServidorBean();
             clienteBean.setCodigo(rs.getInt(28));
             clienteBean.setNome(rs.getString(3));
             clienteBean.setProfissao(rs.getString(20));
@@ -103,7 +104,7 @@ public class ClienteDAO {
 
     public void setCliente(String nome, double limite, String bairro, String Cep, String CPF, String cidade, String complemento, String email, String estado, String filiacao, String logradouro, String obs, String profissao, String RG, double renda, String t1, String t2, String sexo, String status, String tipo, int tentativas, Date dtNascimento, String estadoCivil) {
         try {
-            
+
             Statement st = conexao.createStatement();
 
             String sqlDDL = "insert into cliente (dtCadastro,limiteCompras,nome,bairro,cep,cpf,cidade,complemento,email,estado,filiacao,logradouro,obs,profissao,RG,t1,t2,sexo,satus,tipo,tentativas,renda,dtNascimento,estadocivil)values(now()," + limite + ",lower('" + nome + "'),'" + bairro + "', '" + Cep + "', '" + CPF + "','" + cidade + "','" + complemento + "','" + email + "','" + estado + "','" + filiacao + "','" + logradouro + "','" + obs + "','" + profissao + "','" + RG + "','" + t1 + "', '" + t2 + "', '" + sexo + "','" + status + "','" + tipo + "'," + tentativas + "," + renda + ",'" + dtNascimento + "','" + estadoCivil + "')";
@@ -113,7 +114,7 @@ public class ClienteDAO {
             st.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao gravar o caminho no banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServidorDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -124,14 +125,14 @@ public class ClienteDAO {
             st = conexao.createStatement();
             String sql = "update cliente set nome=lower('" + nome + "'),satus='" + status + "',tipo='" + tipo + "',rg='" + RG + "',cpf='" + CPF + "',sexo='" + sexo + "',estadocivil='" + estadoCivil + "',filiacao='" + filiacao + "',\n"
                     + "dtNascimento='" + dtNascimento + "',cep='" + Cep + "',cidade='" + cidade + "',estado='" + estado + "',t1='" + t1 + "',t2='" + t2 + "',email='" + email + "',logradouro='" + logradouro + "',bairro='" + bairro + "',\n"
-                    + "complemento='" + complemento + "',profissao='" + profissao + "',renda=" + renda + ",limiteCompras=" + limite + ",obs='" + obs + "',tentativas='" + tentativas + "' where codigo="+codigo+"";
+                    + "complemento='" + complemento + "',profissao='" + profissao + "',renda=" + renda + ",limiteCompras=" + limite + ",obs='" + obs + "',tentativas='" + tentativas + "' where codigo=" + codigo + "";
             int ret = st.executeUpdate(sql);
             JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!", "Salvo", JOptionPane.INFORMATION_MESSAGE);
             st.close();
-            
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao gravar o caminho no banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServidorDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -152,15 +153,16 @@ public class ClienteDAO {
                 return count;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServidorDAO.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco de dados!", "Erro", JOptionPane.INFORMATION_MESSAGE);
             System.exit(0);
 
         }
         return 0;
     }
-    public List<ClienteBean> getCliente(String nome, String CPF, String RG) throws SQLException {
-        List<ClienteBean> lista = new ArrayList<ClienteBean>();
+
+    public List<ServidorBean> getCliente(String nome, String CPF, String RG) throws SQLException {
+        List<ServidorBean> lista = new ArrayList<ServidorBean>();
         String terminal = null;
         String sql = null;
         if (nome != null) {
@@ -177,7 +179,7 @@ public class ClienteDAO {
         ResultSet rs = st.executeQuery(sql);
         numeroLinhas = 0;
         while (rs.next()) {
-            ClienteBean clienteBean = new ClienteBean();
+            ServidorBean clienteBean = new ServidorBean();
             clienteBean.setCodigo(rs.getInt(28));
             clienteBean.setNome(rs.getString(3));
             clienteBean.setProfissao(rs.getString(20));
@@ -214,17 +216,15 @@ public class ClienteDAO {
         st.close();
         return lista;
     }
-    
-   
-    
-    public List<ClienteBean> getCliente() throws SQLException {
-        List<ClienteBean> lista = new ArrayList<ClienteBean>();
+
+    public List<ServidorBean> getCliente() throws SQLException {
+        List<ServidorBean> lista = new ArrayList<ServidorBean>();
         String sql = "select dtCadastro,satus,initcap(nome),tipo,rg,cpf,sexo,estadocivil,filiacao,dtNascimento,cep,cidade,estado,t1,t2,email,logradouro,bairro,complemento,profissao,renda,limiteCompras,obs,nFotos,caminhoFoto,validaFoto,tentativas,codigo from cliente order by nome";
         Statement st = this.conexao.createStatement();
         ResultSet rs = st.executeQuery(sql);
         numeroLinhas = 0;
         while (rs.next()) {
-            ClienteBean clienteBean = new ClienteBean();
+            ServidorBean clienteBean = new ServidorBean();
             clienteBean.setCodigo(rs.getInt(28));
             clienteBean.setNome(rs.getString(3));
             clienteBean.setProfissao(rs.getString(20));
@@ -261,6 +261,5 @@ public class ClienteDAO {
         st.close();
         return lista;
     }
-    
 
 }
