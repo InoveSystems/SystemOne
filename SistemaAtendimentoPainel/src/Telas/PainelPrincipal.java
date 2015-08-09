@@ -9,7 +9,6 @@ import ComRede.Conexao;
 import ComRede.Mensagem;
 import XML.LeitorXml;
 import XML.LeitorXmlTemp1;
-import XML.NewJFrame;
 import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Point;
@@ -292,7 +291,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
                         TextExemplo.setText(teste);
                         Thread.currentThread().sleep(1000);
                     } catch (InterruptedException ex) {
-                        Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+                       
                     }
                 }
                 TextExemplo.setText("");
@@ -300,7 +299,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
                 try {
                     Thread.currentThread().sleep(150);
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+                   
                 }
             }
             if (estaVazia()) {
