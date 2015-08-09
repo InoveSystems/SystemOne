@@ -145,7 +145,6 @@ public class Server {
     private void chamar(Mensagem message) {
 
         if (message.getText().equals("convencional")) {
-
             if (filaprioritaria.estaVazia()) {
                 if (filacomum.estaVazia() == false) {
                     System.out.println("chamando: " + filacomum.primeiro());
@@ -158,7 +157,6 @@ public class Server {
                     antepenultima = penultima;
                     penultima = ultima;
                     ultima = message.getAtual();
-
                 }
             } else {
                 if (filaprioritaria.estaVazia() == false) {
@@ -172,10 +170,8 @@ public class Server {
                     antepenultima = penultima;
                     penultima = ultima;
                     ultima = message.getAtual();
-
                 }
             }
-
         } else {
             if (message.getText().equals("popular")) {
                 if (filapopular.estaVazia() == false) {
@@ -189,11 +185,9 @@ public class Server {
                     antepenultima = penultima;
                     penultima = ultima;
                     ultima = message.getAtual();
-
                 }
             }
         }
-       
     }
 
     private void imprime(String ficha) {
@@ -201,10 +195,8 @@ public class Server {
             @Override
             public void run() {
                 pdf.criarpdf(ficha);
-
             }
         }.start();
-
         new Thread() {
             @Override
             public void run() {
@@ -218,11 +210,8 @@ public class Server {
                     fis = new FileInputStream("C:/SENHAS.pdf");
                     Imprimir printPDFFile = new Imprimir(fis, "SENHAS.pdf");
                     printPDFFile.print();
-
                 } catch (FileNotFoundException ex) {
-
                     Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-
                 } catch (IOException ex) {
                     Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (PrinterException ex) {
@@ -230,7 +219,6 @@ public class Server {
                 }
             }
         }.start();
-
     }
 
     private void imprimir(Mensagem message) {
@@ -249,7 +237,6 @@ public class Server {
                 filacomum.adicionar("C" + sc);
                 imprime("C" + sc);
             }
-
         } else {
             if (message.getText().equals("P")) {
                 if (SenhaPrioritaria <= 998) {
@@ -265,7 +252,6 @@ public class Server {
                     filaprioritaria.adicionar("P" + sp);
                     imprime("P" + sp);
                 }
-
             } else {
                 if (message.getText().equals("F")) {
 
@@ -282,11 +268,8 @@ public class Server {
                         filapopular.adicionar("F" + sf);
                         imprime("F" + sf);
                     }
-
                 }
-
             }
-
         }
     }
 
@@ -308,7 +291,7 @@ public class Server {
     }
 
     private void disconnect(Mensagem message, ObjectOutputStream output) {
-        mapOnlines.remove(message.getName());        
+        mapOnlines.remove(message.getName());
         message.setAction(Action.SEND_ONE);
         //sendAll(message);
         System.out.println(message.getName() + " ::..  FECHADO!" + "\n");
@@ -335,7 +318,6 @@ public class Server {
                 }
             }
         }
-
     }
 
     private void sendOnlines() {
@@ -512,31 +494,25 @@ public class Server {
                 qtdeElementos--;
             }
         }
-
     }
 
     public static void main(String args[]) {
         if (SystemTray.isSupported()) {
             SystemTray tray = SystemTray.getSystemTray();
-
             trayIcon.setImageAutoSize(true);
             trayIcon.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     trayIcon.displayMessage("3D Soluções Tecnológicas", "Servidor ONLINE!", TrayIcon.MessageType.INFO);
                 }
-
-            });
-
+            }
+            );
             try {
                 tray.add(trayIcon);
             } catch (AWTException e) {
                 System.err.println("Erro ao adicionar tray");
             }
         }
-
         Server serv = new Server();
         serv.Conect();
-
     }
-
 }

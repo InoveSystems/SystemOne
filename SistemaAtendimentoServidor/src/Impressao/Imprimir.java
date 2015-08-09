@@ -57,7 +57,6 @@ public class Imprimir {
             for (PrintService ps : pservices) {
                 System.out.println("Impressora Encontrada: " + ps.getName());
 
-
                 if (ps.getName().contains(imp)) {
                     System.out.println("Impressora Selecionada: " + ps.getName());
                     impressora = ps;

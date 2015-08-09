@@ -19,19 +19,18 @@ public class PdfCriar {
     public void criarpdf(String ficha) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
         System.out.println(sdf.format(new Date()));
-        Document document = new Document(PageSize.B4,10,10,10,10);
-       
+        Document document = new Document(PageSize.B4, 10, 10, 10, 10);
+
         try {
             PdfWriter.getInstance(document, new FileOutputStream("C:/SENHAS.pdf"));
             document.open();
-            
             // adicionando um parágrafo ao documento 
             Font f = new Font(FontFamily.HELVETICA, 15, Font.NORMAL);
             document.add(new Paragraph("    ..:: SANAR FARMÁCIAS ::..", f));
             Font g = new Font(FontFamily.HELVETICA, 15, Font.NORMAL);
             document.add(new Paragraph("                   SENHA ", g));
             Font H = new Font(FontFamily.HELVETICA, 40, Font.BOLD);
-            document.add(new Paragraph("     "+ficha, H));
+            document.add(new Paragraph("     " + ficha, H));
             document.add(new Paragraph(" ", f));
             document.add(new Paragraph("           " + sdf.format(new Date()), f));
             document.add(new Paragraph("--------------------------------------------", f));
