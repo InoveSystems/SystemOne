@@ -67,14 +67,14 @@ public class Cliente extends javax.swing.JFrame {
                     Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Atendente " + caixa, javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14))); // NOI18N
-ConectarServidor();
+                ConectarServidor();
             }
         }.
                 start();
         new Thread() {
             @Override
             public void run() {
-                
+
             }
         }.start();
 
@@ -746,7 +746,7 @@ ConectarServidor();
                     FileWriter fw;
                     try {
                         fw = new FileWriter(arquivo, false);
-                        BufferedWriter bw = new BufferedWriter(fw);                        
+                        BufferedWriter bw = new BufferedWriter(fw);
                         bw.write(caixa);
                         bw.newLine();
                         bw.close();
