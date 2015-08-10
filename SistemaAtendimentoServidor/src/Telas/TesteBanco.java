@@ -8,7 +8,15 @@ package Telas;
 import Bean.ServidorBean;
 import DAO.ServidorDAO;
 import java.awt.IllegalComponentStateException;
+import java.sql.Date;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -39,6 +47,11 @@ public class TesteBanco extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jTextTipo = new javax.swing.JTextField();
+        jTextNumero = new javax.swing.JTextField();
+        jTextDataHora = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -46,26 +59,125 @@ public class TesteBanco extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Aguarde.png"))); // NOI18N
         jLabel1.setOpaque(true);
 
+        jButton1.setText("Salvar dados");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Editar");
+
+        jTextTipo.setText("P");
+
+        jTextNumero.setText("235");
+        jTextNumero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextNumeroActionPerformed(evt);
+            }
+        });
+
+        jTextDataHora.setText("12/07/90");
+        jTextDataHora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextDataHoraActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jLabel1)
-                .addGap(0, 0, 0))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextDataHora, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextDataHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 142, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+//            System.out.println(sdf.format(new java.util.Date()));
+            ServidorBean Envios = new ServidorBean();
+            String Tipo = jTextTipo.getText();
+            int Numero = Integer.parseInt(jTextNumero.getText());
+//            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+//            java.util.Date minhaData = dateFormat.parse(jTextDataHora.getText());        
+//            java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData.getTime());
+            boolean Status = false;
+            Envios.setTipo(Tipo);
+            Envios.setNumeroFicha(Numero);
+            Envios.setAtendimentoStatus(Status);
+            ServidorDAO enviar = new ServidorDAO();
+            enviar.create(Envios);
+        } catch (SQLException ex) {
+            Logger.getLogger(TesteBanco.class.getName()).log(Level.SEVERE, null, ex);
+        }
+//       try {
+//            Pessoa b = new Pessoa();
+//            Cidade d = new Cidade();
+//            String nome = jTextNome.getText();
+//            int idade = Integer.parseInt(jTextIdade.getText());
+//
+//            CidadeDao t = new CidadeDao(conexao);
+//            ResultSet PtS = t.retriveidd(String.valueOf(jCidade.getSelectedItem()));
+//            while (PtS.next()) {
+//                d.setCod(PtS.getInt("codcid"));
+//                d.setEstado(PtS.getString("estado"));
+//                d.setNomeCid("nomecidade");
+//            }
+//            b.setCid(d);
+//            b.setNome(nome);
+//            b.setIdade(idade);
+//            PessoaDao co = new PessoaDao(conexao);
+//            co.create(b);
+//            atualizarTabela();
+//
+//        } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(null, String.format("Erro ao gravar pessoa:%s", ex.getMessage()), "Erro", JOptionPane.ERROR_MESSAGE);
+//            Logger.getLogger(Tela1.class.getName()).log(Level.WARNING, "Erro ao gravar pessoa", ex);
+//        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNumeroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextNumeroActionPerformed
+
+    private void jTextDataHoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextDataHoraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextDataHoraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -103,6 +215,11 @@ public class TesteBanco extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JTextField jTextDataHora;
+    private javax.swing.JTextField jTextNumero;
+    private javax.swing.JTextField jTextTipo;
     // End of variables declaration//GEN-END:variables
 }

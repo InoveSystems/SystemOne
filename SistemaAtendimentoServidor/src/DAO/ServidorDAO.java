@@ -8,9 +8,11 @@ package DAO;
 import Bean.ServidorBean;
 import ConecctionFactory.ConnectionFactory;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,11 +27,37 @@ import javax.swing.JOptionPane;
 public class ServidorDAO {
 
     Connection conexao;
-    Logger logs;
-    public int numeroLinhas;
 
     public ServidorDAO() {
         this.conexao = ConnectionFactory.openConnection();
+    }
+
+    public void create(ServidorBean server) throws SQLException {
+        String sql = "INSERT INTO fichas (cod,tipo,numero,data_hora,atendimento_finalizado) VALUES (NEXTVAL('seqfichas'),?,?,now(),?)";
+        PreparedStatement pst = this.conexao.prepareStatement(sql);
+        pst.setString(1, server.getTipo());
+        pst.setInt(2, server.getNumeroFicha());
+        pst.setBoolean(3, server.getAtendimentoStatus());
+        pst.executeUpdate();
+        Statement st = this.conexao.createStatement();
+        ResultSet rs = st.executeQuery("SELECT CURRVAL('seqfichas')");
+        if (rs.next()) {
+            server.setCodigo(rs.getInt(1));
+        }
+        rs.close();
+        st.close();
+        pst.close();
+    }
+
+    public void update(ServidorBean server) throws SQLException {
+        String sql = "UPDATE fichas SET tempo_atendimento=?, tempo_espera=?,estouro_justificativa=?,atendimento_finalizado=? WHERE cod=?";
+        PreparedStatement pst = this.conexao.prepareStatement(sql);
+        pst.setTimestamp (1, server.getTempoAtendimento());
+        pst.setTimestamp (2, server.getTempoEspera());
+        pst.setString(3, server.getEstouroAtendimento());
+        pst.setBoolean(4, server.getAtendimentoStatus());
+        pst.executeUpdate();
+        pst.close();
     }
 
 //    public int getUltimoCodigo() throws SQLException {
@@ -261,5 +289,4 @@ public class ServidorDAO {
 //        st.close();
 //        return lista;
 //    }
-
 }

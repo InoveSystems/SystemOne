@@ -27,6 +27,7 @@ import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class Server {
 
@@ -195,6 +196,7 @@ public class Server {
     }
 
     private void imprime(String ficha) {
+
         new Thread() {
             @Override
             public void run() {
@@ -211,9 +213,25 @@ public class Server {
                     } catch (InterruptedException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    try {
+                        int teste;
+                        System.out.println(ficha);
+                        ServidorBean Envios = new ServidorBean();
+                        boolean Status = false;
+                        Envios.setTipo(ficha.substring(0, 1));
+                        teste = (Integer.parseInt(ficha.substring(1, 4)));                        
+                        System.out.println(String.format("%03d", teste));
+                        Envios.setNumeroFicha(Integer.parseInt(String.format("%03d", teste)));
+                        Envios.setAtendimentoStatus(Status);
+                        ServidorDAO enviar = new ServidorDAO();
+                        enviar.create(Envios);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(TesteBanco.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     fis = new FileInputStream("C:/SENHAS.pdf");
                     Imprimir printPDFFile = new Imprimir(fis, "SENHAS.pdf");
                     printPDFFile.print();
+
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {

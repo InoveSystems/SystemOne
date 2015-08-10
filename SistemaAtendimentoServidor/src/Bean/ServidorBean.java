@@ -6,6 +6,7 @@
 package Bean;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  *
@@ -16,17 +17,24 @@ public class ServidorBean {
     private int Codigo;
     private String Tipo;
     private int NumeroFicha;
-    private Date DataHora;
-    private Date TempoAtendimento;
-    private Date TempoEspera;
+    private Timestamp  DataHora;
+    private Timestamp  TempoAtendimento;
+    private Timestamp  TempoEspera;
     private String EstouroAtendimento;
     private Boolean AtendimentoStatus;
 
-    public ServidorBean(int Codigo, String Tipo, int NumeroFicha, Date DataHora, Boolean AtendimentoStatus) {
+    public ServidorBean(int Codigo, String Tipo, int NumeroFicha, Boolean AtendimentoStatus) {
         this.Codigo = Codigo;
         this.Tipo = Tipo;
         this.NumeroFicha = NumeroFicha;
-        this.DataHora = DataHora;
+        this.AtendimentoStatus = AtendimentoStatus;
+    }
+
+    public Boolean getAtendimentoStatus() {
+        return AtendimentoStatus;
+    }
+
+    public void setAtendimentoStatus(Boolean AtendimentoStatus) {
         this.AtendimentoStatus = AtendimentoStatus;
     }
 
@@ -57,27 +65,27 @@ public class ServidorBean {
         this.NumeroFicha = NumeroFicha;
     }
 
-    public Date getDataHora() {
+    public Timestamp  getDataHora() {
         return DataHora;
     }
 
-    public void setDataHora(Date DataHora) {
+    public void setDataHora(Timestamp  DataHora) {
         this.DataHora = DataHora;
     }
 
-    public Date getTempoAtendimento() {
+    public Timestamp  getTempoAtendimento() {
         return TempoAtendimento;
     }
 
-    public void setTempoAtendimento(Date TempoAtendimento) {
+    public void setTempoAtendimento(Timestamp  TempoAtendimento) {
         this.TempoAtendimento = TempoAtendimento;
     }
 
-    public Date getTempoEspera() {
+    public Timestamp  getTempoEspera() {
         return TempoEspera;
     }
 
-    public void setTempoEspera(Date TempoEspera) {
+    public void setTempoEspera(Timestamp  TempoEspera) {
         this.TempoEspera = TempoEspera;
     }
 
@@ -89,12 +97,8 @@ public class ServidorBean {
         this.EstouroAtendimento = EstouroAtendimento;
     }
 
-    public Boolean getAtendimentoFinalizado() {
-        return AtendimentoStatus;
-    }
+    
 
-    public void setAtendimentoFinalizado(Boolean AtendimentoFinalizado) {
-        this.AtendimentoStatus = AtendimentoStatus;
-    }
+  
 
 }
