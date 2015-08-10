@@ -22,7 +22,7 @@ public class Conexao {
 
     public Socket connect() {
         try {
-            this.socket = new Socket("SERVER", 8888);
+            this.socket = new Socket("SERVEER", 8888);
             this.output = new ObjectOutputStream(socket.getOutputStream());
         } catch (UnknownHostException e) {
 
