@@ -144,31 +144,6 @@ public class TesteBanco extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(TesteBanco.class.getName()).log(Level.SEVERE, null, ex);
         }
-//       try {
-//            Pessoa b = new Pessoa();
-//            Cidade d = new Cidade();
-//            String nome = jTextNome.getText();
-//            int idade = Integer.parseInt(jTextIdade.getText());
-//
-//            CidadeDao t = new CidadeDao(conexao);
-//            ResultSet PtS = t.retriveidd(String.valueOf(jCidade.getSelectedItem()));
-//            while (PtS.next()) {
-//                d.setCod(PtS.getInt("codcid"));
-//                d.setEstado(PtS.getString("estado"));
-//                d.setNomeCid("nomecidade");
-//            }
-//            b.setCid(d);
-//            b.setNome(nome);
-//            b.setIdade(idade);
-//            PessoaDao co = new PessoaDao(conexao);
-//            co.create(b);
-//            atualizarTabela();
-//
-//        } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(null, String.format("Erro ao gravar pessoa:%s", ex.getMessage()), "Erro", JOptionPane.ERROR_MESSAGE);
-//            Logger.getLogger(Tela1.class.getName()).log(Level.WARNING, "Erro ao gravar pessoa", ex);
-//        }
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNumeroActionPerformed

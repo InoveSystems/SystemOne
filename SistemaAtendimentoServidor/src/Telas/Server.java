@@ -213,14 +213,15 @@ public class Server {
                     } catch (InterruptedException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    fis = new FileInputStream("C:/SENHAS.pdf");
+                    Imprimir printPDFFile = new Imprimir(fis, "SENHAS.pdf");
+                    printPDFFile.print();
                     try {
                         int teste;
-                        System.out.println(ficha);
                         ServidorBean Envios = new ServidorBean();
                         boolean Status = false;
                         Envios.setTipo(ficha.substring(0, 1));
-                        teste = (Integer.parseInt(ficha.substring(1, 4)));                        
-                        System.out.println(String.format("%03d", teste));
+                        teste = (Integer.parseInt(ficha.substring(1, 4)));
                         Envios.setNumeroFicha(Integer.parseInt(String.format("%03d", teste)));
                         Envios.setAtendimentoStatus(Status);
                         ServidorDAO enviar = new ServidorDAO();
@@ -228,9 +229,6 @@ public class Server {
                     } catch (SQLException ex) {
                         Logger.getLogger(TesteBanco.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    fis = new FileInputStream("C:/SENHAS.pdf");
-                    Imprimir printPDFFile = new Imprimir(fis, "SENHAS.pdf");
-                    printPDFFile.print();
 
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
