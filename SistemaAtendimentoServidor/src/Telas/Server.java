@@ -29,6 +29,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import javax.swing.JOptionPane;
 
 public class Server {
@@ -152,6 +153,9 @@ public class Server {
     }
 
     private void chamar(Mensagem message) {
+        int idAtendimento = 0;
+        String tipo;
+        int numero;
 
         if (message.getText().equals("convencional")) {
             if (filaprioritaria.estaVazia()) {
@@ -165,10 +169,22 @@ public class Server {
                         Pesquisar.setNumeroFicha(Integer.parseInt(filacomum.primeiro().substring(1, 4)));
                         ResultSet rs = c.retriveficha(Pesquisar);
                         while (rs.next()) {
-                            String tipo = rs.getString("tipo");
-                            int numero = rs.getInt("numero");
+                            idAtendimento = rs.getInt("cod");
+                            tipo = rs.getString("tipo");
+                            numero = rs.getInt("numero");
+
+                            System.out.println(idAtendimento + " " + tipo + " " + numero);
                         }
                         atendimentoIniciado = true;
+                        ServidorBean Atualizar = new ServidorBean();
+                        Atualizar.setCodigo(idAtendimento);
+                        Atualizar.setIdcaixa(message.getName());
+                        Atualizar.setTempoEspera(null);
+                        Atualizar.setDataHoraIni(null);
+                        Atualizar.setAtendimentoStatus(atendimentoIniciado);
+                        ServidorDAO atualiza = new ServidorDAO();
+                        atualiza.update(Atualizar);
+
                         message.setStatus(atendimentoIniciado);
                         message.setAtual(filacomum.primeiro());
                         message.setUltima(ultima);
@@ -203,10 +219,21 @@ public class Server {
                         Pesquisar.setNumeroFicha(Integer.parseInt(filacomum.primeiro().substring(1, 4)));
                         ResultSet rs = p.retriveficha(Pesquisar);
                         while (rs.next()) {
-                            String tipo = rs.getString("tipo");
-                            int numero = rs.getInt("numero");
+                            idAtendimento = rs.getInt("cod");
+                            tipo = rs.getString("tipo");
+                            numero = rs.getInt("numero");
                         }
+
                         atendimentoIniciado = true;
+                        ServidorBean Atualizar = new ServidorBean();
+                        Atualizar.setCodigo(idAtendimento);
+                        Atualizar.setIdcaixa(message.getName());
+                        Atualizar.setTempoEspera(null);
+                        Atualizar.setDataHoraIni(null);
+                        Atualizar.setAtendimentoStatus(atendimentoIniciado);
+                        ServidorDAO atualiza = new ServidorDAO();
+                        atualiza.update(Atualizar);
+
                         message.setStatus(atendimentoIniciado);
                         message.setAtual(filaprioritaria.primeiro());
                         message.setUltima(ultima);
@@ -243,10 +270,21 @@ public class Server {
                         Pesquisar.setNumeroFicha(Integer.parseInt(filacomum.primeiro().substring(1, 4)));
                         ResultSet rs = p.retriveficha(Pesquisar);
                         while (rs.next()) {
-                            String tipo = rs.getString("tipo");
-                            int numero = rs.getInt("numero");
+                            idAtendimento = rs.getInt("cod");
+                            tipo = rs.getString("tipo");
+                            numero = rs.getInt("numero");
                         }
+
                         atendimentoIniciado = true;
+                        ServidorBean Atualizar = new ServidorBean();
+                        Atualizar.setCodigo(idAtendimento);
+                        Atualizar.setIdcaixa(message.getName());
+                        Atualizar.setTempoEspera(null);
+                        Atualizar.setDataHoraIni(null);
+                        Atualizar.setAtendimentoStatus(atendimentoIniciado);
+                        ServidorDAO atualiza = new ServidorDAO();
+                        atualiza.update(Atualizar);
+
                         message.setStatus(atendimentoIniciado);
                         message.setAtual(filapopular.primeiro());
                         message.setUltima(ultima);

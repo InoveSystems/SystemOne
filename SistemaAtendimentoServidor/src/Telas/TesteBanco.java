@@ -178,10 +178,7 @@ public class TesteBanco extends javax.swing.JFrame {
                 String tipo = rs.getString("tipo");
                 int numero = rs.getInt("numero");
                 System.out.println(tipo + numero);
-            }
-            
-            
-        
+            }          
         } catch (SQLException ex) {
             Logger.getLogger(TesteBanco.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -50,20 +50,22 @@ public class ServidorDAO {
     }
 
     public void update(ServidorBean server) throws SQLException {
-        String sql = "UPDATE fichas SET idcaixa=?,data_hora_inicio=?, tempo_espera=?,estouro_justificativa=? WHERE cod=?";
+        String sql = "UPDATE fichas SET idcaixa=?,data_hora_inicio=?, tempo_espera=?,estouro_justificativa=?,atendimento_status=? WHERE cod=?";
         PreparedStatement pst = this.conexao.prepareStatement(sql);
-        pst.setTimestamp (1, server.getTempoAtendimento());
-        pst.setTimestamp (2, server.getTempoEspera());
-        pst.setString(3, server.getEstouroAtendimento());
-        pst.setBoolean(4, server.getAtendimentoStatus());
+        pst.setString(1, server.getIdcaixa());
+        pst.setTimestamp(2, server.getDataHoraIni());
+        pst.setTimestamp(3, server.getTempoEspera());
+        pst.setString(4, server.getEstouroAtendimento());
+        pst.setBoolean(5, server.getAtendimentoStatus());
+        pst.setInt(6, server.getCodigo());
         pst.executeUpdate();
         pst.close();
     }
-    
+
     public ResultSet retriveficha(ServidorBean server) throws SQLException {
         Statement stm = this.conexao.createStatement();
         ResultSet rs;
-        String sql = "SELECT * FROM fichas WHERE tipo='" + server.getTipo() + "' AND numero='"+ server.getNumeroFicha() +"'";
+        String sql = "SELECT * FROM fichas WHERE tipo='" + server.getTipo() + "' AND numero='" + server.getNumeroFicha() + "'";
         rs = stm.executeQuery(sql);
         return rs;
     }
