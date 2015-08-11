@@ -24,6 +24,7 @@ import javazoom.jl.decoder.JavaLayerException;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -166,23 +167,27 @@ public class PainelPrincipal extends javax.swing.JFrame {
     }
 
     private void receive(Mensagem message) {
-        idlabel.setText("");
-        atuallabel.setText("");
-        ultimalabel.setText("");
-        penultimalabel.setText("");
-        antepenultimalabel.setText("");
-        idlabel.setText("Atendente " + message.getName());
-        atuallabel.setText(message.getAtual());
-        ultimalabel.setText(message.getUltima());
-        penultimalabel.setText(message.getPenultima());
-        antepenultimalabel.setText(message.getAntepenultima());
+        if (message.isStatus()) {
+            idlabel.setText("");
+            atuallabel.setText("");
+            ultimalabel.setText("");
+            penultimalabel.setText("");
+            antepenultimalabel.setText("");
+            idlabel.setText("Atendente " + message.getName());
+            atuallabel.setText(message.getAtual());
+            ultimalabel.setText(message.getUltima());
+            penultimalabel.setText(message.getPenultima());
+            antepenultimalabel.setText(message.getAntepenultima());
+            new Thread() {
+                @Override
+                public void run() {
+                    audio();
+                }
+            }.start();
+        } else {
+           
 
-        new Thread() {
-            @Override
-            public void run() {
-                audio();
-            }
-        }.start();
+        }
 
     }
 
@@ -291,7 +296,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
                         TextExemplo.setText(teste);
                         Thread.currentThread().sleep(1000);
                     } catch (InterruptedException ex) {
-                       
+
                     }
                 }
                 TextExemplo.setText("");
@@ -299,7 +304,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
                 try {
                     Thread.currentThread().sleep(150);
                 } catch (InterruptedException ex) {
-                   
+
                 }
             }
             if (estaVazia()) {
