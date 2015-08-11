@@ -30,6 +30,11 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import static java.time.Instant.now;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 public class Server {
@@ -172,30 +177,36 @@ public class Server {
                             idAtendimento = rs.getInt("cod");
                             tipo = rs.getString("tipo");
                             numero = rs.getInt("numero");
-
                             System.out.println(idAtendimento + " " + tipo + " " + numero);
                         }
                         atendimentoIniciado = true;
                         ServidorBean Atualizar = new ServidorBean();
                         Atualizar.setCodigo(idAtendimento);
                         Atualizar.setIdcaixa(message.getName());
-                        Atualizar.setTempoEspera(null);
-                        Atualizar.setDataHoraIni(null);
-                        Atualizar.setAtendimentoStatus(atendimentoIniciado);
-                        ServidorDAO atualiza = new ServidorDAO();
-                        atualiza.update(Atualizar);
-
-                        message.setStatus(atendimentoIniciado);
-                        message.setAtual(filacomum.primeiro());
-                        message.setUltima(ultima);
-                        message.setPenultima(penultima);
-                        message.setAntepenultima(antepenultima);
-                        filacomum.remover();
-                        atualizarPainel(message);
-                        tes = antepenultima;
-                        antepenultima = penultima;
-                        penultima = ultima;
-                        ultima = message.getAtual();
+                        try {
+                            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+                            java.util.Date minhaData;
+                            minhaData = dateFormat.parse(getDateTime());
+                            java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData.getTime());
+                            Atualizar.setTempoEspera(sqlDate);
+                            Atualizar.setDataHoraIni(sqlDate);
+                            Atualizar.setAtendimentoStatus(atendimentoIniciado);
+                            ServidorDAO atualiza = new ServidorDAO();
+                            atualiza.update(Atualizar);
+                            message.setStatus(atendimentoIniciado);
+                            message.setAtual(filacomum.primeiro());
+                            message.setUltima(ultima);
+                            message.setPenultima(penultima);
+                            message.setAntepenultima(antepenultima);
+                            filacomum.remover();
+                            atualizarPainel(message);
+                            tes = antepenultima;
+                            antepenultima = penultima;
+                            penultima = ultima;
+                            ultima = message.getAtual();
+                        } catch (ParseException ex) {
+                            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     } catch (SQLException ex) {
                         Logger.getLogger(TesteBanco.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -212,39 +223,47 @@ public class Server {
             } else {
                 if (filaprioritaria.estaVazia() == false) {
                     try {
+                        System.out.println("CAIXA: " + message.getName());
                         System.out.println("chamando: " + filaprioritaria.primeiro());
                         ServidorBean Pesquisar = new ServidorBean();
                         ServidorDAO p = new ServidorDAO();
-                        Pesquisar.setTipo(filacomum.primeiro().substring(0, 1));
-                        Pesquisar.setNumeroFicha(Integer.parseInt(filacomum.primeiro().substring(1, 4)));
+                        Pesquisar.setTipo(filaprioritaria.primeiro().substring(0, 1));
+                        Pesquisar.setNumeroFicha(Integer.parseInt(filaprioritaria.primeiro().substring(1, 4)));
                         ResultSet rs = p.retriveficha(Pesquisar);
                         while (rs.next()) {
                             idAtendimento = rs.getInt("cod");
                             tipo = rs.getString("tipo");
                             numero = rs.getInt("numero");
+                            System.out.println(idAtendimento + " " + tipo + " " + numero);
                         }
-
                         atendimentoIniciado = true;
                         ServidorBean Atualizar = new ServidorBean();
                         Atualizar.setCodigo(idAtendimento);
                         Atualizar.setIdcaixa(message.getName());
-                        Atualizar.setTempoEspera(null);
-                        Atualizar.setDataHoraIni(null);
-                        Atualizar.setAtendimentoStatus(atendimentoIniciado);
-                        ServidorDAO atualiza = new ServidorDAO();
-                        atualiza.update(Atualizar);
-
-                        message.setStatus(atendimentoIniciado);
-                        message.setAtual(filaprioritaria.primeiro());
-                        message.setUltima(ultima);
-                        message.setPenultima(penultima);
-                        message.setAntepenultima(antepenultima);
-                        filaprioritaria.remover();
-                        atualizarPainel(message);
-                        tes = antepenultima;
-                        antepenultima = penultima;
-                        penultima = ultima;
-                        ultima = message.getAtual();
+                        try {
+                            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+                            java.util.Date minhaData;
+                            minhaData = dateFormat.parse(getDateTime());
+                            java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData.getTime());
+                            Atualizar.setTempoEspera(sqlDate);
+                            Atualizar.setDataHoraIni(sqlDate);
+                            Atualizar.setAtendimentoStatus(atendimentoIniciado);
+                            ServidorDAO atualiza = new ServidorDAO();
+                            atualiza.update(Atualizar);
+                            message.setStatus(atendimentoIniciado);
+                            message.setAtual(filaprioritaria.primeiro());
+                            message.setUltima(ultima);
+                            message.setPenultima(penultima);
+                            message.setAntepenultima(antepenultima);
+                            filaprioritaria.remover();
+                            atualizarPainel(message);
+                            tes = antepenultima;
+                            antepenultima = penultima;
+                            penultima = ultima;
+                            ultima = message.getAtual();
+                        } catch (ParseException ex) {
+                            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     } catch (SQLException ex) {
                         Logger.getLogger(TesteBanco.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -265,37 +284,44 @@ public class Server {
                     try {
                         System.out.println("chamando: " + filapopular.primeiro());
                         ServidorBean Pesquisar = new ServidorBean();
-                        ServidorDAO p = new ServidorDAO();
-                        Pesquisar.setTipo(filacomum.primeiro().substring(0, 1));
-                        Pesquisar.setNumeroFicha(Integer.parseInt(filacomum.primeiro().substring(1, 4)));
-                        ResultSet rs = p.retriveficha(Pesquisar);
+                        ServidorDAO pop = new ServidorDAO();
+                        Pesquisar.setTipo(filapopular.primeiro().substring(0, 1));
+                        Pesquisar.setNumeroFicha(Integer.parseInt(filapopular.primeiro().substring(1, 4)));
+                        ResultSet rs = pop.retriveficha(Pesquisar);
                         while (rs.next()) {
                             idAtendimento = rs.getInt("cod");
                             tipo = rs.getString("tipo");
                             numero = rs.getInt("numero");
+                            System.out.println(idAtendimento + " " + tipo + " " + numero);
                         }
-
                         atendimentoIniciado = true;
                         ServidorBean Atualizar = new ServidorBean();
                         Atualizar.setCodigo(idAtendimento);
                         Atualizar.setIdcaixa(message.getName());
-                        Atualizar.setTempoEspera(null);
-                        Atualizar.setDataHoraIni(null);
-                        Atualizar.setAtendimentoStatus(atendimentoIniciado);
-                        ServidorDAO atualiza = new ServidorDAO();
-                        atualiza.update(Atualizar);
-
-                        message.setStatus(atendimentoIniciado);
-                        message.setAtual(filapopular.primeiro());
-                        message.setUltima(ultima);
-                        message.setPenultima(penultima);
-                        message.setAntepenultima(antepenultima);
-                        filapopular.remover();
-                        atualizarPainel(message);
-                        tes = antepenultima;
-                        antepenultima = penultima;
-                        penultima = ultima;
-                        ultima = message.getAtual();
+                        try {
+                            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+                            java.util.Date minhaData;
+                            minhaData = dateFormat.parse(getDateTime());
+                            java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData.getTime());
+                            Atualizar.setTempoEspera(sqlDate);
+                            Atualizar.setDataHoraIni(sqlDate);
+                            Atualizar.setAtendimentoStatus(atendimentoIniciado);
+                            ServidorDAO atualiza = new ServidorDAO();
+                            atualiza.update(Atualizar);
+                            message.setStatus(atendimentoIniciado);
+                            message.setAtual(filapopular.primeiro());
+                            message.setUltima(ultima);
+                            message.setPenultima(penultima);
+                            message.setAntepenultima(antepenultima);
+                            filapopular.remover();
+                            atualizarPainel(message);
+                            tes = antepenultima;
+                            antepenultima = penultima;
+                            penultima = ultima;
+                            ultima = message.getAtual();
+                        } catch (ParseException ex) {
+                            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     } catch (SQLException ex) {
                         Logger.getLogger(TesteBanco.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -642,6 +668,12 @@ public class Server {
                 qtdeElementos--;
             }
         }
+    }
+
+    private String getDateTime() {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        Date date = new Date();
+        return dateFormat.format(date);
     }
 
     public static void main(String args[]) {
