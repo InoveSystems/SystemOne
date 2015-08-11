@@ -27,7 +27,9 @@ import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 public class Server {
 
@@ -53,6 +55,8 @@ public class Server {
     String ultima;
     String penultima;
     String antepenultima;
+    String tes;
+    boolean atendimentoIniciado = false;
 
     public Server() {
 
@@ -152,44 +156,119 @@ public class Server {
         if (message.getText().equals("convencional")) {
             if (filaprioritaria.estaVazia()) {
                 if (filacomum.estaVazia() == false) {
-                    System.out.println("chamando: " + filacomum.primeiro());
-                    message.setAtual(filacomum.primeiro());
-                    message.setUltima(ultima);
-                    message.setPenultima(penultima);
-                    message.setAntepenultima(antepenultima);
-                    filacomum.remover();
+                    try {
+                        System.out.println("CAIXA: " + message.getName());
+                        System.out.println("chamando: " + filacomum.primeiro());
+                        ServidorBean Pesquisar = new ServidorBean();
+                        ServidorDAO c = new ServidorDAO();
+                        Pesquisar.setTipo(filacomum.primeiro().substring(0, 1));
+                        Pesquisar.setNumeroFicha(Integer.parseInt(filacomum.primeiro().substring(1, 4)));
+                        ResultSet rs = c.retriveficha(Pesquisar);
+                        while (rs.next()) {
+                            String tipo = rs.getString("tipo");
+                            int numero = rs.getInt("numero");
+                        }
+                        atendimentoIniciado = true;
+                        message.setStatus(atendimentoIniciado);
+                        message.setAtual(filacomum.primeiro());
+                        message.setUltima(ultima);
+                        message.setPenultima(penultima);
+                        message.setAntepenultima(antepenultima);
+                        filacomum.remover();
+                        atualizarPainel(message);
+                        tes = antepenultima;
+                        antepenultima = penultima;
+                        penultima = ultima;
+                        ultima = message.getAtual();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(TesteBanco.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    atendimentoIniciado = false;
+                    message.setStatus(atendimentoIniciado);
+                    message.setAtual(ultima);
+                    message.setUltima(penultima);
+                    message.setPenultima(antepenultima);
+                    message.setAntepenultima(tes);
                     atualizarPainel(message);
-                    antepenultima = penultima;
-                    penultima = ultima;
-                    ultima = message.getAtual();
+
                 }
             } else {
                 if (filaprioritaria.estaVazia() == false) {
-                    System.out.println("chamando: " + filaprioritaria.primeiro());
-                    message.setAtual(filaprioritaria.primeiro());
-                    message.setUltima(ultima);
-                    message.setPenultima(penultima);
-                    message.setAntepenultima(antepenultima);
-                    filaprioritaria.remover();
+                    try {
+                        System.out.println("chamando: " + filaprioritaria.primeiro());
+                        ServidorBean Pesquisar = new ServidorBean();
+                        ServidorDAO p = new ServidorDAO();
+                        Pesquisar.setTipo(filacomum.primeiro().substring(0, 1));
+                        Pesquisar.setNumeroFicha(Integer.parseInt(filacomum.primeiro().substring(1, 4)));
+                        ResultSet rs = p.retriveficha(Pesquisar);
+                        while (rs.next()) {
+                            String tipo = rs.getString("tipo");
+                            int numero = rs.getInt("numero");
+                        }
+                        atendimentoIniciado = true;
+                        message.setStatus(atendimentoIniciado);
+                        message.setAtual(filaprioritaria.primeiro());
+                        message.setUltima(ultima);
+                        message.setPenultima(penultima);
+                        message.setAntepenultima(antepenultima);
+                        filaprioritaria.remover();
+                        atualizarPainel(message);
+                        tes = antepenultima;
+                        antepenultima = penultima;
+                        penultima = ultima;
+                        ultima = message.getAtual();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(TesteBanco.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    atendimentoIniciado = false;
+                    message.setStatus(atendimentoIniciado);
+                    message.setAtual(ultima);
+                    message.setUltima(penultima);
+                    message.setPenultima(antepenultima);
+                    message.setAntepenultima(tes);
                     atualizarPainel(message);
-                    antepenultima = penultima;
-                    penultima = ultima;
-                    ultima = message.getAtual();
+
                 }
             }
         } else {
             if (message.getText().equals("popular")) {
                 if (filapopular.estaVazia() == false) {
-                    System.out.println("chamando: " + filapopular.primeiro());
-                    message.setAtual(filapopular.primeiro());
-                    message.setUltima(ultima);
-                    message.setPenultima(penultima);
-                    message.setAntepenultima(antepenultima);
-                    filapopular.remover();
+                    try {
+                        System.out.println("chamando: " + filapopular.primeiro());
+                        ServidorBean Pesquisar = new ServidorBean();
+                        ServidorDAO p = new ServidorDAO();
+                        Pesquisar.setTipo(filacomum.primeiro().substring(0, 1));
+                        Pesquisar.setNumeroFicha(Integer.parseInt(filacomum.primeiro().substring(1, 4)));
+                        ResultSet rs = p.retriveficha(Pesquisar);
+                        while (rs.next()) {
+                            String tipo = rs.getString("tipo");
+                            int numero = rs.getInt("numero");
+                        }
+                        atendimentoIniciado = true;
+                        message.setStatus(atendimentoIniciado);
+                        message.setAtual(filapopular.primeiro());
+                        message.setUltima(ultima);
+                        message.setPenultima(penultima);
+                        message.setAntepenultima(antepenultima);
+                        filapopular.remover();
+                        atualizarPainel(message);
+                        tes = antepenultima;
+                        antepenultima = penultima;
+                        penultima = ultima;
+                        ultima = message.getAtual();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(TesteBanco.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    atendimentoIniciado = false;
+                    message.setStatus(atendimentoIniciado);
+                    message.setAtual(ultima);
+                    message.setUltima(penultima);
+                    message.setPenultima(antepenultima);
+                    message.setAntepenultima(tes);
                     atualizarPainel(message);
-                    antepenultima = penultima;
-                    penultima = ultima;
-                    ultima = message.getAtual();
                 }
             }
         }
@@ -210,12 +289,11 @@ public class Server {
                 try {
                     try {
                         Thread.currentThread().sleep(1000);
+
                     } catch (InterruptedException ex) {
-                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(Server.class
+                                .getName()).log(Level.SEVERE, null, ex);
                     }
-                    fis = new FileInputStream("C:/SENHAS.pdf");
-                    Imprimir printPDFFile = new Imprimir(fis, "SENHAS.pdf");
-                    printPDFFile.print();
                     try {
                         int teste;
                         ServidorBean Envios = new ServidorBean();
@@ -226,16 +304,24 @@ public class Server {
                         Envios.setAtendimentoStatus(Status);
                         ServidorDAO enviar = new ServidorDAO();
                         enviar.create(Envios);
+
                     } catch (SQLException ex) {
-                        Logger.getLogger(TesteBanco.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(TesteBanco.class
+                                .getName()).log(Level.SEVERE, null, ex);
                     }
+                    fis = new FileInputStream("C:/SENHAS.pdf");
+                    Imprimir printPDFFile = new Imprimir(fis, "SENHAS.pdf");
+                    printPDFFile.print();
 
                 } catch (FileNotFoundException ex) {
-                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Server.class
+                            .getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
-                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Server.class
+                            .getName()).log(Level.SEVERE, null, ex);
                 } catch (PrinterException ex) {
-                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Server.class
+                            .getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }.start();
@@ -320,6 +406,7 @@ public class Server {
     private void sendOne(Mensagem message, ObjectOutputStream output) {
         try {
             output.writeObject(message);
+
         } catch (IOException ex) {
             Logger.getLogger(Server.class
                     .getName()).log(Level.SEVERE, null, ex);
@@ -332,6 +419,7 @@ public class Server {
                 message.setAction(Action.SEND_ONE);
                 try {
                     kv.getValue().writeObject(message);
+
                 } catch (IOException ex) {
                     Logger.getLogger(Server.class
                             .getName()).log(Level.SEVERE, null, ex);
@@ -353,10 +441,12 @@ public class Server {
             try {
                 System.out.println("ATIVADO:" + kv.getKey());
                 kv.getValue().writeObject(message);
+
             } catch (IOException ex) {
                 Logger.getLogger(Server.class
                         .getName()).log(Level.SEVERE, null, ex);
             }
+
         }
     }
 

@@ -33,7 +33,7 @@ public class ServidorDAO {
     }
 
     public void create(ServidorBean server) throws SQLException {
-        String sql = "INSERT INTO fichas (cod,tipo,numero,data_hora,atendimento_finalizado) VALUES (NEXTVAL('seqfichas'),?,?,now(),?)";
+        String sql = "INSERT INTO fichas (cod,tipo,numero,data_hora_impre,atendimento_status) VALUES (NEXTVAL('seqfichas'),?,?,now(),?)";
         PreparedStatement pst = this.conexao.prepareStatement(sql);
         pst.setString(1, server.getTipo());
         pst.setInt(2, server.getNumeroFicha());
@@ -50,7 +50,7 @@ public class ServidorDAO {
     }
 
     public void update(ServidorBean server) throws SQLException {
-        String sql = "UPDATE fichas SET tempo_atendimento=?, tempo_espera=?,estouro_justificativa=?,atendimento_finalizado=? WHERE cod=?";
+        String sql = "UPDATE fichas SET idcaixa=?,data_hora_inicio=?, tempo_espera=?,estouro_justificativa=? WHERE cod=?";
         PreparedStatement pst = this.conexao.prepareStatement(sql);
         pst.setTimestamp (1, server.getTempoAtendimento());
         pst.setTimestamp (2, server.getTempoEspera());
@@ -58,6 +58,14 @@ public class ServidorDAO {
         pst.setBoolean(4, server.getAtendimentoStatus());
         pst.executeUpdate();
         pst.close();
+    }
+    
+    public ResultSet retriveficha(ServidorBean server) throws SQLException {
+        Statement stm = this.conexao.createStatement();
+        ResultSet rs;
+        String sql = "SELECT * FROM fichas WHERE tipo='" + server.getTipo() + "' AND numero='"+ server.getNumeroFicha() +"'";
+        rs = stm.executeQuery(sql);
+        return rs;
     }
 
 //    public int getUltimoCodigo() throws SQLException {

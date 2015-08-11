@@ -17,9 +17,12 @@ public class ServidorBean {
     private int Codigo;
     private String Tipo;
     private int NumeroFicha;
-    private Timestamp  DataHora;
-    private Timestamp  TempoAtendimento;
-    private Timestamp  TempoEspera;
+    private Timestamp DataHoraImp;
+    private String idcaixa;
+    private Timestamp DataHoraIni;
+    private Timestamp DataHoraFim;
+    private Timestamp TempoAtendimento;
+    private Timestamp TempoEspera;
     private String EstouroAtendimento;
     private Boolean AtendimentoStatus;
 
@@ -28,6 +31,38 @@ public class ServidorBean {
         this.Tipo = Tipo;
         this.NumeroFicha = NumeroFicha;
         this.AtendimentoStatus = AtendimentoStatus;
+    }
+
+    public Timestamp getDataHoraImp() {
+        return DataHoraImp;
+    }
+
+    public void setDataHoraImp(Timestamp DataHoraImp) {
+        this.DataHoraImp = DataHoraImp;
+    }
+
+    public String getIdcaixa() {
+        return idcaixa;
+    }
+
+    public void setIdcaixa(String idcaixa) {
+        this.idcaixa = idcaixa;
+    }
+
+    public Timestamp getDataHoraIni() {
+        return DataHoraIni;
+    }
+
+    public void setDataHoraIni(Timestamp DataHoraIni) {
+        this.DataHoraIni = DataHoraIni;
+    }
+
+    public Timestamp getDataHoraFim() {
+        return DataHoraFim;
+    }
+
+    public void setDataHoraFim(Timestamp DataHoraFim) {
+        this.DataHoraFim = DataHoraFim;
     }
 
     public Boolean getAtendimentoStatus() {
@@ -65,27 +100,19 @@ public class ServidorBean {
         this.NumeroFicha = NumeroFicha;
     }
 
-    public Timestamp  getDataHora() {
-        return DataHora;
-    }
-
-    public void setDataHora(Timestamp  DataHora) {
-        this.DataHora = DataHora;
-    }
-
-    public Timestamp  getTempoAtendimento() {
+    public Timestamp getTempoAtendimento() {
         return TempoAtendimento;
     }
 
-    public void setTempoAtendimento(Timestamp  TempoAtendimento) {
+    public void setTempoAtendimento(Timestamp TempoAtendimento) {
         this.TempoAtendimento = TempoAtendimento;
     }
 
-    public Timestamp  getTempoEspera() {
+    public Timestamp getTempoEspera() {
         return TempoEspera;
     }
 
-    public void setTempoEspera(Timestamp  TempoEspera) {
+    public void setTempoEspera(Timestamp TempoEspera) {
         this.TempoEspera = TempoEspera;
     }
 
@@ -96,9 +123,5 @@ public class ServidorBean {
     public void setEstouroAtendimento(String EstouroAtendimento) {
         this.EstouroAtendimento = EstouroAtendimento;
     }
-
-    
-
-  
 
 }
