@@ -16,6 +16,7 @@ public class Mensagem implements Serializable {
     private String ultima;
     private String penultima;
     private String antepenultima;
+    private boolean status;
 
     public enum Action {
 
@@ -47,6 +48,14 @@ public class Mensagem implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public String getText() {

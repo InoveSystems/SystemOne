@@ -31,6 +31,7 @@ public class Cliente extends javax.swing.JFrame {
     private Conexao service;
     String caixa = "20";
     File arquivo = new File("C:/SistemaAtendimentoCliente/CaixaConfig.txt");
+    boolean StatusMensage;
 
     public Cliente() {
         initComponents();
@@ -174,16 +175,22 @@ public class Cliente extends javax.swing.JFrame {
     }
 
     private void receive(Mensagem message) {
-        idlabel.setText("");
-        atuallabel.setText("");
-        ultimalabel.setText("");
-        penultimalabel.setText("");
-        antepenultimalabel.setText("");
-        idlabel.setText("Atendente " + message.getName());
-        atuallabel.setText(message.getAtual());
-        ultimalabel.setText(message.getUltima());
-        penultimalabel.setText(message.getPenultima());
-        antepenultimalabel.setText(message.getAntepenultima());
+        if (message.isStatus()) {
+            idlabel.setText("");
+            atuallabel.setText("");
+            ultimalabel.setText("");
+            penultimalabel.setText("");
+            antepenultimalabel.setText("");
+            idlabel.setText("Atendente " + message.getName());
+            atuallabel.setText(message.getAtual());
+            ultimalabel.setText(message.getUltima());
+            penultimalabel.setText(message.getPenultima());
+            antepenultimalabel.setText(message.getAntepenultima());
+        } else {
+            if (message.getName().equals(caixa)) {
+                JOptionPane.showMessageDialog(null, "Não á clientes a serem atendidos! \n        Verififique outras Filas!", "Inove Systems - Informação", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
     }
 
     private void refreshOnlines(Mensagem message) {
@@ -656,6 +663,7 @@ public class Cliente extends javax.swing.JFrame {
             this.message.setAction(Mensagem.Action.CALL);
             this.service.send(this.message);
         }
+
     }//GEN-LAST:event_jbConvencionalActionPerformed
 
     private void jbPopularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPopularActionPerformed
@@ -739,8 +747,10 @@ public class Cliente extends javax.swing.JFrame {
                     if (!arquivo.exists()) {
                         try {
                             arquivo.createNewFile();
+
                         } catch (IOException ex) {
-                            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(Cliente.class
+                                    .getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                     FileWriter fw;
@@ -751,8 +761,10 @@ public class Cliente extends javax.swing.JFrame {
                         bw.newLine();
                         bw.close();
                         fw.close();
+
                     } catch (IOException ex) {
-                        Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(Cliente.class
+                                .getName()).log(Level.SEVERE, null, ex);
                     }
 
                 } catch (NullPointerException ex) {
