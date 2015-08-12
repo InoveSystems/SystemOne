@@ -24,13 +24,30 @@ public class ServidorBean {
     private Timestamp TempoAtendimento;
     private Timestamp TempoEspera;
     private String EstouroAtendimento;
-    private Boolean AtendimentoStatus;
+    private Boolean AtendimentoIniciado;
+    private Boolean AtendimentoFinalizado;
 
-    public ServidorBean(int Codigo, String Tipo, int NumeroFicha, Boolean AtendimentoStatus) {
+    public ServidorBean(int Codigo, String Tipo, int NumeroFicha, Boolean AtendimentoIniciado) {
         this.Codigo = Codigo;
         this.Tipo = Tipo;
         this.NumeroFicha = NumeroFicha;
-        this.AtendimentoStatus = AtendimentoStatus;
+        this.AtendimentoIniciado = AtendimentoIniciado;
+    }
+
+    public Boolean getAtendimentoIniciado() {
+        return AtendimentoIniciado;
+    }
+
+    public void setAtendimentoIniciado(Boolean AtendimentoIniciado) {
+        this.AtendimentoIniciado = AtendimentoIniciado;
+    }
+
+    public Boolean getAtendimentoFinalizado() {
+        return AtendimentoFinalizado;
+    }
+
+    public void setAtendimentoFinalizado(Boolean AtendimentoFinalizado) {
+        this.AtendimentoFinalizado = AtendimentoFinalizado;
     }
 
     public Timestamp getDataHoraImp() {
@@ -63,14 +80,6 @@ public class ServidorBean {
 
     public void setDataHoraFim(Timestamp DataHoraFim) {
         this.DataHoraFim = DataHoraFim;
-    }
-
-    public Boolean getAtendimentoStatus() {
-        return AtendimentoStatus;
-    }
-
-    public void setAtendimentoStatus(Boolean AtendimentoStatus) {
-        this.AtendimentoStatus = AtendimentoStatus;
     }
 
     public ServidorBean() {

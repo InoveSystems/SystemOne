@@ -62,7 +62,6 @@ public class Server {
     String penultima;
     String antepenultima;
     String tes;
-    boolean atendimentoIniciado = false;
 
     public Server() {
 
@@ -159,60 +158,151 @@ public class Server {
 
     private void chamar(Mensagem message) {
         int idAtendimento = 0;
-        String tipo;
-        int numero;
-
+        String tipo = null;
+        int numero = 0;
+        boolean finalizou = false;
+        
         if (message.getText().equals("convencional")) {
             if (filaprioritaria.estaVazia()) {
                 if (filacomum.estaVazia() == false) {
+                    finalizou = false;
                     try {
-                        System.out.println("CAIXA: " + message.getName());
-                        System.out.println("chamando: " + filacomum.primeiro());
-                        ServidorBean Pesquisar = new ServidorBean();
-                        ServidorDAO c = new ServidorDAO();
-                        Pesquisar.setTipo(filacomum.primeiro().substring(0, 1));
-                        Pesquisar.setNumeroFicha(Integer.parseInt(filacomum.primeiro().substring(1, 4)));
-                        ResultSet rs = c.retriveficha(Pesquisar);
-                        while (rs.next()) {
-                            idAtendimento = rs.getInt("cod");
-                            tipo = rs.getString("tipo");
-                            numero = rs.getInt("numero");
-                            System.out.println(idAtendimento + " " + tipo + " " + numero);
+                        //Pesquisa se tem ficha em aberto para aquele caixa
+                        ServidorBean PesquisarInicio = new ServidorBean();
+                        ServidorDAO ini = new ServidorDAO();
+                        PesquisarInicio.setIdcaixa(message.getName());
+                        PesquisarInicio.setAtendimentoIniciado(true);
+                        PesquisarInicio.setAtendimentoFinalizado(false);
+                        ResultSet rsi;
+                        rsi = ini.retrivefichaAberta(PesquisarInicio);
+                        while (rsi.next()) {
+                            idAtendimento = rsi.getInt("cod");
+                            tipo = rsi.getString("tipo");
+                            numero = rsi.getInt("numero");
+                            numero = Integer.parseInt(String.format("%03d", numero));
+                            int resposta = JOptionPane.showConfirmDialog(null, "VOCÊ DEVE FINALIZAR O ATENDIMENTO ANTERIOR! \n" + "DESEJA FINALIZAR O ATENDIMENTO  " + tipo + numero + " ?");
+                            if (resposta == JOptionPane.YES_OPTION) {
+                                ServidorBean AtualizarFinalizar = new ServidorBean();
+                                AtualizarFinalizar.setCodigo(idAtendimento);
+                                AtualizarFinalizar.setIdcaixa(message.getName());
+                                try {
+                                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+                                    java.util.Date minhaData1;
+                                    minhaData1 = dateFormat.parse(getDateTime());
+                                    java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData1.getTime());
+                                    AtualizarFinalizar.setDataHoraFim(sqlDate);
+                                    AtualizarFinalizar.setTempoAtendimento(sqlDate);
+                                    AtualizarFinalizar.setAtendimentoIniciado(true);
+                                    AtualizarFinalizar.setAtendimentoFinalizado(true);
+                                    AtualizarFinalizar.setEstouroAtendimento("Finalizado");
+                                    ServidorDAO atualiza = new ServidorDAO();
+                                    atualiza.updatefinalizar(AtualizarFinalizar);//  
+                                    finalizou = true;
+                                } catch (ParseException ex) {
+                                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                            } else {
+
+                            }
+
                         }
-                        atendimentoIniciado = true;
-                        ServidorBean Atualizar = new ServidorBean();
-                        Atualizar.setCodigo(idAtendimento);
-                        Atualizar.setIdcaixa(message.getName());
-                        try {
-                            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-                            java.util.Date minhaData;
-                            minhaData = dateFormat.parse(getDateTime());
-                            java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData.getTime());
-                            Atualizar.setTempoEspera(sqlDate);
-                            Atualizar.setDataHoraIni(sqlDate);
-                            Atualizar.setAtendimentoStatus(atendimentoIniciado);
-                            ServidorDAO atualiza = new ServidorDAO();
-                            atualiza.update(Atualizar);
-                            message.setStatus(atendimentoIniciado);
-                            message.setAtual(filacomum.primeiro());
-                            message.setUltima(ultima);
-                            message.setPenultima(penultima);
-                            message.setAntepenultima(antepenultima);
-                            filacomum.remover();
-                            atualizarPainel(message);
-                            tes = antepenultima;
-                            antepenultima = penultima;
-                            penultima = ultima;
-                            ultima = message.getAtual();
-                        } catch (ParseException ex) {
-                            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                        if (!finalizou) {
+                            //se nao tiver ficha aberta Pesquisa ID da ficha e adiciona um caixa a ela iniciando atendimento = true
+                            try {
+                                System.out.println("CAIXA: " + message.getName());
+                                System.out.println("chamando: " + filacomum.primeiro());
+                                ServidorBean Pesquisar = new ServidorBean();
+                                ServidorDAO c = new ServidorDAO();
+                                Pesquisar.setTipo(filacomum.primeiro().substring(0, 1));
+                                Pesquisar.setNumeroFicha(Integer.parseInt(filacomum.primeiro().substring(1, 4)));
+                                ResultSet rs = c.retriveficha(Pesquisar);
+                                while (rs.next()) {
+                                    idAtendimento = rs.getInt("cod");
+                                }
+                                ServidorBean Atualizar = new ServidorBean();
+                                Atualizar.setCodigo(idAtendimento);
+                                Atualizar.setIdcaixa(message.getName());
+                                try {
+                                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+                                    java.util.Date minhaData;
+                                    minhaData = dateFormat.parse(getDateTime());
+                                    java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData.getTime());
+                                    Atualizar.setTempoEspera(sqlDate);
+                                    Atualizar.setDataHoraIni(sqlDate);
+                                    Atualizar.setAtendimentoIniciado(true);
+                                    Atualizar.setAtendimentoFinalizado(false);
+                                    ServidorDAO atualiza = new ServidorDAO();
+                                    atualiza.update(Atualizar);
+                                    message.setStatus(true);
+                                    message.setAtual(filacomum.primeiro());
+                                    message.setUltima(ultima);
+                                    message.setPenultima(penultima);
+                                    message.setAntepenultima(antepenultima);
+                                    filacomum.remover();
+                                    atualizarPainel(message);
+                                    tes = antepenultima;
+                                    antepenultima = penultima;
+                                    penultima = ultima;
+                                    ultima = message.getAtual();
+                                } catch (ParseException ex) {
+                                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            } catch (SQLException ex) {
+                                Logger.getLogger(TesteBanco.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
                     } catch (SQLException ex) {
-                        Logger.getLogger(TesteBanco.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else {
-                    atendimentoIniciado = false;
-                    message.setStatus(atendimentoIniciado);
+
+                    try {
+                        //se vazia filaa Pesquisa se tem ficha em aberto para aquele caixa
+                        ServidorBean PesquisarInicio = new ServidorBean();
+                        ServidorDAO ini = new ServidorDAO();
+                        PesquisarInicio.setIdcaixa(message.getName());
+                        PesquisarInicio.setAtendimentoIniciado(true);
+                        PesquisarInicio.setAtendimentoFinalizado(false);
+                        ResultSet rsi;
+
+                        rsi = ini.retrivefichaAberta(PesquisarInicio);
+
+                        while (rsi.next()) {
+                            idAtendimento = rsi.getInt("cod");
+                            tipo = rsi.getString("tipo");
+                            numero = rsi.getInt("numero");
+                            numero = Integer.parseInt(String.format("%03d", numero));
+                            int resposta = JOptionPane.showConfirmDialog(null, "VOCÊ DEVE FINALIZAR O ATENDIMENTO ANTERIOR! \n" + "DESEJA FINALIZAR O ATENDIMENTO  " + tipo + numero + " ?");
+                            if (resposta == JOptionPane.YES_OPTION) {
+                                ServidorBean AtualizarFinalizar = new ServidorBean();
+                                AtualizarFinalizar.setCodigo(idAtendimento);
+                                AtualizarFinalizar.setIdcaixa(message.getName());
+                                try {
+                                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+                                    java.util.Date minhaData1;
+                                    minhaData1 = dateFormat.parse(getDateTime());
+                                    java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData1.getTime());
+                                    AtualizarFinalizar.setDataHoraFim(sqlDate);
+                                    AtualizarFinalizar.setTempoAtendimento(sqlDate);
+                                    AtualizarFinalizar.setAtendimentoIniciado(true);
+                                    AtualizarFinalizar.setAtendimentoFinalizado(true);
+                                    AtualizarFinalizar.setEstouroAtendimento("Finalizado");
+                                    ServidorDAO atualiza = new ServidorDAO();
+                                    atualiza.updatefinalizar(AtualizarFinalizar);// 
+
+                                } catch (ParseException ex) {
+                                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                            } else {
+
+                            }
+                        }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    message.setStatus(false);
                     message.setAtual(ultima);
                     message.setUltima(penultima);
                     message.setPenultima(antepenultima);
@@ -236,7 +326,6 @@ public class Server {
                             numero = rs.getInt("numero");
                             System.out.println(idAtendimento + " " + tipo + " " + numero);
                         }
-                        atendimentoIniciado = true;
                         ServidorBean Atualizar = new ServidorBean();
                         Atualizar.setCodigo(idAtendimento);
                         Atualizar.setIdcaixa(message.getName());
@@ -247,10 +336,11 @@ public class Server {
                             java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData.getTime());
                             Atualizar.setTempoEspera(sqlDate);
                             Atualizar.setDataHoraIni(sqlDate);
-                            Atualizar.setAtendimentoStatus(atendimentoIniciado);
+                            Atualizar.setAtendimentoIniciado(true);
+                            Atualizar.setAtendimentoFinalizado(false);
                             ServidorDAO atualiza = new ServidorDAO();
                             atualiza.update(Atualizar);
-                            message.setStatus(atendimentoIniciado);
+                            message.setStatus(true);
                             message.setAtual(filaprioritaria.primeiro());
                             message.setUltima(ultima);
                             message.setPenultima(penultima);
@@ -268,8 +358,50 @@ public class Server {
                         Logger.getLogger(TesteBanco.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else {
-                    atendimentoIniciado = false;
-                    message.setStatus(atendimentoIniciado);
+                    try {
+                        ServidorBean PesquisarInicio = new ServidorBean();
+                        ServidorDAO ini = new ServidorDAO();
+                        PesquisarInicio.setIdcaixa(message.getName());
+                        PesquisarInicio.setAtendimentoIniciado(true);
+                        PesquisarInicio.setAtendimentoFinalizado(false);
+                        ResultSet rsi;
+
+                        rsi = ini.retrivefichaAberta(PesquisarInicio);
+
+                        while (rsi.next()) {
+                            idAtendimento = rsi.getInt("cod");
+                            tipo = rsi.getString("tipo");
+                            numero = rsi.getInt("numero");
+                            numero = Integer.parseInt(String.format("%03d", numero));
+                            int resposta = JOptionPane.showConfirmDialog(null, "VOCÊ DEVE FINALIZAR O ATENDIMENTO ANTERIOR! \n" + "DESEJA FINALIZAR O ATENDIMENTO  " + tipo + numero + " ?");
+                            if (resposta == JOptionPane.YES_OPTION) {
+                                ServidorBean AtualizarFinalizar = new ServidorBean();
+                                AtualizarFinalizar.setCodigo(idAtendimento);
+                                AtualizarFinalizar.setIdcaixa(message.getName());
+                                try {
+                                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+                                    java.util.Date minhaData1;
+                                    minhaData1 = dateFormat.parse(getDateTime());
+                                    java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData1.getTime());
+                                    AtualizarFinalizar.setDataHoraFim(sqlDate);
+                                    AtualizarFinalizar.setTempoAtendimento(sqlDate);
+                                    AtualizarFinalizar.setAtendimentoIniciado(true);
+                                    AtualizarFinalizar.setAtendimentoFinalizado(true);
+                                    AtualizarFinalizar.setEstouroAtendimento("Finalizado");
+                                    ServidorDAO atualiza = new ServidorDAO();
+                                    atualiza.updatefinalizar(AtualizarFinalizar);//                               
+                                } catch (ParseException ex) {
+                                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                            } else {
+
+                            }
+                        }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    message.setStatus(false);
                     message.setAtual(ultima);
                     message.setUltima(penultima);
                     message.setPenultima(antepenultima);
@@ -294,7 +426,6 @@ public class Server {
                             numero = rs.getInt("numero");
                             System.out.println(idAtendimento + " " + tipo + " " + numero);
                         }
-                        atendimentoIniciado = true;
                         ServidorBean Atualizar = new ServidorBean();
                         Atualizar.setCodigo(idAtendimento);
                         Atualizar.setIdcaixa(message.getName());
@@ -305,10 +436,11 @@ public class Server {
                             java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData.getTime());
                             Atualizar.setTempoEspera(sqlDate);
                             Atualizar.setDataHoraIni(sqlDate);
-                            Atualizar.setAtendimentoStatus(atendimentoIniciado);
+                            Atualizar.setAtendimentoIniciado(true);
+                            Atualizar.setAtendimentoFinalizado(false);
                             ServidorDAO atualiza = new ServidorDAO();
                             atualiza.update(Atualizar);
-                            message.setStatus(atendimentoIniciado);
+                            message.setStatus(true);
                             message.setAtual(filapopular.primeiro());
                             message.setUltima(ultima);
                             message.setPenultima(penultima);
@@ -326,8 +458,8 @@ public class Server {
                         Logger.getLogger(TesteBanco.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else {
-                    atendimentoIniciado = false;
-                    message.setStatus(atendimentoIniciado);
+
+                    message.setStatus(false);
                     message.setAtual(ultima);
                     message.setUltima(penultima);
                     message.setPenultima(antepenultima);
@@ -358,21 +490,27 @@ public class Server {
                         Logger.getLogger(Server.class
                                 .getName()).log(Level.SEVERE, null, ex);
                     }
-                    try {
-                        int teste;
-                        ServidorBean Envios = new ServidorBean();
-                        boolean Status = false;
-                        Envios.setTipo(ficha.substring(0, 1));
-                        teste = (Integer.parseInt(ficha.substring(1, 4)));
-                        Envios.setNumeroFicha(Integer.parseInt(String.format("%03d", teste)));
-                        Envios.setAtendimentoStatus(Status);
-                        ServidorDAO enviar = new ServidorDAO();
-                        enviar.create(Envios);
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            try {
+                                int teste;
+                                ServidorBean Envios = new ServidorBean();
+                                boolean Status = false;
+                                Envios.setTipo(ficha.substring(0, 1));
+                                teste = (Integer.parseInt(ficha.substring(1, 4)));
+                                Envios.setNumeroFicha(Integer.parseInt(String.format("%03d", teste)));
+                                Envios.setAtendimentoIniciado(Status);
+                                Envios.setAtendimentoFinalizado(Status);
+                                ServidorDAO enviar = new ServidorDAO();
+                                enviar.create(Envios);
 
-                    } catch (SQLException ex) {
-                        Logger.getLogger(TesteBanco.class
-                                .getName()).log(Level.SEVERE, null, ex);
-                    }
+                            } catch (SQLException ex) {
+                                Logger.getLogger(TesteBanco.class
+                                        .getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }.start();
                     fis = new FileInputStream("C:/SENHAS.pdf");
                     Imprimir printPDFFile = new Imprimir(fis, "SENHAS.pdf");
                     printPDFFile.print();

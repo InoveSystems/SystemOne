@@ -139,24 +139,24 @@ public class TesteBanco extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-//            System.out.println(sdf.format(new java.util.Date()));
-            ServidorBean Envios = new ServidorBean();
-            String Tipo = jTextTipo.getText();
-            int Numero = Integer.parseInt(jTextNumero.getText());
-//            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-//            java.util.Date minhaData = dateFormat.parse(jTextDataHora.getText());        
-//            java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData.getTime());
-            boolean Status = false;
-            Envios.setTipo(Tipo);
-            Envios.setNumeroFicha(Numero);
-            Envios.setAtendimentoStatus(Status);
-            ServidorDAO enviar = new ServidorDAO();
-            enviar.create(Envios);
-        } catch (SQLException ex) {
-            Logger.getLogger(TesteBanco.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+////            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+////            System.out.println(sdf.format(new java.util.Date()));
+//            ServidorBean Envios = new ServidorBean();
+//            String Tipo = jTextTipo.getText();
+//            int Numero = Integer.parseInt(jTextNumero.getText());
+////            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+////            java.util.Date minhaData = dateFormat.parse(jTextDataHora.getText());        
+////            java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData.getTime());
+//            boolean Status = false;
+//            Envios.setTipo(Tipo);
+//            Envios.setNumeroFicha(Numero);
+//            Envios.setAtendimentoStatus(Status);
+//            ServidorDAO enviar = new ServidorDAO();
+//            enviar.create(Envios);
+//        } catch (SQLException ex) {
+//            Logger.getLogger(TesteBanco.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNumeroActionPerformed
@@ -168,20 +168,49 @@ public class TesteBanco extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextDataHoraActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+
+        ServidorBean PesquisarInicio = new ServidorBean();
+        ServidorDAO ini = new ServidorDAO();
+        PesquisarInicio.setIdcaixa("20");
+        PesquisarInicio.setAtendimentoIniciado(true);
+        PesquisarInicio.setAtendimentoFinalizado(false);
+        ResultSet rsi;
         try {
-            ServidorBean Pesquisar = new ServidorBean();
-            ServidorDAO c = new ServidorDAO();
-            Pesquisar.setTipo("C");
-            Pesquisar.setNumeroFicha(2);
-            ResultSet rs = c.retriveficha(Pesquisar);           
-            while (rs.next()) {
-                String tipo = rs.getString("tipo");
-                int numero = rs.getInt("numero");
-                System.out.println(tipo + numero);
-            }          
+            rsi = ini.retrivefichaAberta(PesquisarInicio);
+            
+
+           
+            
+            
+            while (rsi.next()) {
+                int idAtendimento = rsi.getInt("cod");
+                String tipo = rsi.getString("tipo");
+                int numero = rsi.getInt("numero");
+                System.out.println("FOI");
+            }
+           if (!rsi.next()) {
+System.out.println("FOooooooooooI");
+//                            numero = Integer.parseInt(String.format("%03d", numero));
+//                            resposta = JOptionPane.showConfirmDialog(null, "VOCÊ DEVE FINALIZAR O ATENDIMENTO ANTERIOR! \n" + "DESEJA FINALIZAR O ATENDIMENTO  " + tipo + numero + " ?");
+           }
         } catch (SQLException ex) {
             Logger.getLogger(TesteBanco.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+//        try {
+//            ServidorBean Pesquisar = new ServidorBean();
+//            ServidorDAO c = new ServidorDAO();
+//            Pesquisar.setTipo("C");
+//            Pesquisar.setNumeroFicha(2);
+//            ResultSet rs = c.retriveficha(Pesquisar);           
+//            while (rs.next()) {
+//                String tipo = rs.getString("tipo");
+//                int numero = rs.getInt("numero");
+//                System.out.println(tipo + numero);
+//            }          
+//        } catch (SQLException ex) {
+//            Logger.getLogger(TesteBanco.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
