@@ -163,7 +163,7 @@ public class Server {
         boolean finalizou = false;
         boolean finalizou1 = false;
         boolean finalizou2 = false;
-        
+
         if (message.getText().equals("convencional")) {
             if (filaprioritaria.estaVazia()) {
                 if (filacomum.estaVazia() == false) {
@@ -183,6 +183,7 @@ public class Server {
                             numero = rsi.getInt("numero");
                             numero = Integer.parseInt(String.format("%03d", numero));
                             int resposta = JOptionPane.showConfirmDialog(null, "VOCÊ DEVE FINALIZAR O ATENDIMENTO ANTERIOR! \n" + "DESEJA FINALIZAR O ATENDIMENTO  " + tipo + numero + " ?");
+
                             if (resposta == JOptionPane.YES_OPTION) {
                                 ServidorBean AtualizarFinalizar = new ServidorBean();
                                 AtualizarFinalizar.setCodigo(idAtendimento);
@@ -204,8 +205,12 @@ public class Server {
                                     Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                                 }
 
-                            } else {
-
+                            }
+                            if (resposta == JOptionPane.NO_OPTION) {
+                                finalizou = true;
+                            }
+                            if (resposta == JOptionPane.CANCEL_OPTION) {
+                                finalizou = true;
                             }
 
                         }
@@ -292,15 +297,20 @@ public class Server {
                                     AtualizarFinalizar.setEstouroAtendimento("Finalizado");
                                     ServidorDAO atualiza = new ServidorDAO();
                                     atualiza.updatefinalizar(AtualizarFinalizar);// 
-
+                                    finalizou = true;
                                 } catch (ParseException ex) {
                                     Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                                 }
 
-                            } else {
-
+                            }
+                            if (resposta == JOptionPane.NO_OPTION) {
+                                finalizou = true;
+                            }
+                            if (resposta == JOptionPane.CANCEL_OPTION) {
+                                finalizou = true;
                             }
                         }
+
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -351,8 +361,13 @@ public class Server {
                                     Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                                 }
 
-                            } else {
+                            }
 
+                            if (resposta == JOptionPane.NO_OPTION) {
+                                finalizou1 = true;
+                            }
+                            if (resposta == JOptionPane.CANCEL_OPTION) {
+                                finalizou1 = true;
                             }
 
                         }
@@ -439,13 +454,17 @@ public class Server {
                                     AtualizarFinalizar.setEstouroAtendimento("Finalizado");
                                     ServidorDAO atualiza = new ServidorDAO();
                                     atualiza.updatefinalizar(AtualizarFinalizar);// 
-
+                                    finalizou1 = true;
                                 } catch (ParseException ex) {
                                     Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                                 }
 
-                            } else {
-
+                            }
+                            if (resposta == JOptionPane.NO_OPTION) {
+                                finalizou1 = true;
+                            }
+                            if (resposta == JOptionPane.CANCEL_OPTION) {
+                                finalizou1 = true;
                             }
                         }
                     } catch (SQLException ex) {
@@ -456,16 +475,14 @@ public class Server {
                     message.setUltima(penultima);
                     message.setPenultima(antepenultima);
                     message.setAntepenultima(tes);
-                    atualizarPainel(message);                  
-                 
+                    atualizarPainel(message);
 
                 }
             }
         } else {
             if (message.getText().equals("popular")) {
                 if (filapopular.estaVazia() == false) {
-
-                     finalizou2 = false;
+                    finalizou2 = false;
                     try {
                         //Pesquisa se tem ficha em aberto para aquele caixa
                         ServidorBean PesquisarInicio = new ServidorBean();
@@ -502,8 +519,13 @@ public class Server {
                                     Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                                 }
 
-                            } else {
+                            }
+                            if (resposta == JOptionPane.NO_OPTION) {
+                                finalizou2 = true;
+                            }
 
+                            if (resposta == JOptionPane.CANCEL_OPTION) {
+                                finalizou2 = true;
                             }
 
                         }
@@ -590,13 +612,17 @@ public class Server {
                                     AtualizarFinalizar.setEstouroAtendimento("Finalizado");
                                     ServidorDAO atualiza = new ServidorDAO();
                                     atualiza.updatefinalizar(AtualizarFinalizar);// 
-
+                                    finalizou2 = true;
                                 } catch (ParseException ex) {
                                     Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                                 }
 
-                            } else {
-
+                            }
+                            if (resposta == JOptionPane.NO_OPTION) {
+                                finalizou2 = true;
+                            }
+                            if (resposta == JOptionPane.CANCEL_OPTION) {
+                                finalizou2 = true;
                             }
                         }
                     } catch (SQLException ex) {
