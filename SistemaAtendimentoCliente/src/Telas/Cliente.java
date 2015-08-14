@@ -176,6 +176,7 @@ public class Cliente extends javax.swing.JFrame {
     }
 
     private void receive(Mensagem message) {
+        String text;
         //atualiza vom a nova ficha
         if (message.getStatus().equals("yes")) {
             idlabel.setText("");
@@ -199,22 +200,55 @@ public class Cliente extends javax.swing.JFrame {
         if (message.getStatus().equals("finalizar")) {
 
             if (message.getName().equals(caixa)) {
-                int resposta = JOptionPane.showConfirmDialog(null, "VOCÊ DEVE FINALIZAR O ATENDIMENTOOOOOOOOOOOOOOOOOO ANTERIOR! \n" + "DESEJA FINALIZAR O ATENDIMENTO  " + message.getIdFinalizar() + message.getName() + message.getTipo() + message.getNumero() + " ?");
+                int resposta = JOptionPane.showConfirmDialog(null, "VOCÊ DEVE FINALIZAR O ATENDIMENTO ANTERIOR! \n" + "DESEJA FINALIZAR O ATENDIMENTO  "  + message.getTipo() + String.format("%03d",message.getNumero()) + " ?");
 
                 if (resposta == JOptionPane.YES_OPTION) {
+                    text = "yes";
+                    if (!text.isEmpty()) {
+                        message.setName(message.getName());
+                        message.setText(text);
+                        message.setIdFinalizar(message.getIdFinalizar());
+                        message.setStatus("yes");
+                        message.setAction(Mensagem.Action.FINALIZAR);
+                        service.send(message);
 
+                    }
                 }
 
                 if (resposta == JOptionPane.NO_OPTION) {
-
+                    text = "no";
+                    if (!text.isEmpty()) {
+                        message.setName(message.getName());
+                        message.setText(text);
+                        message.setIdFinalizar(message.getIdFinalizar());
+                        message.setStatus("no");
+                        message.setAction(Mensagem.Action.FINALIZAR);
+                        service.send(message);
+                    }
                 }
 
                 if (resposta == JOptionPane.CANCEL_OPTION) {
-
+                    text = "no";
+                    if (!text.isEmpty()) {
+                        message.setName(message.getName());
+                        message.setText(text);
+                        message.setIdFinalizar(message.getIdFinalizar());
+                        message.setStatus("no");
+                        message.setAction(Mensagem.Action.FINALIZAR);
+                        service.send(message);
+                    }
                 }
 
                 if (resposta == JOptionPane.CLOSED_OPTION) {
-
+                    text = "no";
+                    if (!text.isEmpty()) {
+                        message.setName(message.getName());
+                        message.setText(text);
+                        message.setIdFinalizar(message.getIdFinalizar());
+                        message.setStatus("no");
+                        message.setAction(Mensagem.Action.FINALIZAR);
+                        service.send(message);
+                    }
                 }
             }
         }
