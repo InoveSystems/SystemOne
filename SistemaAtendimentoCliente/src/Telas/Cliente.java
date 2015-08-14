@@ -125,6 +125,7 @@ public class Cliente extends javax.swing.JFrame {
                     } else if (action.equals(action.USERS_ONLINE)) {
                         refreshOnlines(message);
                     }
+
                 }
             } catch (NullPointerException ex) {
             } catch (IOException ex) {
@@ -175,7 +176,8 @@ public class Cliente extends javax.swing.JFrame {
     }
 
     private void receive(Mensagem message) {
-        if (message.isStatus()) {
+        //atualiza vom a nova ficha
+        if (message.getStatus().equals("yes")) {
             idlabel.setText("");
             atuallabel.setText("");
             ultimalabel.setText("");
@@ -186,11 +188,37 @@ public class Cliente extends javax.swing.JFrame {
             ultimalabel.setText(message.getUltima());
             penultimalabel.setText(message.getPenultima());
             antepenultimalabel.setText(message.getAntepenultima());
-        } else {
+        }
+        // avisa que nao tem clientes na fila
+        if (message.getStatus().equals("no")) {
             if (message.getName().equals(caixa)) {
                 JOptionPane.showMessageDialog(null, "Não á clientes a serem atendidos! \n        Verififique outras Filas!", "Inove Systems - Informação", JOptionPane.INFORMATION_MESSAGE);
             }
         }
+//        //avisa que tem clientes a finalizar
+        if (message.getStatus().equals("finalizar")) {
+
+            if (message.getName().equals(caixa)) {
+                int resposta = JOptionPane.showConfirmDialog(null, "VOCÊ DEVE FINALIZAR O ATENDIMENTOOOOOOOOOOOOOOOOOO ANTERIOR! \n" + "DESEJA FINALIZAR O ATENDIMENTO  " + message.getIdFinalizar() + message.getName() + message.getTipo() + message.getNumero() + " ?");
+
+                if (resposta == JOptionPane.YES_OPTION) {
+
+                }
+
+                if (resposta == JOptionPane.NO_OPTION) {
+
+                }
+
+                if (resposta == JOptionPane.CANCEL_OPTION) {
+
+                }
+
+                if (resposta == JOptionPane.CLOSED_OPTION) {
+
+                }
+            }
+        }
+
     }
 
     private void refreshOnlines(Mensagem message) {
@@ -663,7 +691,6 @@ public class Cliente extends javax.swing.JFrame {
             this.message.setAction(Mensagem.Action.CALL);
             this.service.send(this.message);
         }
-
     }//GEN-LAST:event_jbConvencionalActionPerformed
 
     private void jbPopularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPopularActionPerformed
