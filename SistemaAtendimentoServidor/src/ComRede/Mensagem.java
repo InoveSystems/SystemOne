@@ -16,11 +16,14 @@ public class Mensagem implements Serializable {
     private String ultima;
     private String penultima;
     private String antepenultima;
-    private boolean status;
+    private String status;
+    private String tipo;
+    private int numero;
+    private int idFinalizar;
 
     public enum Action {
 
-        CONNECT, DISCONNECT, SEND_ONE, SEND_ALL, USERS_ONLINE, PRINT, CALL
+        CONNECT, DISCONNECT, SEND_ONE, SEND_ALL, USERS_ONLINE, PRINT, CALL, FINALIZAR
     }
 
     public Set<String> getSetOnlines() {
@@ -35,6 +38,14 @@ public class Mensagem implements Serializable {
         return action;
     }
 
+    public int getIdFinalizar() {
+        return idFinalizar;
+    }
+
+    public void setIdFinalizar(int idFinalizar) {
+        this.idFinalizar = idFinalizar;
+    }
+
     public void setAction(Action action) {
         this.action = action;
     }
@@ -42,11 +53,27 @@ public class Mensagem implements Serializable {
     public Mensagem() {
     }
 
-    public boolean isStatus() {
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
