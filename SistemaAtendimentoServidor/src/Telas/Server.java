@@ -130,7 +130,7 @@ public class Server {
                         imprimir(message);
 
                     } else if (action.equals(action.FINALIZAR)) {
-                        // finalizacaoComum(message);
+                        finalizacao(message);
                     }
 
                 }
@@ -187,7 +187,8 @@ public class Server {
                             numero = rsi.getInt("numero");
                             numero = Integer.parseInt(String.format("%03d", numero));
                             message.setIdFinalizar(idAtendimento);
-                            finalizarComum(message);
+                            finalizar(message);
+                            finalizou = true;
                         }
                         if (!finalizou) {
                             //se nao tiver ficha aberta Pesquisa ID da ficha e adiciona um caixa a ela iniciando atendimento = true
@@ -256,7 +257,8 @@ public class Server {
                             numero = rsi.getInt("numero");
                             numero = Integer.parseInt(String.format("%03d", numero));
                             message.setIdFinalizar(idAtendimento);
-                            finalizarComum(message);
+                            finalizar(message);
+                            finalizou = true;
                         }
 
                     } catch (SQLException ex) {
@@ -288,7 +290,8 @@ public class Server {
                             numero = rsi.getInt("numero");
                             numero = Integer.parseInt(String.format("%03d", numero));
                             message.setIdFinalizar(idAtendimento);
-                            finalizarPrioritaria(message);
+                            finalizar(message);
+                            finalizou1 = true;
 
                         }
                         if (!finalizou1) {
@@ -358,7 +361,8 @@ public class Server {
                             numero = rsi.getInt("numero");
                             numero = Integer.parseInt(String.format("%03d", numero));
                             message.setIdFinalizar(idAtendimento);
-                            finalizarPrioritaria(message);
+                            finalizar(message);
+                            finalizou1 = true;
                         }
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
@@ -391,7 +395,8 @@ public class Server {
                             numero = rsi.getInt("numero");
                             numero = Integer.parseInt(String.format("%03d", numero));
                             message.setIdFinalizar(idAtendimento);
-                            finalizarPopular(message);
+                            finalizar(message);
+                            finalizou2 = true;
                         }
                         if (!finalizou2) {
                             //se nao tiver ficha aberta Pesquisa ID da ficha e adiciona um caixa a ela iniciando atendimento = true
@@ -460,7 +465,8 @@ public class Server {
                             numero = rsi.getInt("numero");
                             numero = Integer.parseInt(String.format("%03d", numero));
                             message.setIdFinalizar(idAtendimento);
-                            finalizarPopular(message);
+                            finalizar(message);
+                            finalizou2 = true;
                         }
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
@@ -476,118 +482,185 @@ public class Server {
         }
     }
 
-    void finalizarComum(Mensagem message) {
-        int resposta = JOptionPane.showConfirmDialog(null, "VOCÊ DEVE FINALIZAR O ATENDIMENTO ANTERIOR! \n" + "DESEJA FINALIZAR O ATENDIMENTO  " + tipo + numero + " ?");
-        if (resposta == JOptionPane.YES_OPTION) {
-            ServidorBean AtualizarFinalizar = new ServidorBean();
-            AtualizarFinalizar.setCodigo(message.getIdFinalizar());
-            AtualizarFinalizar.setIdcaixa(message.getName());
-            try {
-                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-                java.util.Date minhaData1;
-                minhaData1 = dateFormat.parse(getDateTime());
-                java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData1.getTime());
-                AtualizarFinalizar.setDataHoraFim(sqlDate);
-                AtualizarFinalizar.setTempoAtendimento(sqlDate);
-                AtualizarFinalizar.setAtendimentoIniciado(true);
-                AtualizarFinalizar.setAtendimentoFinalizado(true);
-                AtualizarFinalizar.setEstouroAtendimento("Finalizado");
-                ServidorDAO atualiza = new ServidorDAO();
-                atualiza.updatefinalizar(AtualizarFinalizar);//  
+    void finalizar(Mensagem message) {
+        message.setStatus("finalizar");
+        message.setAtual(ultima);
+        message.setUltima(penultima);
+        message.setPenultima(antepenultima);
+        message.setAntepenultima(tes);
+        message.setTipo(tipo);
+        message.setNumero(numero);
+        atualizarPainel(message);
+        
+
+    }
+
+    void finalizacao(Mensagem message) {
+        if (message.getTipo().equals("C")) {
+            if (message.getStatus().equals("yes")) {
+                ServidorBean AtualizarFinalizar = new ServidorBean();
+                AtualizarFinalizar.setCodigo(message.getIdFinalizar());
+                AtualizarFinalizar.setIdcaixa(message.getName());
+                try {
+                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+                    java.util.Date minhaData1;
+                    minhaData1 = dateFormat.parse(getDateTime());
+                    java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData1.getTime());
+                    AtualizarFinalizar.setDataHoraFim(sqlDate);
+                    AtualizarFinalizar.setTempoAtendimento(sqlDate);
+                    AtualizarFinalizar.setAtendimentoIniciado(true);
+                    AtualizarFinalizar.setAtendimentoFinalizado(true);
+                    AtualizarFinalizar.setEstouroAtendimento("Finalizado");
+                    ServidorDAO atualiza = new ServidorDAO();
+                    atualiza.updatefinalizar(AtualizarFinalizar);//  
+                    finalizou = true;
+                } catch (SQLException ex) {
+                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (message.getStatus().equals("no")) {
                 finalizou = true;
-            } catch (SQLException ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ParseException ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        if (resposta == JOptionPane.NO_OPTION) {
-            finalizou = true;
-        }
-        if (resposta == JOptionPane.CANCEL_OPTION) {
-            finalizou = true;
-        }
-        if (resposta == JOptionPane.CLOSED_OPTION) {
-            finalizou = true;
-        }
 
-    }
+        if (message.getTipo().equals("P")) {
+            if (message.getStatus().equals("yes")) {
+                ServidorBean AtualizarFinalizar = new ServidorBean();
+                AtualizarFinalizar.setCodigo(message.getIdFinalizar());
+                AtualizarFinalizar.setIdcaixa(message.getName());
+                try {
+                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+                    java.util.Date minhaData1;
+                    minhaData1 = dateFormat.parse(getDateTime());
+                    java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData1.getTime());
+                    AtualizarFinalizar.setDataHoraFim(sqlDate);
+                    AtualizarFinalizar.setTempoAtendimento(sqlDate);
+                    AtualizarFinalizar.setAtendimentoIniciado(true);
+                    AtualizarFinalizar.setAtendimentoFinalizado(true);
+                    AtualizarFinalizar.setEstouroAtendimento("Finalizado");
+                    ServidorDAO atualiza = new ServidorDAO();
+                    atualiza.updatefinalizar(AtualizarFinalizar);// 
+                    finalizou1 = true;
+                } catch (SQLException ex) {
+                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
 
-    void finalizarPrioritaria(Mensagem message) {
-        int resposta = JOptionPane.showConfirmDialog(null, "VOCÊ DEVE FINALIZAR O ATENDIMENTO ANTERIOR! \n" + "DESEJA FINALIZAR O ATENDIMENTO  " + tipo + numero + " ?");
-        if (resposta == JOptionPane.YES_OPTION) {
-            ServidorBean AtualizarFinalizar = new ServidorBean();
-            AtualizarFinalizar.setCodigo(message.getIdFinalizar());
-            AtualizarFinalizar.setIdcaixa(message.getName());
-            try {
-                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-                java.util.Date minhaData1;
-                minhaData1 = dateFormat.parse(getDateTime());
-                java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData1.getTime());
-                AtualizarFinalizar.setDataHoraFim(sqlDate);
-                AtualizarFinalizar.setTempoAtendimento(sqlDate);
-                AtualizarFinalizar.setAtendimentoIniciado(true);
-                AtualizarFinalizar.setAtendimentoFinalizado(true);
-                AtualizarFinalizar.setEstouroAtendimento("Finalizado");
-                ServidorDAO atualiza = new ServidorDAO();
-
-                atualiza.updatefinalizar(AtualizarFinalizar);// 
+                } catch (ParseException ex) {
+                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (message.getStatus().equals("no")) {
                 finalizou1 = true;
-            } catch (SQLException ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-
-            } catch (ParseException ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }
-
         }
-        if (resposta == JOptionPane.NO_OPTION) {
-            finalizou1 = true;
-        }
-
-        if (resposta == JOptionPane.CANCEL_OPTION) {
-            finalizou1 = true;
-        }
-        if (resposta == JOptionPane.CLOSED_OPTION) {
-            finalizou1 = true;
-        }
-    }
-
-    void finalizarPopular(Mensagem message) {
-        int resposta = JOptionPane.showConfirmDialog(null, "VOCÊ DEVE FINALIZAR O ATENDIMENTO ANTERIOR! \n" + "DESEJA FINALIZAR O ATENDIMENTO  " + tipo + numero + " ?");
-        if (resposta == JOptionPane.YES_OPTION) {
-            ServidorBean AtualizarFinalizar = new ServidorBean();
-            AtualizarFinalizar.setCodigo(message.getIdFinalizar());
-            AtualizarFinalizar.setIdcaixa(message.getName());
-            try {
-                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-                java.util.Date minhaData1;
-                minhaData1 = dateFormat.parse(getDateTime());
-                java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData1.getTime());
-                AtualizarFinalizar.setDataHoraFim(sqlDate);
-                AtualizarFinalizar.setTempoAtendimento(sqlDate);
-                AtualizarFinalizar.setAtendimentoIniciado(true);
-                AtualizarFinalizar.setAtendimentoFinalizado(true);
-                AtualizarFinalizar.setEstouroAtendimento("Finalizado");
-                ServidorDAO atualiza = new ServidorDAO();
-                atualiza.updatefinalizar(AtualizarFinalizar);//  
+        if (message.getTipo().equals("F")) {
+            if (message.getStatus().equals("yes")) {
+                ServidorBean AtualizarFinalizar = new ServidorBean();
+                AtualizarFinalizar.setCodigo(message.getIdFinalizar());
+                AtualizarFinalizar.setIdcaixa(message.getName());
+                try {
+                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+                    java.util.Date minhaData1;
+                    minhaData1 = dateFormat.parse(getDateTime());
+                    java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData1.getTime());
+                    AtualizarFinalizar.setDataHoraFim(sqlDate);
+                    AtualizarFinalizar.setTempoAtendimento(sqlDate);
+                    AtualizarFinalizar.setAtendimentoIniciado(true);
+                    AtualizarFinalizar.setAtendimentoFinalizado(true);
+                    AtualizarFinalizar.setEstouroAtendimento("Finalizado");
+                    ServidorDAO atualiza = new ServidorDAO();
+                    atualiza.updatefinalizar(AtualizarFinalizar);//  
+                    finalizou2 = true;
+                } catch (SQLException ex) {
+                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (message.getStatus().equals("no")) {
                 finalizou2 = true;
-            } catch (SQLException ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ParseException ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }
+
         }
-        if (resposta == JOptionPane.NO_OPTION) {
-            finalizou2 = true;
-        }
-        if (resposta == JOptionPane.CANCEL_OPTION) {
-            finalizou2 = true;
-        }
-        if (resposta == JOptionPane.CLOSED_OPTION) {
-            finalizou2 = true;
-        }
+
     }
+
+//    void finalizarPrioritaria(Mensagem message) {
+//        int resposta = JOptionPane.showConfirmDialog(null, "VOCÊ DEVE FINALIZAR O ATENDIMENTO ANTERIOR! \n" + "DESEJA FINALIZAR O ATENDIMENTO  " + tipo + numero + " ?");
+//        if (resposta == JOptionPane.YES_OPTION) {
+//            ServidorBean AtualizarFinalizar = new ServidorBean();
+//            AtualizarFinalizar.setCodigo(message.getIdFinalizar());
+//            AtualizarFinalizar.setIdcaixa(message.getName());
+//            try {
+//                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+//                java.util.Date minhaData1;
+//                minhaData1 = dateFormat.parse(getDateTime());
+//                java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData1.getTime());
+//                AtualizarFinalizar.setDataHoraFim(sqlDate);
+//                AtualizarFinalizar.setTempoAtendimento(sqlDate);
+//                AtualizarFinalizar.setAtendimentoIniciado(true);
+//                AtualizarFinalizar.setAtendimentoFinalizado(true);
+//                AtualizarFinalizar.setEstouroAtendimento("Finalizado");
+//                ServidorDAO atualiza = new ServidorDAO();
+//
+//                atualiza.updatefinalizar(AtualizarFinalizar);// 
+//                finalizou1 = true;
+//            } catch (SQLException ex) {
+//                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+//
+//            } catch (ParseException ex) {
+//                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//
+//        }
+//        if (resposta == JOptionPane.NO_OPTION) {
+//            finalizou1 = true;
+//        }
+//
+//        if (resposta == JOptionPane.CANCEL_OPTION) {
+//            finalizou1 = true;
+//        }
+//        if (resposta == JOptionPane.CLOSED_OPTION) {
+//            finalizou1 = true;
+//        }
+//    }
+
+//    void finalizarPopular(Mensagem message) {
+//        int resposta = JOptionPane.showConfirmDialog(null, "VOCÊ DEVE FINALIZAR O ATENDIMENTO ANTERIOR! \n" + "DESEJA FINALIZAR O ATENDIMENTO  " + tipo + numero + " ?");
+//        if (resposta == JOptionPane.YES_OPTION) {
+//            ServidorBean AtualizarFinalizar = new ServidorBean();
+//            AtualizarFinalizar.setCodigo(message.getIdFinalizar());
+//            AtualizarFinalizar.setIdcaixa(message.getName());
+//            try {
+//                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+//                java.util.Date minhaData1;
+//                minhaData1 = dateFormat.parse(getDateTime());
+//                java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData1.getTime());
+//                AtualizarFinalizar.setDataHoraFim(sqlDate);
+//                AtualizarFinalizar.setTempoAtendimento(sqlDate);
+//                AtualizarFinalizar.setAtendimentoIniciado(true);
+//                AtualizarFinalizar.setAtendimentoFinalizado(true);
+//                AtualizarFinalizar.setEstouroAtendimento("Finalizado");
+//                ServidorDAO atualiza = new ServidorDAO();
+//                atualiza.updatefinalizar(AtualizarFinalizar);//  
+//                finalizou2 = true;
+//            } catch (SQLException ex) {
+//                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+//            } catch (ParseException ex) {
+//                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+//        if (resposta == JOptionPane.NO_OPTION) {
+//            finalizou2 = true;
+//        }
+//        if (resposta == JOptionPane.CANCEL_OPTION) {
+//            finalizou2 = true;
+//        }
+//        if (resposta == JOptionPane.CLOSED_OPTION) {
+//            finalizou2 = true;
+//        }
+//    }
 
     private void imprime(String ficha) {
 
