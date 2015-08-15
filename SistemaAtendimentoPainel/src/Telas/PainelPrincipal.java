@@ -167,7 +167,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
     }
 
     private void receive(Mensagem message) {
-        if (message.isStatus()) {
+        if (message.getStatus().equals("yes")) {
             idlabel.setText("");
             atuallabel.setText("");
             ultimalabel.setText("");
