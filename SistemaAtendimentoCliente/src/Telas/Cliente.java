@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.net.SocketException;
+import java.net.URISyntaxException;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -200,7 +201,7 @@ public class Cliente extends javax.swing.JFrame {
         if (message.getStatus().equals("finalizar")) {
 
             if (message.getName().equals(caixa)) {
-                int resposta = JOptionPane.showConfirmDialog(null, "VOCÊ DEVE FINALIZAR O ATENDIMENTO ANTERIOR! \n" + "DESEJA FINALIZAR O ATENDIMENTO  "  + message.getTipo() + String.format("%03d",message.getNumero()) + " ?");
+                int resposta = JOptionPane.showConfirmDialog(null, "VOCÊ DEVE FINALIZAR O ATENDIMENTO ANTERIOR! \n" + "DESEJA FINALIZAR O ATENDIMENTO  " + message.getTipo() + String.format("%03d", message.getNumero()) + " ?");
 
                 if (resposta == JOptionPane.YES_OPTION) {
                     text = "yes";
@@ -316,7 +317,6 @@ public class Cliente extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("3D - Soluções Tecnológicas - Cliente");
@@ -618,22 +618,22 @@ public class Cliente extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/blog32.png"))); // NOI18N
-        jLabel14.setToolTipText("3D Soluções Tecnológicas - Suporte");
+        jLabel14.setToolTipText("Inove Systems - Suporte");
 
         jLabel15.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/you32.png"))); // NOI18N
-        jLabel15.setToolTipText("3D Soluções Tecnológicas - Video Aulas");
+        jLabel15.setToolTipText("Inove Systems - Video Aulas");
 
         jLabel16.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/3D.png"))); // NOI18N
-        jLabel16.setToolTipText("3D Soluções Tecnológicas - Home Page");
-
-        jLabel17.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/face32.png"))); // NOI18N
-        jLabel17.setToolTipText("3D Soluções Tecnológicas - Facebook");
+        jLabel16.setToolTipText("Inove Systems - Home Page");
+        jLabel16.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel16MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -641,14 +641,12 @@ public class Cliente extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(4, 4, 4)
-                .addComponent(statuslabel, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(statuslabel, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator11, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel16)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel17)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel15)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel14)
@@ -663,11 +661,9 @@ public class Cliente extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addGap(0, 3, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel14)
-                        .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.TRAILING))
-                    .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -847,6 +843,17 @@ public class Cliente extends javax.swing.JFrame {
         }.start();
     }//GEN-LAST:event_jLabel1MouseClicked
 
+    private void jLabel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MouseClicked
+        try {
+            java.awt.Desktop.getDesktop().browse(new java.net.URI("http://www.inovesystems.com.br"));
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jLabel16MouseClicked
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -893,7 +900,6 @@ public class Cliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
