@@ -648,7 +648,7 @@ public class Server {
                     Logger.getLogger(Server.class
                             .getName()).log(Level.SEVERE, null, ex);
                 } catch (PrinterException ex) {
-                    JOptionPane.showMessageDialog(null, "Problemas com a impressão! \n        Verififique a impressora!", "Inove Systems - Informação", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Problemas com a impressão! \n * Verifique se há impressora instalada! \n * Verifique os cabos da impressorea! \n Entre em contato com o suporte! ", "Inove Systems - Informação", JOptionPane.INFORMATION_MESSAGE);
 
                 }
             }
