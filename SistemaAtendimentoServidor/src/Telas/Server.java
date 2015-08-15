@@ -179,6 +179,7 @@ public class Server {
                         PesquisarInicio.setIdcaixa(message.getName());
                         PesquisarInicio.setAtendimentoIniciado(true);
                         PesquisarInicio.setAtendimentoFinalizado(false);
+
                         ResultSet rsi;
                         rsi = ini.retrivefichaAberta(PesquisarInicio);
                         while (rsi.next()) {
@@ -216,7 +217,16 @@ public class Server {
                                     Atualizar.setAtendimentoIniciado(true);
                                     Atualizar.setAtendimentoFinalizado(false);
                                     ServidorDAO atualiza = new ServidorDAO();
-                                    atualiza.update(Atualizar);
+                                    new Thread() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                atualiza.update(Atualizar);
+                                            } catch (SQLException ex) {
+                                                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                                            }
+                                        }
+                                    }.start();
                                     message.setStatus("yes");
                                     message.setAtual(filacomum.primeiro());
                                     message.setUltima(ultima);
@@ -491,7 +501,6 @@ public class Server {
         message.setTipo(tipo);
         message.setNumero(numero);
         atualizarPainel(message);
-        
 
     }
 
@@ -586,82 +595,6 @@ public class Server {
 
     }
 
-//    void finalizarPrioritaria(Mensagem message) {
-//        int resposta = JOptionPane.showConfirmDialog(null, "VOCÊ DEVE FINALIZAR O ATENDIMENTO ANTERIOR! \n" + "DESEJA FINALIZAR O ATENDIMENTO  " + tipo + numero + " ?");
-//        if (resposta == JOptionPane.YES_OPTION) {
-//            ServidorBean AtualizarFinalizar = new ServidorBean();
-//            AtualizarFinalizar.setCodigo(message.getIdFinalizar());
-//            AtualizarFinalizar.setIdcaixa(message.getName());
-//            try {
-//                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-//                java.util.Date minhaData1;
-//                minhaData1 = dateFormat.parse(getDateTime());
-//                java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData1.getTime());
-//                AtualizarFinalizar.setDataHoraFim(sqlDate);
-//                AtualizarFinalizar.setTempoAtendimento(sqlDate);
-//                AtualizarFinalizar.setAtendimentoIniciado(true);
-//                AtualizarFinalizar.setAtendimentoFinalizado(true);
-//                AtualizarFinalizar.setEstouroAtendimento("Finalizado");
-//                ServidorDAO atualiza = new ServidorDAO();
-//
-//                atualiza.updatefinalizar(AtualizarFinalizar);// 
-//                finalizou1 = true;
-//            } catch (SQLException ex) {
-//                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-//
-//            } catch (ParseException ex) {
-//                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//
-//        }
-//        if (resposta == JOptionPane.NO_OPTION) {
-//            finalizou1 = true;
-//        }
-//
-//        if (resposta == JOptionPane.CANCEL_OPTION) {
-//            finalizou1 = true;
-//        }
-//        if (resposta == JOptionPane.CLOSED_OPTION) {
-//            finalizou1 = true;
-//        }
-//    }
-
-//    void finalizarPopular(Mensagem message) {
-//        int resposta = JOptionPane.showConfirmDialog(null, "VOCÊ DEVE FINALIZAR O ATENDIMENTO ANTERIOR! \n" + "DESEJA FINALIZAR O ATENDIMENTO  " + tipo + numero + " ?");
-//        if (resposta == JOptionPane.YES_OPTION) {
-//            ServidorBean AtualizarFinalizar = new ServidorBean();
-//            AtualizarFinalizar.setCodigo(message.getIdFinalizar());
-//            AtualizarFinalizar.setIdcaixa(message.getName());
-//            try {
-//                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-//                java.util.Date minhaData1;
-//                minhaData1 = dateFormat.parse(getDateTime());
-//                java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData1.getTime());
-//                AtualizarFinalizar.setDataHoraFim(sqlDate);
-//                AtualizarFinalizar.setTempoAtendimento(sqlDate);
-//                AtualizarFinalizar.setAtendimentoIniciado(true);
-//                AtualizarFinalizar.setAtendimentoFinalizado(true);
-//                AtualizarFinalizar.setEstouroAtendimento("Finalizado");
-//                ServidorDAO atualiza = new ServidorDAO();
-//                atualiza.updatefinalizar(AtualizarFinalizar);//  
-//                finalizou2 = true;
-//            } catch (SQLException ex) {
-//                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-//            } catch (ParseException ex) {
-//                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        if (resposta == JOptionPane.NO_OPTION) {
-//            finalizou2 = true;
-//        }
-//        if (resposta == JOptionPane.CANCEL_OPTION) {
-//            finalizou2 = true;
-//        }
-//        if (resposta == JOptionPane.CLOSED_OPTION) {
-//            finalizou2 = true;
-//        }
-//    }
-
     private void imprime(String ficha) {
 
         new Thread() {
@@ -682,6 +615,10 @@ public class Server {
                         Logger.getLogger(Server.class
                                 .getName()).log(Level.SEVERE, null, ex);
                     }
+
+                    fis = new FileInputStream("C:/SENHAS.pdf");
+                    Imprimir printPDFFile = new Imprimir(fis, "SENHAS.pdf");
+                    printPDFFile.print();
                     new Thread() {
                         @Override
                         public void run() {
@@ -703,9 +640,6 @@ public class Server {
                             }
                         }
                     }.start();
-                    fis = new FileInputStream("C:/SENHAS.pdf");
-                    Imprimir printPDFFile = new Imprimir(fis, "SENHAS.pdf");
-                    printPDFFile.print();
 
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(Server.class
@@ -714,8 +648,8 @@ public class Server {
                     Logger.getLogger(Server.class
                             .getName()).log(Level.SEVERE, null, ex);
                 } catch (PrinterException ex) {
-                    Logger.getLogger(Server.class
-                            .getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, "Problemas com a impressão! \n        Verififique a impressora!", "Inove Systems - Informação", JOptionPane.INFORMATION_MESSAGE);
+
                 }
             }
         }.start();
