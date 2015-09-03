@@ -31,7 +31,7 @@ public class Cliente extends javax.swing.JFrame {
     private Mensagem message;
     private Conexao service;
     String caixa = "20";    
-    File arquivo = new File(getClass().getResource("/Config/CaixaConfig.txt").getPath());
+    File arquivo = new File(getClass().getResource("/Config/CaixaConfig.txt").getFile());
   //File arquivo = new File("C://SistemaAtendimentoCliente/CaixaConfig.txt");
     boolean StatusMensage;
 
