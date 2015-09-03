@@ -22,14 +22,14 @@ public class Conexao {
 
     public Socket connect() {
         try {
-            this.socket = new Socket("SERVEER", 8888);
+            this.socket = new Socket("192.168.2.101", 8888);
             this.output = new ObjectOutputStream(socket.getOutputStream());
         } catch (UnknownHostException e) {
-
+             System.out.println("erro ao conectar 1"); 
         } catch (SocketException ex) {
-
+             System.out.println("erro ao conectar 2"); 
         } catch (IOException ex) {
-            Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
+           System.out.println("erro ao conectar 3"); 
         }
 
         return socket;

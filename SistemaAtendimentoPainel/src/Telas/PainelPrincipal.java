@@ -362,33 +362,33 @@ public class PainelPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        ultimalabel.setFont(new java.awt.Font("Arial", 1, 100)); // NOI18N
+        ultimalabel.setFont(new java.awt.Font("Arial", 1, 90)); // NOI18N
         ultimalabel.setForeground(new java.awt.Color(255, 255, 255));
         ultimalabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ultimalabel.setText("F000");
         getContentPane().add(ultimalabel);
-        ultimalabel.setBounds(960, 830, 250, 90);
+        ultimalabel.setBounds(940, 830, 290, 90);
 
-        penultimalabel.setFont(new java.awt.Font("Arial", 1, 100)); // NOI18N
+        penultimalabel.setFont(new java.awt.Font("Arial", 1, 90)); // NOI18N
         penultimalabel.setForeground(new java.awt.Color(255, 255, 255));
         penultimalabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         penultimalabel.setText("C000");
         getContentPane().add(penultimalabel);
-        penultimalabel.setBounds(1290, 832, 250, 90);
+        penultimalabel.setBounds(1270, 832, 290, 90);
 
-        antepenultimalabel.setFont(new java.awt.Font("Arial", 1, 100)); // NOI18N
+        antepenultimalabel.setFont(new java.awt.Font("Arial", 1, 90)); // NOI18N
         antepenultimalabel.setForeground(new java.awt.Color(255, 255, 255));
         antepenultimalabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         antepenultimalabel.setText("C000");
         getContentPane().add(antepenultimalabel);
-        antepenultimalabel.setBounds(1615, 832, 250, 90);
+        antepenultimalabel.setBounds(1595, 832, 290, 90);
 
-        atuallabel.setFont(new java.awt.Font("Arial", 1, 350)); // NOI18N
+        atuallabel.setFont(new java.awt.Font("Arial", 1, 335)); // NOI18N
         atuallabel.setForeground(new java.awt.Color(255, 255, 255));
         atuallabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         atuallabel.setText("F000");
         getContentPane().add(atuallabel);
-        atuallabel.setBounds(930, 310, 950, 410);
+        atuallabel.setBounds(930, 310, 980, 410);
 
         idlabel.setFont(new java.awt.Font("Franklin Gothic Book", 1, 100)); // NOI18N
         idlabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -404,21 +404,21 @@ public class PainelPrincipal extends javax.swing.JFrame {
         TextExemplo.setDoubleBuffered(true);
         TextExemplo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         getContentPane().add(TextExemplo);
-        TextExemplo.setBounds(0, 970, 2015, 100);
+        TextExemplo.setBounds(0, 970, 2050, 100);
 
-        TempValue.setFont(new java.awt.Font("Arial", 1, 90)); // NOI18N
+        TempValue.setFont(new java.awt.Font("Arial", 1, 83)); // NOI18N
         TempValue.setForeground(new java.awt.Color(255, 255, 255));
         TempValue.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        TempValue.setText("00.00 ºC");
+        TempValue.setText("00 ºC");
         getContentPane().add(TempValue);
-        TempValue.setBounds(490, 830, 370, 90);
+        TempValue.setBounds(580, 830, 310, 90);
 
-        DateValue.setFont(new java.awt.Font("Arial", 1, 85)); // NOI18N
+        DateValue.setFont(new java.awt.Font("Arial", 1, 83)); // NOI18N
         DateValue.setForeground(new java.awt.Color(255, 255, 255));
-        DateValue.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        DateValue.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         DateValue.setText("28/06/2015");
         getContentPane().add(DateValue);
-        DateValue.setBounds(40, 830, 460, 90);
+        DateValue.setBounds(40, 830, 530, 90);
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Principal.png"))); // NOI18N
