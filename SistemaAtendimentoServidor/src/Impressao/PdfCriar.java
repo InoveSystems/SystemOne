@@ -22,7 +22,7 @@ public class PdfCriar {
         Document document = new Document(PageSize.B4, 10, 10, 10, 10);
 
         try {
-            PdfWriter.getInstance(document, new FileOutputStream("C:/SENHAS.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream(getClass().getResource("/Config/SENHAS.pdf").getFile()));
             document.open();
             // adicionando um parágrafo ao documento 
             Font f = new Font(FontFamily.HELVETICA, 15, Font.NORMAL);

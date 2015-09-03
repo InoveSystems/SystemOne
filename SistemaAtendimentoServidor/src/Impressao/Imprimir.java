@@ -24,13 +24,11 @@ public class Imprimir {
     static String imp = "";
     private PrintService impressora = null;
 
-    public static void main(String[] args) throws IOException, PrinterException {
+    public void main(String[] args) throws IOException, PrinterException {
 
         imp = "3DSTimp";
-
-        FileInputStream fis = new FileInputStream("C:/SENHAS.pdf");
+        FileInputStream fis = new FileInputStream(getClass().getResource("/Config/SENHAS.pdf").getFile());
         Imprimir printPDFFile = new Imprimir(fis, "SENHAS.pdf");
-
         printPDFFile.print();
     }
 
