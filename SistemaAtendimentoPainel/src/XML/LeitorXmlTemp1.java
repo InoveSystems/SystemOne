@@ -9,6 +9,7 @@ import XML.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,9 +44,12 @@ public class LeitorXmlTemp1 {
         String urlstring = "http://www.yr.no/sted/Brasil/Rio_Grande_do_Sul/Pinheiro_Machado/varsel.xml";//este é o rss do meu blog
         try {
             is = new URL(urlstring).openConnection().getInputStream();
+        } catch (UnknownHostException ex) {
+
         } catch (IOException ex) {
             Logger.getLogger(LeitorXmlTemp1.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = null;
         try {
@@ -56,21 +60,28 @@ public class LeitorXmlTemp1 {
         Document documento = null;
         try {
             documento = documentBuilder.parse(is);
+        
+        } catch (IllegalArgumentException ex) {
+
         } catch (SAXException ex) {
-            Logger.getLogger(LeitorXmlTemp1.class.getName()).log(Level.SEVERE, null, ex);
+            
         } catch (IOException ex) {
-            Logger.getLogger(LeitorXmlTemp1.class.getName()).log(Level.SEVERE, null, ex);
+           
         }
-        NodeList list = documento.getElementsByTagName("temperature");
-        Node node = list.item(0);
-        Element element = (Element) node;
-        atual = element.getAttribute("value");
-        min = element.getAttribute("min");
-        max = element.getAttribute("max");
-        //String fonte = element.getElementsByTagName("time").item(i).getTextContent();
-        System.out.println("Temperatura Atual: " + atual + "°C" + " Min: " + min + "°C" + " Max: " + max + "°C");
-        Feed = atual + "°C";
-        return Feed;
+        try {
+            NodeList list = documento.getElementsByTagName("temperature");
+            Node node = list.item(0);
+            Element element = (Element) node;
+            atual = element.getAttribute("value");
+            min = element.getAttribute("min");
+            max = element.getAttribute("max");
+            //String fonte = element.getElementsByTagName("time").item(i).getTextContent();
+            System.out.println("Temperatura Atual: " + atual + "°C" + " Min: " + min + "°C" + " Max: " + max + "°C");
+            Feed = atual + "°C";
+            return Feed;
+        } catch (NullPointerException ex) {
+            return "-- °C"; 
+        }
 
     }
 

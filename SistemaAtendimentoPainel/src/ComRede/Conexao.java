@@ -20,16 +20,17 @@ public class Conexao {
     private Socket socket;
     private ObjectOutputStream output;
 
-    public Socket connect() {
+    public Socket connect(String IPConfig) {
+      
         try {
-            this.socket = new Socket("192.168.2.101", 8888);
+            this.socket = new Socket(IPConfig,8888);
             this.output = new ObjectOutputStream(socket.getOutputStream());
         } catch (UnknownHostException e) {
-             System.out.println("erro ao conectar 1"); 
+           //  System.out.println("erro ao conectar 1"); 
         } catch (SocketException ex) {
-             System.out.println("erro ao conectar 2"); 
+            // System.out.println("erro ao conectar 2"); 
         } catch (IOException ex) {
-           System.out.println("erro ao conectar 3"); 
+           //System.out.println("erro ao conectar 3"); 
         }
 
         return socket;

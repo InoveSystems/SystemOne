@@ -13,7 +13,12 @@ import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
@@ -32,6 +37,7 @@ import javax.swing.JOptionPane;
  */
 public class PainelPrincipal extends javax.swing.JFrame {
 
+    File IPConfig = new File(getClass().getResource("/Config/IPConfig.txt").getFile());
     private Socket socket;
     private Mensagem message;
     private Conexao service;
@@ -43,6 +49,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
     int fim;
     PainelPrincipal.Fila f1 = new PainelPrincipal.Fila();
     String teste = " ";
+    String IPCom = "127.0.0.1";
 
     /**
      * Creates new form PainelPrincipal
@@ -57,13 +64,48 @@ public class PainelPrincipal extends javax.swing.JFrame {
         Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImage, new Point(0, 0), "");
         setCursor(blankCursor);
         DateValue.setText(getDateTime());
+
         new Thread() {
             @Override
             public void run() {
-                ConectarServidor();
+                FileReader fr;
+                try {
+                    if (!IPConfig.exists()) {
+                        try {
+                            IPConfig.createNewFile();
+                            FileWriter fw = new FileWriter(IPConfig, false);
+                            BufferedWriter bw = new BufferedWriter(fw);
+                            bw.write(IPCom);
+                            bw.newLine();
+                            bw.close();
+                            fw.close();
+                        } catch (IOException ex) {
 
+                        }
+                    } else {
+                        fr = new FileReader(IPConfig);
+                        BufferedReader br = new BufferedReader(fr);
+                        while (br.ready()) {
+                            String linha = br.readLine();
+                            IPCom = linha;
+                        }
+                        br.close();
+                        fr.close();
+                    }
+                } catch (FileNotFoundException ex) {
+
+                } catch (IOException ex) {
+
+                }
+                new Thread() {
+                    @Override
+                    public void run() {
+                        ConectarServidor();
+                    }
+                }.start();
             }
-        }.start();
+        }.
+                start();
 
     }
 
@@ -75,9 +117,11 @@ public class PainelPrincipal extends javax.swing.JFrame {
             try {
                 this.input = new ObjectInputStream(socket.getInputStream());
             } catch (NullPointerException ex) {
+                System.out.println("Erro ao conectar ao servidor!");
                 //   statuslabel.setText("Erro ao conectar ao servidor!");
                 try {
                     Thread.currentThread().sleep(5000);
+                    System.out.println("Tentando conectar novamente ...");
                     //statuslabel.setText("Tentando conectar novamente ...");
                     Thread.currentThread().sleep(5000);
                     new Thread() {
@@ -105,7 +149,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
                         connected(message);
                     } else if (action.equals(action.DISCONNECT)) {
                         disconnected();
-                        socket.close();
+//                        socket.close();
                     } else if (action.equals(action.SEND_ONE)) {
                         receive(message);
                     } else if (action.equals(action.USERS_ONLINE)) {
@@ -116,10 +160,10 @@ public class PainelPrincipal extends javax.swing.JFrame {
             } catch (NullPointerException ex) {
 
             } catch (IOException ex) {
-                //  statuslabel.setText("Erro ao conectar ao servidor!");
+                System.out.println("Erro ao conectar ao servidor!");
                 try {
                     Thread.currentThread().sleep(5000);
-                    //     statuslabel.setText("Tentando conectar novamente ...");
+                    System.out.println("Tentando conectar novamente ...");
                     Thread.currentThread().sleep(5000);
                     new Thread() {
                         @Override
@@ -143,9 +187,11 @@ public class PainelPrincipal extends javax.swing.JFrame {
 
     private void connected(Mensagem message) {
         if (message.getText().equals("NO")) {
+            System.out.println("Erro Grave! Contate o Suporte!");
             //statuslabel.setText("Erro Grave! Contate o Suporte!");
             try {
                 Thread.currentThread().sleep(3000);
+                System.out.println("O sistema sera fechado!");
                 //      statuslabel.setText("O sistema sera fechado!");
                 Thread.currentThread().sleep(3000);
                 this.message.setAction(Mensagem.Action.DISCONNECT);
@@ -163,7 +209,11 @@ public class PainelPrincipal extends javax.swing.JFrame {
     }
 
     private void disconnected() {
-        // JOptionPane.showMessageDialog(this, "Voce saiu do chat");
+        try {
+            socket.close();
+        } catch (IOException ex) {
+
+        }
     }
 
     private void receive(Mensagem message) {
@@ -185,7 +235,6 @@ public class PainelPrincipal extends javax.swing.JFrame {
                 }
             }.start();
         } else {
-           
 
         }
 
@@ -207,10 +256,9 @@ public class PainelPrincipal extends javax.swing.JFrame {
             this.message.setAction(Mensagem.Action.CONNECT);
             this.message.setName(caixa);
             this.service = new Conexao();
-            this.socket = this.service.connect();
+            this.socket = this.service.connect(IPCom);
             new Thread(new PainelPrincipal.ListenerSocket(this.socket)).start();
             this.service.send(message);
-
         }
         return true;
     }
@@ -227,8 +275,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
             add = leitor.adicionar();
             inicio = fim = -1;
             tamanho = add.length();
-            fila = new String[tamanho];
-
+//            fila = new String[tamanho];
             qtdeElementos = 0;
         }
 
@@ -251,11 +298,17 @@ public class PainelPrincipal extends javax.swing.JFrame {
         }
 
         public void adicionar() {
+            fila = new String[tamanho];
+            new Thread() {
+                @Override
+                public void run() {
+
             if (!estaCheia()) {
                 if (inicio == -1) {
                     inicio = 0;
                 }
 //                filaComum[fim] = e;
+                System.out.println(add.length());
                 for (int i = 0; i < add.length(); i++) {
                     fila[i] = String.valueOf(add.charAt(i));
                     fim++;
@@ -263,11 +316,14 @@ public class PainelPrincipal extends javax.swing.JFrame {
                 }
 
             }
+
             new Thread() {
                 @Override
                 public void run() {
                     f1.remover();
                 }
+            }.start();
+            }
             }.start();
 
         }
@@ -275,32 +331,44 @@ public class PainelPrincipal extends javax.swing.JFrame {
         public void remover() {
 
             while (!estaVazia()) {
-
                 teste = "";
                 for (int i = inicio; i < fim; i++) {
-
                     teste = teste + fila[i];
-
                 }
                 inicio++;
                 qtdeElementos--;
-
                 if (inicio == 1) {
                     try {
-                        TempValue.setText(temperatura.adicionar());
-
-                        TextExemplo.setText("                    ..:: 3D - Soluções Tecnológicas ::..");
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                TempValue.setText(temperatura.adicionar());
+                            }
+                        }.start();
+                        TextExemplo.setText("                              ..:: INOVE SYSTEMS ::..");
                         Thread.currentThread().sleep(5000);
                         TextExemplo.setText("      TELEFONE: (53) 32481203 - Pinheiro Machado-RS");
                         Thread.currentThread().sleep(5000);
-                        TextExemplo.setText(teste);
-                        Thread.currentThread().sleep(1000);
+                        TextExemplo.setText("                         www.inovesystems.com.br");
+                        Thread.currentThread().sleep(5000);
+
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                System.gc();
+                                add = "";
+                                add = leitor.adicionar();
+                                TextExemplo.setText(teste);
+                            }
+                        }.start();
+                        Thread.currentThread().sleep(100);
                     } catch (InterruptedException ex) {
 
                     }
                 }
                 TextExemplo.setText("");
                 TextExemplo.setText(teste);
+
                 try {
                     Thread.currentThread().sleep(150);
                 } catch (InterruptedException ex) {
@@ -308,18 +376,33 @@ public class PainelPrincipal extends javax.swing.JFrame {
                 }
             }
             if (estaVazia()) {
-                inicio = 0;
-                fim = 0;
-                tamanho = 0;
-                for (int i = 0; i < add.length(); i++) {
-                    fila[i] = "";
-                }
-                new Thread() {
-                    @Override
-                    public void run() {
-                        f1.adicionar();
+                try {
+                    inicio = 0;
+                    fim = 0;
+                    tamanho = 0;
+
+                    for (int i = 0; i < add.length(); i++) {
+                        fila[i] = "";
                     }
-                }.start();
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            tamanho = add.length();
+                            f1.adicionar();
+                        }
+                    }.start();
+                } catch (ArrayIndexOutOfBoundsException ex) {
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            for (int i = 0; i < fila.length; i++) {
+                                fila[i] = "";
+                            }
+                            tamanho = add.length();
+                            f1.adicionar();
+                        }
+                    }.start();
+                }
             }
         }
 
@@ -422,12 +505,88 @@ public class PainelPrincipal extends javax.swing.JFrame {
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Principal.png"))); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 1920, 1080);
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        String ipconexao;
+        int resposta = 0;
+        ipconexao = JOptionPane.showInputDialog(null, "QUAL O IP DO SERVIDOR?", "3D Soluções Tecnológicas - Configuração", 3);
+        try {
+            if ((!ipconexao.equals(null)) && (!ipconexao.equals(""))) {
+                resposta = JOptionPane.showConfirmDialog(null, "CERTIFIQUE-SE QUE ESTE IP EXISTA NA REDE! \n" + "ESTE É O IP DO SERVIDOR " + ipconexao + " ?");
+                if (resposta == JOptionPane.YES_OPTION) {
+                    IPCom = ipconexao;
+                    JOptionPane.showMessageDialog(null, "IP " + IPCom + " CONFIGURADO COM SUCESSO!", "3D Soluções Tecnológicas - Informação", 1);
+                    disconnected();
+
+                } else {
+
+                }
+            } else {
+                do {
+                    ipconexao = JOptionPane.showInputDialog(null, "ERRO GRAVE! IP INVALIDO! \nQUAL O IP DO SERVIDOR ?", "3D Soluções Tecnológicas - Configuração", 3);
+                } while ((ipconexao.equals(null)) || (ipconexao.equals("")));
+                resposta = JOptionPane.showConfirmDialog(null, "CERTIFIQUE-SE QUE ESTE IP EXISTA NA REDE! \n" + "ESTE É O IP DO SERVIDOR " + ipconexao + " ?");
+                if (resposta == JOptionPane.YES_OPTION) {
+                    IPCom = ipconexao;
+                    JOptionPane.showMessageDialog(null, "IP " + IPCom + " CONFIGURADO COM SUCESSO!", "3D Soluções Tecnológicas - Informação", 1);
+                    disconnected();
+                }
+            }
+        } catch (NullPointerException ex) {
+        }
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    if (!IPConfig.exists()) {
+                        try {
+                            IPConfig.createNewFile();
+
+                        } catch (IOException ex) {
+
+                        }
+                    }
+                    FileWriter fw;
+                    try {
+                        fw = new FileWriter(IPConfig, false);
+                        BufferedWriter bw = new BufferedWriter(fw);
+                        bw.write(IPCom);
+                        bw.newLine();
+                        bw.close();
+                        fw.close();
+
+                    } catch (IOException ex) {
+
+                    }
+
+                } catch (NullPointerException ex) {
+                }
+            }
+        }.start();
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                message.setAction(Mensagem.Action.CONNECT);
+//                message.setName(caixa);
+//                service = new Conexao();
+//                socket = service.connect(IPCom);
+//                new Thread(
+//                        new PainelPrincipal.ListenerSocket(socket)).start();
+//                service.send(message);
+//            }
+//        }.start();
+    }//GEN-LAST:event_jLabel1MouseClicked
 
     /**
      * @param args the command line arguments
