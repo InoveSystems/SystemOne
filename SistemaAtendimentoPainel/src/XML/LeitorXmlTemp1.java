@@ -5,6 +5,7 @@
  */
 package XML;
 
+import Telas.PainelPrincipal;
 import XML.*;
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,9 +35,11 @@ public class LeitorXmlTemp1 {
     String max;
     String Feed;
 
-    public LeitorXmlTemp1() {
-
+    public LeitorXmlTemp1 () {
+        
     }
+
+
 
     public String adicionar() {
         //http://api.openweathermap.org/data/2.5/weather?q=Pinheiro-Machado,BR&units=metric&,BR&mode=xml
@@ -60,13 +63,13 @@ public class LeitorXmlTemp1 {
         Document documento = null;
         try {
             documento = documentBuilder.parse(is);
-        
+
         } catch (IllegalArgumentException ex) {
 
         } catch (SAXException ex) {
-            
+
         } catch (IOException ex) {
-           
+
         }
         try {
             NodeList list = documento.getElementsByTagName("temperature");
@@ -78,9 +81,12 @@ public class LeitorXmlTemp1 {
             //String fonte = element.getElementsByTagName("time").item(i).getTextContent();
             System.out.println("Temperatura Atual: " + atual + "°C" + " Min: " + min + "°C" + " Max: " + max + "°C");
             Feed = atual + "°C";
+            PainelPrincipal.DateValue.setText(PainelPrincipal.getDateTime());
             return Feed;
         } catch (NullPointerException ex) {
-            return "-- °C"; 
+            PainelPrincipal.DateValue.setText("    --/--/--");
+            return "-- °C";
+
         }
 
     }

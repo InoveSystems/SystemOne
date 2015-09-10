@@ -29,7 +29,9 @@ import javazoom.jl.decoder.JavaLayerException;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileSystemView;
 
 /**
  *
@@ -37,7 +39,10 @@ import javax.swing.JOptionPane;
  */
 public class PainelPrincipal extends javax.swing.JFrame {
 
-    File IPConfig = new File(getClass().getResource("/Config/IPConfig.txt").getFile());
+    String diretorioUsuario = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
+    File IPConfig = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "IPConfig.txt");
+
+    //File IPConfig = new File(getClass().getResource("/Config/IPConfig.txt").getFile());
     private Socket socket;
     private Mensagem message;
     private Conexao service;
@@ -55,7 +60,6 @@ public class PainelPrincipal extends javax.swing.JFrame {
      * Creates new form PainelPrincipal
      */
     public PainelPrincipal() {
-
         setExtendedState(MAXIMIZED_BOTH);
         setUndecorated(true);
         initComponents();
@@ -63,7 +67,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
         Image cursorImage = Toolkit.getDefaultToolkit().getImage("xparent.gif");
         Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImage, new Point(0, 0), "");
         setCursor(blankCursor);
-        DateValue.setText(getDateTime());
+        //DateValue.setText(getDateTime());
 
         new Thread() {
             @Override
@@ -80,7 +84,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
                             bw.close();
                             fw.close();
                         } catch (IOException ex) {
-
+                            JOptionPane.showMessageDialog(null, " erro ao criar arquivo", "3D Soluções Tecnológicas - Informação", 1);
                         }
                     } else {
                         fr = new FileReader(IPConfig);
@@ -93,6 +97,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
                         fr.close();
                     }
                 } catch (FileNotFoundException ex) {
+                    JOptionPane.showMessageDialog(null, " erro arquivo nao encontrado ", "3D Soluções Tecnológicas - Informação", 1);
 
                 } catch (IOException ex) {
 
@@ -303,27 +308,27 @@ public class PainelPrincipal extends javax.swing.JFrame {
                 @Override
                 public void run() {
 
-            if (!estaCheia()) {
-                if (inicio == -1) {
-                    inicio = 0;
-                }
+                    if (!estaCheia()) {
+                        if (inicio == -1) {
+                            inicio = 0;
+                        }
 //                filaComum[fim] = e;
-                System.out.println(add.length());
-                for (int i = 0; i < add.length(); i++) {
-                    fila[i] = String.valueOf(add.charAt(i));
-                    fim++;
-                    qtdeElementos++;
-                }
+                        // System.out.println(add.length());
+                        for (int i = 0; i < add.length(); i++) {
+                            fila[i] = String.valueOf(add.charAt(i));
+                            fim++;
+                            qtdeElementos++;
+                        }
 
-            }
+                    }
 
-            new Thread() {
-                @Override
-                public void run() {
-                    f1.remover();
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            f1.remover();
+                        }
+                    }.start();
                 }
-            }.start();
-            }
             }.start();
 
         }
@@ -345,11 +350,11 @@ public class PainelPrincipal extends javax.swing.JFrame {
                                 TempValue.setText(temperatura.adicionar());
                             }
                         }.start();
-                        TextExemplo.setText("                              ..:: INOVE SYSTEMS ::..");
+                        TextExemplo.setText("                       ..:: INOVE SYSTEMS ::..");
                         Thread.currentThread().sleep(5000);
-                        TextExemplo.setText("      TELEFONE: (53) 32481203 - Pinheiro Machado-RS");
+                        TextExemplo.setText("TELEFONE: (53) 32481203 - Pinheiro Machado-RS");
                         Thread.currentThread().sleep(5000);
-                        TextExemplo.setText("                         www.inovesystems.com.br");
+                        TextExemplo.setText("                     www.inovesystems.com.br");
                         Thread.currentThread().sleep(5000);
 
                         new Thread() {
@@ -361,7 +366,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
                                 TextExemplo.setText(teste);
                             }
                         }.start();
-                        Thread.currentThread().sleep(100);
+                        Thread.currentThread().sleep(150);
                     } catch (InterruptedException ex) {
 
                     }
@@ -410,14 +415,14 @@ public class PainelPrincipal extends javax.swing.JFrame {
 
     private void audio() {
         try {
-            java.io.InputStream in = (java.io.InputStream) (new java.io.FileInputStream("C:/SistemaAtendimentoPainel/sounds/Atenção.mp3"));
+            java.io.InputStream in = (java.io.InputStream) (new java.io.FileInputStream(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Audio" + File.separator + "Atencao.mp3"));
             javazoom.jl.player.Player p = new javazoom.jl.player.Player(in);
             p.play();
         } catch (FileNotFoundException | JavaLayerException e) {
         }
     }
 
-    private String getDateTime() {
+    public static String getDateTime() {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date();
         return dateFormat.format(date);
@@ -480,7 +485,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
         getContentPane().add(idlabel);
         idlabel.setBounds(940, 220, 940, 80);
 
-        TextExemplo.setFont(new java.awt.Font("Franklin Gothic Book", 1, 70)); // NOI18N
+        TextExemplo.setFont(new java.awt.Font("Franklin Gothic Book", 1, 60)); // NOI18N
         TextExemplo.setForeground(new java.awt.Color(255, 255, 255));
         TextExemplo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         TextExemplo.setAutoscrolls(true);
@@ -554,6 +559,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
                             IPConfig.createNewFile();
 
                         } catch (IOException ex) {
+                            JOptionPane.showMessageDialog(null, " erro ao criar ", "3D Soluções Tecnológicas - Informação", 1);
 
                         }
                     }
@@ -567,10 +573,13 @@ public class PainelPrincipal extends javax.swing.JFrame {
                         fw.close();
 
                     } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(null, " erro ao ler", "3D Soluções Tecnológicas - Informação", 1);
 
                     }
 
                 } catch (NullPointerException ex) {
+                    JOptionPane.showMessageDialog(null, " erro ao ler ", "3D Soluções Tecnológicas - Informação", 1);
+
                 }
             }
         }.start();
@@ -625,7 +634,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel DateValue;
+    public static javax.swing.JLabel DateValue;
     private javax.swing.JLabel TempValue;
     private javax.swing.JLabel TextExemplo;
     private javax.swing.JLabel antepenultimalabel;
