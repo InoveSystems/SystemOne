@@ -1,6 +1,6 @@
 package ComRede;
 
-import Telas.Cliente;
+import Telas.PainelTouch;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -19,19 +19,18 @@ public class Conexao {
 
     private Socket socket;
     private ObjectOutputStream output;
-    
-    
 
-    public Socket connect() {
+    public Socket connect(String IPConfig) {
+
         try {
-            this.socket = new Socket("SERVEER", 8888);
+            this.socket = new Socket(IPConfig, 8888);
             this.output = new ObjectOutputStream(socket.getOutputStream());
+        } catch (UnknownHostException e) {
+            //  System.out.println("erro ao conectar 1"); 
         } catch (SocketException ex) {
-            
-        }catch(UnknownHostException e){
-              
+            // System.out.println("erro ao conectar 2"); 
         } catch (IOException ex) {
-            Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
+            //System.out.println("erro ao conectar 3"); 
         }
 
         return socket;
@@ -44,7 +43,7 @@ public class Conexao {
         } catch (NullPointerException ex) {
             //Socket esta fechado. Fazer alguma coisa nessa excessão.  
         } catch (SocketException ex) {
-           
+
         } catch (IOException ex) {
             Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
         }

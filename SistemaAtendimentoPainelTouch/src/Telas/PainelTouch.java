@@ -12,6 +12,12 @@ import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
@@ -22,8 +28,9 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.border.EtchedBorder;
+import javax.swing.filechooser.FileSystemView;
 
-public class Cliente extends javax.swing.JFrame {
+public class PainelTouch extends javax.swing.JFrame {
 
     private Socket socket;
     private Mensagem message;
@@ -33,22 +40,26 @@ public class Cliente extends javax.swing.JFrame {
     LeitorXml leitor = new LeitorXml();
     int inicio;
     int fim;
-
-    Cliente.FilaComum f1 = new Cliente.FilaComum();
+    PainelTouch.FilaComum f1 = new PainelTouch.FilaComum();
     String teste = " ";
+    String IPCom = "127.0.0.1";
+    String diretorioUsuario = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
+    File IPConfig = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "IPConfig.txt");
+    File arquivo = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "PainelConfig.txt");
 
-    public Cliente() {
+    public PainelTouch() {
 
-        setExtendedState(MAXIMIZED_BOTH);
-        setUndecorated(true);
-        Image cursorImage = Toolkit.getDefaultToolkit().getImage("xparent.gif");
-        Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImage, new Point(0, 0), "");
-        setCursor(blankCursor);
+        //setExtendedState(MAXIMIZED_BOTH);
+        //setUndecorated(true);
+        //Image cursorImage = Toolkit.getDefaultToolkit().getImage("xparent.gif");
+        //Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImage, new Point(0, 0), "");
+        //setCursor(blankCursor);
         initComponents();
         new Thread() {
             @Override
             public void run() {
                 try {
+
                     ImagemAguarde.setEnabled(false);
                     ImagemAguarde.setVisible(false);
 //                    MenImp.setEnabled(false);
@@ -59,14 +70,87 @@ public class Cliente extends javax.swing.JFrame {
             }
         }.start();
         f1.adicionar();
+
+        //lendo ou criando arquivo com o ip do servidor
         new Thread() {
             @Override
             public void run() {
-                ConectarServidor();
-//                   jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Atendente " + caixa, javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14))); // NOI18N
-//    
+                FileReader fr;
+                try {
+                    if (!IPConfig.exists()) {
+                        try {
+                            IPConfig.createNewFile();
+                            FileWriter fw = new FileWriter(IPConfig, false);
+                            BufferedWriter bw = new BufferedWriter(fw);
+                            bw.write(IPCom);
+                            bw.newLine();
+                            bw.close();
+                            fw.close();
+                        } catch (IOException ex) {
+                            statuslabel.setText("Erro ao criar IPConfig!");
+                        }
+                    } else {
+                        fr = new FileReader(IPConfig);
+                        BufferedReader br = new BufferedReader(fr);
+                        while (br.ready()) {
+                            String linha = br.readLine();
+                            IPCom = linha;
+                        }
+                        br.close();
+                        fr.close();
+                    }
+                } catch (FileNotFoundException ex) {
+                    statuslabel.setText("Erro! IPConfig não encontrado!");
+                } catch (IOException ex) {
+
+                }
+
             }
-        }.start();
+        }.
+                start();
+
+        new Thread() {
+            @Override
+            public void run() {
+                FileReader fr;
+                try {
+                    if (!arquivo.exists()) {
+                        try {
+                            arquivo.createNewFile();
+                            FileWriter fw = new FileWriter(arquivo, false);
+                            BufferedWriter bw = new BufferedWriter(fw);
+                            bw.write(caixa);
+                            bw.newLine();
+                            bw.close();
+                            fw.close();
+                        } catch (IOException ex) {
+                            statuslabel.setText("Erro ao ler Configurações!");
+                        }
+                    } else {
+                        fr = new FileReader(arquivo);
+                        BufferedReader br = new BufferedReader(fr);
+                        while (br.ready()) {
+                            String linha = br.readLine();
+                            caixa = linha;
+                        }
+                        br.close();
+                        fr.close();
+                    }
+                } catch (FileNotFoundException ex) {
+                    statuslabel.setText("Arquivo de config. não encontrado!");
+                } catch (IOException ex) {
+                    statuslabel.setText("Erro ao ler Configurações!");
+                }
+                new Thread() {
+                    @Override
+                    public void run() {
+                        ConectarServidor();
+                    }
+                }.start();
+
+            }
+        }.
+                start();
 
     }
 
@@ -91,12 +175,12 @@ public class Cliente extends javax.swing.JFrame {
                         }
                     }.start();
                 } catch (InterruptedException ex1) {
-                    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex1);
+                    Logger.getLogger(PainelTouch.class.getName()).log(Level.SEVERE, null, ex1);
                 }
 
             } catch (IOException ex) {
 
-                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PainelTouch.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -134,13 +218,13 @@ public class Cliente extends javax.swing.JFrame {
                         }
                     }.start();
                 } catch (InterruptedException ex1) {
-                    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex1);
+                    Logger.getLogger(PainelTouch.class.getName()).log(Level.SEVERE, null, ex1);
                 }
                 return;
 //                
             } catch (ClassNotFoundException ex) {
 
-                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PainelTouch.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -158,7 +242,7 @@ public class Cliente extends javax.swing.JFrame {
                 this.service.send(this.message);
                 System.exit(0);
             } catch (InterruptedException ex) {
-                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PainelTouch.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             return;
@@ -168,20 +252,17 @@ public class Cliente extends javax.swing.JFrame {
     }
 
     private void disconnected() {
-        // JOptionPane.showMessageDialog(this, "Voce saiu do chat");
+        try {
+            socket.close();
+        } catch (IOException ex) {
+            statuslabel.setText("Erro ao sair! Tente mais tarde.");
+        } catch (NullPointerException ex) {
+
+        }
     }
 
     private void receive(Mensagem message) {
-//        idlabel.setText("");
-//        atuallabel.setText("");
-//        ultimalabel.setText("");
-//        penultimalabel.setText("");
-//        antepenultimalabel.setText("");
-//        idlabel.setText("Atendente " + message.getName());
-//        atuallabel.setText(message.getAtual());
-//        ultimalabel.setText(message.getUltima());
-//        penultimalabel.setText(message.getPenultima());
-//        antepenultimalabel.setText(message.getAntepenultima());
+
 
     }
 
@@ -189,9 +270,7 @@ public class Cliente extends javax.swing.JFrame {
         System.out.println(message.getSetOnlines().toString());
         Set<String> names = message.getSetOnlines();
         String[] array = (String[]) names.toArray(new String[names.size()]);
-//        this.listOnlines.setListData(array);
-//        this.listOnlines.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//        this.listOnlines.setLayoutOrientation(JList.VERTICAL);
+
     }
 
     public boolean ConectarServidor() {
@@ -201,8 +280,8 @@ public class Cliente extends javax.swing.JFrame {
             this.message.setAction(Mensagem.Action.CONNECT);
             this.message.setName(caixa);
             this.service = new Conexao();
-            this.socket = this.service.connect();
-            new Thread(new Cliente.ListenerSocket(this.socket)).start();
+            this.socket = this.service.connect(IPCom);
+            new Thread(new PainelTouch.ListenerSocket(this.socket)).start();
             this.service.send(message);
 
         }
@@ -327,12 +406,13 @@ public class Cliente extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         statuslabel = new javax.swing.JLabel();
+        jConfig = new javax.swing.JLabel();
+        jConfigIP = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("3D - Soluções Tecnológicas - Cliente");
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(1280, 1024));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -371,16 +451,37 @@ public class Cliente extends javax.swing.JFrame {
         });
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(124, 634, 730, 200));
 
-        statuslabel.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        statuslabel.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
         statuslabel.setForeground(new java.awt.Color(204, 204, 204));
         statuslabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         statuslabel.setText("Conectando...");
-        getContentPane().add(statuslabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 120, 302, 50));
+        getContentPane().add(statuslabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 120, 260, 50));
+
+        jConfig.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jConfigMouseClicked(evt);
+            }
+        });
+        getContentPane().add(jConfig, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 10, 280, 80));
+
+        jConfigIP.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jConfigIP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Setings 32.png"))); // NOI18N
+        jConfigIP.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jConfigIPMouseClicked(evt);
+            }
+        });
+        getContentPane().add(jConfigIP, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 124, 40, 40));
 
         jLabel17.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Fundo.png"))); // NOI18N
         jLabel17.setToolTipText("");
+        jLabel17.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel17MouseClicked(evt);
+            }
+        });
         getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 1024));
 
         pack();
@@ -415,7 +516,7 @@ public class Cliente extends javax.swing.JFrame {
                     ImagemAguarde.setEnabled(false);
                     ImagemAguarde.setVisible(false);
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(PainelTouch.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }
@@ -450,7 +551,7 @@ public class Cliente extends javax.swing.JFrame {
                     ImagemAguarde.setEnabled(false);
                     ImagemAguarde.setVisible(false);
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(PainelTouch.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }
@@ -484,12 +585,141 @@ public class Cliente extends javax.swing.JFrame {
                     ImagemAguarde.setEnabled(false);
                     ImagemAguarde.setVisible(false);
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(PainelTouch.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }
         }.start();
     }//GEN-LAST:event_jLabel3MousePressed
+
+    private void jConfigMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jConfigMouseClicked
+        String caixaProb;
+        int resposta = 0;
+        caixaProb = JOptionPane.showInputDialog(null, "QUAL O NÚMERO DE SEU PAINEL ?", "3D Soluções Tecnológicas - Configuração", 3);
+        try {
+            if ((!caixaProb.equals(null)) && (!caixaProb.equals(""))) {
+                resposta = JOptionPane.showConfirmDialog(null, "CERTIFIQUE-SE QUE ESTE PAINEL NÃO EXISTE NA REDE! \n" + "O SEU PAINEL É O NÚMERO " + caixaProb + " ?");
+                if (resposta == JOptionPane.YES_OPTION) {
+                    caixa = caixaProb;
+                    JOptionPane.showMessageDialog(null, "PAINEL " + caixa + " CRIADO COM SUCESSO!", "3D Soluções Tecnológicas - Informação", 1);
+                } else {
+
+                }
+            } else {
+                do {
+                    caixaProb = JOptionPane.showInputDialog(null, "ERRO GRAVE! PAINEL INVALIDO! \nQUAL O NÚMERO DE SEU PAINEL ?", "3D Soluções Tecnológicas - Configuração", 3);
+                } while ((caixaProb.equals(null)) || (caixaProb.equals("")));
+                resposta = JOptionPane.showConfirmDialog(null, "CERTIFIQUE-SE QUE ESTE PAINEL NÃO EXISTE NA REDE! \n" + "O SEU PAINEL É O NÚMERO " + caixaProb + " ?");
+                if (resposta == JOptionPane.YES_OPTION) {
+                    caixa = caixaProb;
+                    JOptionPane.showMessageDialog(null, "PAINEL " + caixa + " CRIADO COM SUCESSO!", "3D Soluções Tecnológicas - Informação", 1);
+                }
+            }
+        } catch (NullPointerException ex) {
+
+        }
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    if (!arquivo.exists()) {
+                        try {
+                            arquivo.createNewFile();
+                        } catch (IOException ex) {
+                            statuslabel.setText("Erro ao criar CaixaConfig!");
+                        }
+                    }
+                    FileWriter fw;
+                    try {
+                        fw = new FileWriter(arquivo, false);
+                        BufferedWriter bw = new BufferedWriter(fw);
+                        bw.write(caixa);
+                        bw.newLine();
+                        bw.close();
+                        fw.close();
+
+                    } catch (IOException ex) {
+                        statuslabel.setText("Erro ao ler CaixaConfig!");
+                    }
+
+                } catch (NullPointerException ex) {
+
+                }
+            }
+        }.start();
+        new Thread() {
+            @Override
+            public void run() {
+                disconnected();
+            }
+        }.start();
+    }//GEN-LAST:event_jConfigMouseClicked
+
+    private void jConfigIPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jConfigIPMouseClicked
+        String ipconexao;
+        int resposta = 0;
+        ipconexao = JOptionPane.showInputDialog(null, "QUAL O IP DO SERVIDOR?", "3D Soluções Tecnológicas - Configuração", 3);
+        try {
+            if ((!ipconexao.equals(null)) && (!ipconexao.equals(""))) {
+                resposta = JOptionPane.showConfirmDialog(null, "CERTIFIQUE-SE QUE ESTE IP EXISTA NA REDE! \n" + "ESTE É O IP DO SERVIDOR " + ipconexao + " ?");
+                if (resposta == JOptionPane.YES_OPTION) {
+                    IPCom = ipconexao;
+                    JOptionPane.showMessageDialog(null, "IP " + IPCom + " CONFIGURADO COM SUCESSO!", "3D Soluções Tecnológicas - Informação", 1);
+                    disconnected();
+
+                } else {
+
+                }
+            } else {
+                do {
+                    ipconexao = JOptionPane.showInputDialog(null, "ERRO GRAVE! IP INVALIDO! \nQUAL O IP DO SERVIDOR ?", "3D Soluções Tecnológicas - Configuração", 3);
+                } while ((ipconexao.equals(null)) || (ipconexao.equals("")));
+                resposta = JOptionPane.showConfirmDialog(null, "CERTIFIQUE-SE QUE ESTE IP EXISTA NA REDE! \n" + "ESTE É O IP DO SERVIDOR " + ipconexao + " ?");
+                if (resposta == JOptionPane.YES_OPTION) {
+                    IPCom = ipconexao;
+                    JOptionPane.showMessageDialog(null, "IP " + IPCom + " CONFIGURADO COM SUCESSO!", "3D Soluções Tecnológicas - Informação", 1);
+                    disconnected();
+                }
+            }
+        } catch (NullPointerException ex) {
+        }
+
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    if (!IPConfig.exists()) {
+                        try {
+                            IPConfig.createNewFile();
+
+                        } catch (IOException ex) {
+                            JOptionPane.showMessageDialog(null, " erro ao criar ", "3D Soluções Tecnológicas - Informação", 1);
+
+                        }
+                    }
+                    FileWriter fw;
+                    try {
+                        fw = new FileWriter(IPConfig, false);
+                        BufferedWriter bw = new BufferedWriter(fw);
+                        bw.write(IPCom);
+                        bw.newLine();
+                        bw.close();
+                        fw.close();
+
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(null, " erro ao ler", "3D Soluções Tecnológicas - Informação", 1);
+                        statuslabel.setText("Erro ao ler IPConfig!");
+                    }
+                } catch (NullPointerException ex) {
+                    statuslabel.setText("Erro ao ler IPConfig!");
+                }
+            }
+        }.start();
+    }//GEN-LAST:event_jConfigIPMouseClicked
+
+    private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel17MouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -506,33 +736,38 @@ public class Cliente extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Cliente.class
+            java.util.logging.Logger.getLogger(PainelTouch.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Cliente.class
+            java.util.logging.Logger.getLogger(PainelTouch.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Cliente.class
+            java.util.logging.Logger.getLogger(PainelTouch.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Cliente.class
+            java.util.logging.Logger.getLogger(PainelTouch.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
 
-                new Cliente().setVisible(true);
+                new PainelTouch().setVisible(true);
 
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel ImagemAguarde;
+    public javax.swing.JLabel ImagemAguarde;
     private javax.swing.JLabel TextExemplo;
+    private javax.swing.JLabel jConfig;
+    private javax.swing.JLabel jConfigIP;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
