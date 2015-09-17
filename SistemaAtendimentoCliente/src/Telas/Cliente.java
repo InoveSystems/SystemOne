@@ -37,7 +37,6 @@ public class Cliente extends javax.swing.JFrame {
     boolean StatusMensage;
     String IPCom = "127.0.0.1";
     String diretorioUsuario = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
-    String diretorioUsuario2 = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
     File IPConfig = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "IPConfig.txt");
     File arquivo = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "CaixaConfig.txt");
 
@@ -59,7 +58,8 @@ public class Cliente extends javax.swing.JFrame {
                             bw.close();
                             fw.close();
                         } catch (IOException ex) {
-                            JOptionPane.showMessageDialog(null, " erro ao criar arquivo", "3D Soluções Tecnológicas - Informação", 1);
+                            statuslabel.setText("Erro ao criar IPConfig!");
+                            //JOptionPane.showMessageDialog(null, " erro ao criar arquivo", "3D Soluções Tecnológicas - Informação", 1);
                         }
                     } else {
                         fr = new FileReader(IPConfig);
@@ -72,8 +72,8 @@ public class Cliente extends javax.swing.JFrame {
                         fr.close();
                     }
                 } catch (FileNotFoundException ex) {
-                    JOptionPane.showMessageDialog(null, " erro arquivo nao encontrado ", "3D Soluções Tecnológicas - Informação", 1);
-
+                    //JOptionPane.showMessageDialog(null, " erro arquivo nao encontrado ", "3D Soluções Tecnológicas - Informação", 1);
+                    statuslabel.setText("Erro! IPConfig não encontrado!");
                 } catch (IOException ex) {
 
                 }
@@ -97,7 +97,7 @@ public class Cliente extends javax.swing.JFrame {
                             bw.close();
                             fw.close();
                         } catch (IOException ex) {
-                            statuslabel.setText("Erro ao ler Configurações!");
+                            statuslabel.setText("Erro ao criar CaixaConfig!");
                         }
                     } else {
                         fr = new FileReader(arquivo);
@@ -886,7 +886,6 @@ public class Cliente extends javax.swing.JFrame {
                         fw.close();
 
                     } catch (IOException ex) {
-
                         statuslabel.setText("Erro ao ler CaixaConfig!");
                     }
 
