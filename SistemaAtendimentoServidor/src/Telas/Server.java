@@ -81,7 +81,7 @@ public class Server {
                 new Thread(new ListenerSocket(socket)).start();
             }
         } catch (IOException ex) {
-            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+       
         }
     }
 
@@ -96,7 +96,7 @@ public class Server {
                 this.output = new ObjectOutputStream(socket.getOutputStream());
                 this.input = new ObjectInputStream(socket.getInputStream());
             } catch (IOException ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+             
             }
         }
 
@@ -141,7 +141,7 @@ public class Server {
                 sendOnlines();
 
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+              
             }
         }
 
@@ -153,8 +153,7 @@ public class Server {
             try {
                 kv.getValue().writeObject(message);
             } catch (IOException ex) {
-                Logger.getLogger(Server.class
-                        .getName()).log(Level.SEVERE, null, ex);
+
             }
         }
         message.setName(message.getName());
@@ -223,7 +222,7 @@ public class Server {
                                             try {
                                                 atualiza.update(Atualizar);
                                             } catch (SQLException ex) {
-                                                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+
                                             }
                                         }
                                     }.start();
@@ -239,14 +238,14 @@ public class Server {
                                     penultima = ultima;
                                     ultima = message.getAtual();
                                 } catch (ParseException ex) {
-                                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+
                                 }
                             } catch (SQLException ex) {
-                                Logger.getLogger(TesteBanco.class.getName()).log(Level.SEVERE, null, ex);
+
                             }
                         }
                     } catch (SQLException ex) {
-                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+
                     }
                 } else {
 
@@ -272,7 +271,7 @@ public class Server {
                         }
 
                     } catch (SQLException ex) {
-                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+
                     }
                     message.setStatus("no");
                     message.setAtual(ultima);
@@ -343,14 +342,14 @@ public class Server {
                                     penultima = ultima;
                                     ultima = message.getAtual();
                                 } catch (ParseException ex) {
-                                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+
                                 }
                             } catch (SQLException ex) {
-                                Logger.getLogger(TesteBanco.class.getName()).log(Level.SEVERE, null, ex);
+
                             }
                         }
                     } catch (SQLException ex) {
-                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+
                     }
                 } else {
 
@@ -375,7 +374,7 @@ public class Server {
                             finalizou1 = true;
                         }
                     } catch (SQLException ex) {
-                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+
                     }
                     message.setStatus("no");
                     message.setAtual(ultima);
@@ -447,14 +446,14 @@ public class Server {
                                     penultima = ultima;
                                     ultima = message.getAtual();
                                 } catch (ParseException ex) {
-                                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+
                                 }
                             } catch (SQLException ex) {
-                                Logger.getLogger(TesteBanco.class.getName()).log(Level.SEVERE, null, ex);
+
                             }
                         }
                     } catch (SQLException ex) {
-                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+
                     }
                 } else {
 
@@ -479,7 +478,7 @@ public class Server {
                             finalizou2 = true;
                         }
                     } catch (SQLException ex) {
-                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+
                     }
                     message.setStatus("no");
                     message.setAtual(ultima);
@@ -521,12 +520,12 @@ public class Server {
                     AtualizarFinalizar.setAtendimentoFinalizado(true);
                     AtualizarFinalizar.setEstouroAtendimento("Finalizado");
                     ServidorDAO atualiza = new ServidorDAO();
-                    atualiza.updatefinalizar(AtualizarFinalizar);//  
+                    atualiza.updatefinalizar(AtualizarFinalizar);  
                     finalizou = true;
                 } catch (SQLException ex) {
-                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+
                 } catch (ParseException ex) {
-                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+
                 }
             }
             if (message.getStatus().equals("no")) {
@@ -550,13 +549,12 @@ public class Server {
                     AtualizarFinalizar.setAtendimentoFinalizado(true);
                     AtualizarFinalizar.setEstouroAtendimento("Finalizado");
                     ServidorDAO atualiza = new ServidorDAO();
-                    atualiza.updatefinalizar(AtualizarFinalizar);// 
+                    atualiza.updatefinalizar(AtualizarFinalizar);
                     finalizou1 = true;
                 } catch (SQLException ex) {
-                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
 
                 } catch (ParseException ex) {
-                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+
                 }
             }
             if (message.getStatus().equals("no")) {
@@ -582,9 +580,9 @@ public class Server {
                     atualiza.updatefinalizar(AtualizarFinalizar);//  
                     finalizou2 = true;
                 } catch (SQLException ex) {
-                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+
                 } catch (ParseException ex) {
-                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+
                 }
             }
             if (message.getStatus().equals("no")) {
@@ -612,8 +610,7 @@ public class Server {
                         Thread.currentThread().sleep(1000);
 
                     } catch (InterruptedException ex) {
-                        Logger.getLogger(Server.class
-                                .getName()).log(Level.SEVERE, null, ex);
+
                     }
 
                     fis = new FileInputStream("C:/SENHAS.pdf");
@@ -633,23 +630,18 @@ public class Server {
                                 Envios.setAtendimentoFinalizado(Status);
                                 ServidorDAO enviar = new ServidorDAO();
                                 enviar.create(Envios);
-
                             } catch (SQLException ex) {
-                                Logger.getLogger(TesteBanco.class
-                                        .getName()).log(Level.SEVERE, null, ex);
+
                             }
                         }
                     }.start();
 
                 } catch (FileNotFoundException ex) {
-                    Logger.getLogger(Server.class
-                            .getName()).log(Level.SEVERE, null, ex);
+
                 } catch (IOException ex) {
-                    Logger.getLogger(Server.class
-                            .getName()).log(Level.SEVERE, null, ex);
+
                 } catch (PrinterException ex) {
                     JOptionPane.showMessageDialog(null, "Problemas com a impressão! \n * Verifique se há impressora instalada! \n * Verifique os cabos da impressorea! \n Entre em contato com o suporte! ", "Inove Systems - Informação", JOptionPane.INFORMATION_MESSAGE);
-
                 }
             }
         }.start();
@@ -726,8 +718,7 @@ public class Server {
 
     private void disconnect(Mensagem message, ObjectOutputStream output) {
         mapOnlines.remove(message.getName());
-        message.setAction(Action.SEND_ONE);
-        //sendAll(message);
+        message.setAction(Action.SEND_ONE);        
         System.out.println(message.getName() + " ::..  FECHADO!" + "\n");
     }
 
@@ -736,8 +727,7 @@ public class Server {
             output.writeObject(message);
 
         } catch (IOException ex) {
-            Logger.getLogger(Server.class
-                    .getName()).log(Level.SEVERE, null, ex);
+
         }
     }
 
@@ -749,8 +739,7 @@ public class Server {
                     kv.getValue().writeObject(message);
 
                 } catch (IOException ex) {
-                    Logger.getLogger(Server.class
-                            .getName()).log(Level.SEVERE, null, ex);
+
                 }
             }
         }
@@ -771,8 +760,7 @@ public class Server {
                 kv.getValue().writeObject(message);
 
             } catch (IOException ex) {
-                Logger.getLogger(Server.class
-                        .getName()).log(Level.SEVERE, null, ex);
+
             }
 
         }
