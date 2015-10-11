@@ -29,7 +29,6 @@ import javazoom.jl.decoder.JavaLayerException;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileSystemView;
 
@@ -41,8 +40,6 @@ public class PainelPrincipal extends javax.swing.JFrame {
 
     String diretorioUsuario = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
     File IPConfig = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "IPConfig.txt");
-
-    //File IPConfig = new File(getClass().getResource("/Config/IPConfig.txt").getFile());
     private Socket socket;
     private Mensagem message;
     private Conexao service;
@@ -67,7 +64,6 @@ public class PainelPrincipal extends javax.swing.JFrame {
         Image cursorImage = Toolkit.getDefaultToolkit().getImage("xparent.gif");
         Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImage, new Point(0, 0), "");
         setCursor(blankCursor);
-        //DateValue.setText(getDateTime());
 
         new Thread() {
             @Override
@@ -123,16 +119,13 @@ public class PainelPrincipal extends javax.swing.JFrame {
                 this.input = new ObjectInputStream(socket.getInputStream());
             } catch (NullPointerException ex) {
                 System.out.println("Erro ao conectar ao servidor!");
-                //   statuslabel.setText("Erro ao conectar ao servidor!");
                 try {
                     Thread.currentThread().sleep(5000);
                     System.out.println("Tentando conectar novamente ...");
-                    //statuslabel.setText("Tentando conectar novamente ...");
                     Thread.currentThread().sleep(5000);
                     new Thread() {
                         @Override
                         public void run() {
-                            // statuslabel.setText("Tentando conectar novamente ...");
                             ConectarServidor();
                         }
                     }.start();
@@ -160,7 +153,6 @@ public class PainelPrincipal extends javax.swing.JFrame {
                     } else if (action.equals(action.USERS_ONLINE)) {
                         refreshOnlines(message);
                     }
-
                 }
             } catch (NullPointerException ex) {
 
@@ -173,7 +165,6 @@ public class PainelPrincipal extends javax.swing.JFrame {
                     new Thread() {
                         @Override
                         public void run() {
-                            //          statuslabel.setText("Tentando conectar novamente ...");
                             ConectarServidor();
                         }
                     }.start();
@@ -210,7 +201,6 @@ public class PainelPrincipal extends javax.swing.JFrame {
             return;
         }
         this.message = message;
-        // statuslabel.setText("Conexão realizada com sucesso!");
     }
 
     private void disconnected() {
@@ -249,9 +239,6 @@ public class PainelPrincipal extends javax.swing.JFrame {
         System.out.println(message.getSetOnlines().toString());
         Set<String> names = message.getSetOnlines();
         String[] array = (String[]) names.toArray(new String[names.size()]);
-//        this.listOnlines.setListData(array);
-//        this.listOnlines.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//        this.listOnlines.setLayoutOrientation(JList.VERTICAL);
     }
 
     public boolean ConectarServidor() {
@@ -280,7 +267,6 @@ public class PainelPrincipal extends javax.swing.JFrame {
             add = leitor.adicionar();
             inicio = fim = -1;
             tamanho = add.length();
-//            fila = new String[tamanho];
             qtdeElementos = 0;
         }
 
@@ -312,8 +298,6 @@ public class PainelPrincipal extends javax.swing.JFrame {
                         if (inicio == -1) {
                             inicio = 0;
                         }
-//                filaComum[fim] = e;
-                        // System.out.println(add.length());
                         for (int i = 0; i < add.length(); i++) {
                             fila[i] = String.valueOf(add.charAt(i));
                             fim++;
@@ -583,18 +567,6 @@ public class PainelPrincipal extends javax.swing.JFrame {
                 }
             }
         }.start();
-//        new Thread() {
-//            @Override
-//            public void run() {
-//                message.setAction(Mensagem.Action.CONNECT);
-//                message.setName(caixa);
-//                service = new Conexao();
-//                socket = service.connect(IPCom);
-//                new Thread(
-//                        new PainelPrincipal.ListenerSocket(socket)).start();
-//                service.send(message);
-//            }
-//        }.start();
     }//GEN-LAST:event_jLabel1MouseClicked
 
     /**
