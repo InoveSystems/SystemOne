@@ -263,7 +263,6 @@ public class PainelTouch extends javax.swing.JFrame {
 
     private void receive(Mensagem message) {
 
-
     }
 
     private void refreshOnlines(Mensagem message) {
@@ -324,22 +323,29 @@ public class PainelTouch extends javax.swing.JFrame {
         }
 
         public void adicionar() {
-            if (!estaCheia()) {
-                if (inicio == -1) {
-                    inicio = 0;
-                }
-//                filaComum[fim] = e;
-                for (int i = 0; i < add.length(); i++) {
-                    filaComum[i] = String.valueOf(add.charAt(i));
-                    fim++;
-                    qtdeElementos++;
-                }
-
-            }
+            filaComum = new String[tamanho];
             new Thread() {
                 @Override
                 public void run() {
-                    f1.remover();
+
+                    if (!estaCheia()) {
+                        if (inicio == -1) {
+                            inicio = 0;
+                        }
+                        for (int i = 0; i < add.length(); i++) {
+                            filaComum[i] = String.valueOf(add.charAt(i));
+                            fim++;
+                            qtdeElementos++;
+                        }
+
+                    }
+
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            f1.remover();
+                        }
+                    }.start();
                 }
             }.start();
 
@@ -421,7 +427,7 @@ public class PainelTouch extends javax.swing.JFrame {
         TextExemplo.setAutoscrolls(true);
         TextExemplo.setDoubleBuffered(true);
         TextExemplo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        getContentPane().add(TextExemplo, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 920, 1340, 66));
+        getContentPane().add(TextExemplo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 920, 1340, 66));
 
         jLabel2.setText("  ");
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -451,7 +457,7 @@ public class PainelTouch extends javax.swing.JFrame {
         });
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(124, 634, 730, 200));
 
-        statuslabel.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        statuslabel.setFont(new java.awt.Font("Century Gothic", 1, 15)); // NOI18N
         statuslabel.setForeground(new java.awt.Color(204, 204, 204));
         statuslabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         statuslabel.setText("Conectando...");

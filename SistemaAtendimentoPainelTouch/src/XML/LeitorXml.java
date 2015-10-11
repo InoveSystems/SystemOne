@@ -34,13 +34,15 @@ public class LeitorXml {
 
     }
 
-    public String adicionar() {
-
+   public String adicionar() {
+        channel="";
+        item="";
+        is=null;
+        String urlstring = "http://g1.globo.com/dynamo/rs/rio-grande-do-sul/rss2.xml ";//este é o rss do meu blog
         try {
-            String urlstring = "http://g1.globo.com/dynamo/rs/rio-grande-do-sul/rss2.xml"; //este é o rss do meu blog
             is = new URL(urlstring).openConnection().getInputStream();
         } catch (IOException ex) {
-            Logger.getLogger(LeitorXml.class.getName()).log(Level.SEVERE, null, ex);
+            return "FEED DE NOTÍCIAS SEM RETORNO, VERIFIQUE SUA CONEXÃO COM A INTERNET, SE O PROBLEMA PERCISTIR ENTRE EM CONTATO COM O SUPORTE TECNICO!";
         }
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = null;
@@ -52,36 +54,44 @@ public class LeitorXml {
         Document documento = null;
         try {
             documento = documentBuilder.parse(is);
+        } catch (UnknownHostException ex) {
+            return "VERIFIQUE SUA CONEXÃO COM A INTERNET E RECEBA NOTÍCIAS ATUALIZADAS!";
         } catch (SAXException ex) {
-            Logger.getLogger(LeitorXml.class.getName()).log(Level.SEVERE, null, ex);
+
         } catch (IOException ex) {
-            Logger.getLogger(LeitorXml.class.getName()).log(Level.SEVERE, null, ex);
+            return "VERIFIQUE SUA CONEXÃO COM A INTERNET E RECEBA NOTÍCIAS ATUALIZADAS!";
+        } catch (IllegalArgumentException ex) {
+
         }
-        NodeList list = documento.getElementsByTagName("channel");
-        NodeList lista = documento.getElementsByTagName("item");
-        for (int i = 0; i < list.getLength(); i++) {
-            Node node = list.item(i);
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
-                Element element = (Element) node;
-                String fonte = element.getElementsByTagName("title").item(i).getTextContent();
+        try {
+            NodeList list = documento.getElementsByTagName("channel");
+            NodeList lista = documento.getElementsByTagName("item");
+            for (int i = 0; i < list.getLength(); i++) {
+                Node node = list.item(i);
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                    Element element = (Element) node;
+                    String fonte = element.getElementsByTagName("title").item(i).getTextContent();
 //                System.out.println("Fonte: " + fonte);
 //                System.out.println("Link: " + element.getElementsByTagName("link").item(i).getTextContent());
 //                System.out.println(" ");
-                channel = "..:: " + fonte + " ::.. " + element.getElementsByTagName("link").item(i).getTextContent() + " ";
+                    channel = "..:: " + fonte + " ::.. " + element.getElementsByTagName("link").item(i).getTextContent() + " ";
 
-                for (int a = 0; a < lista.getLength(); a++) {
-                    Node nodeA = lista.item(a);
-                    if (nodeA.getNodeType() == Node.ELEMENT_NODE) {
+                    for (int a = 0; a < lista.getLength(); a++) {
+                        Node nodeA = lista.item(a);
+                        if (nodeA.getNodeType() == Node.ELEMENT_NODE) {
 //                        System.out.println(fonte + ": " + element.getElementsByTagName("title").item(a + 2).getTextContent() + ". ");
-                        item = item + fonte + ": " + element.getElementsByTagName("title").item(a + 2).getTextContent() + ". ";
+                            item = item + fonte + ": " + element.getElementsByTagName("title").item(a + 2).getTextContent() + ". ";
+                        }
+
                     }
 
                 }
-
             }
+            String Feed = channel + item;
+            return Feed;
+        } catch (NullPointerException ex) {
+            return "VERIFIQUE SUA CONEXÃO COM A INTERNET E RECEBA NOTÍCIAS ATUALIZADAS!";
         }
-        String Feed = channel + item;
-        return Feed;
     }
 
 }

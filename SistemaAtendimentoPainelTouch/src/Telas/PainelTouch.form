@@ -42,7 +42,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="2" y="920" width="1340" height="66"/>
+          <AbsoluteConstraints x="0" y="920" width="1340" height="66"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -106,7 +106,7 @@
     <Component class="javax.swing.JLabel" name="statuslabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Century Gothic" size="16" style="1"/>
+          <Font name="Century Gothic" size="15" style="1"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="cc" green="cc" red="cc" type="rgb"/>
