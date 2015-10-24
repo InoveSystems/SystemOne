@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 public class PdfCriar {
 
     public void criarpdf(String ficha) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         System.out.println(sdf.format(new Date()));
         Document document = new Document(PageSize.B4, 10, 10, 10, 10);
 
