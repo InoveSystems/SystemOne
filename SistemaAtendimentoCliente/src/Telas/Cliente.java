@@ -957,7 +957,7 @@ public class Cliente extends javax.swing.JFrame {
                             IPConfig.createNewFile();
 
                         } catch (IOException ex) {
-                            JOptionPane.showMessageDialog(null, " erro ao criar ", "3D Soluções Tecnológicas - Informação", 1);
+                            JOptionPane.showMessageDialog(null, " Erro ao criar IPConfig! ", "3D Soluções Tecnológicas - Informação", 1);
 
                         }
                     }
@@ -971,7 +971,7 @@ public class Cliente extends javax.swing.JFrame {
                         fw.close();
 
                     } catch (IOException ex) {
-                        JOptionPane.showMessageDialog(null, " erro ao ler", "3D Soluções Tecnológicas - Informação", 1);
+                        JOptionPane.showMessageDialog(null, " Erro ao ler IPConfig! ", "3D Soluções Tecnológicas - Informação", 1);
                         statuslabel.setText("Erro ao ler IPConfig!");
                     }
                 } catch (NullPointerException ex) {
