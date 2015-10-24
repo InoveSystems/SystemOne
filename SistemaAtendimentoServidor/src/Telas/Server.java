@@ -36,6 +36,8 @@ import java.text.SimpleDateFormat;
 import static java.time.Instant.now;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import org.joda.time.LocalTime;
+import org.joda.time.Period;
 
 public class Server {
 
@@ -66,6 +68,8 @@ public class Server {
     int numero = 0;
     boolean finalizou = false;
     boolean finalizou1 = false;
+    java.util.Date date_impressao;
+    java.util.Date date_fim;
     boolean finalizou2 = false;
 
     public Server() {
@@ -81,7 +85,7 @@ public class Server {
                 new Thread(new ListenerSocket(socket)).start();
             }
         } catch (IOException ex) {
-       
+
         }
     }
 
@@ -96,7 +100,7 @@ public class Server {
                 this.output = new ObjectOutputStream(socket.getOutputStream());
                 this.input = new ObjectInputStream(socket.getInputStream());
             } catch (IOException ex) {
-             
+
             }
         }
 
@@ -141,7 +145,7 @@ public class Server {
                 sendOnlines();
 
             } catch (ClassNotFoundException ex) {
-              
+
             }
         }
 
@@ -178,13 +182,13 @@ public class Server {
                         PesquisarInicio.setIdcaixa(message.getName());
                         PesquisarInicio.setAtendimentoIniciado(true);
                         PesquisarInicio.setAtendimentoFinalizado(false);
-
                         ResultSet rsi;
                         rsi = ini.retrivefichaAberta(PesquisarInicio);
                         while (rsi.next()) {
                             idAtendimento = rsi.getInt("cod");
                             tipo = rsi.getString("tipo");
                             numero = rsi.getInt("numero");
+                            date_impressao = rsi.getTimestamp("data_hora_impre");
                             numero = Integer.parseInt(String.format("%03d", numero));
                             message.setIdFinalizar(idAtendimento);
                             finalizar(message);
@@ -202,17 +206,24 @@ public class Server {
                                 ResultSet rs = c.retriveficha(Pesquisar);
                                 while (rs.next()) {
                                     idAtendimento = rs.getInt("cod");
+                                    date_impressao = rs.getTimestamp("data_hora_impre");
                                 }
                                 ServidorBean Atualizar = new ServidorBean();
                                 Atualizar.setCodigo(idAtendimento);
                                 Atualizar.setIdcaixa(message.getName());
                                 try {
-                                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-                                    java.util.Date minhaData;
-                                    minhaData = dateFormat.parse(getDateTime());
-                                    java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData.getTime());
-                                    Atualizar.setTempoEspera(sqlDate);
-                                    Atualizar.setDataHoraIni(sqlDate);
+                                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");//formata a data e hora atual                                    
+                                    java.util.Date minhaData;//cria a minha data e hora atual                                   
+                                    minhaData = dateFormat.parse(getDateTime()); //minha data  recebe a data e hora                                     
+                                    java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData.getTime()); // coloca pra timestamp do banco
+                                    LocalTime start = new LocalTime(date_impressao);// pesquisar data no banco e por aqui
+                                    LocalTime end = new LocalTime(sqlDate);
+                                    Period period = new Period(start, end);
+                                    java.util.Date resul;
+                                    resul = dateFormat.parse(getDate() + " " + period.getHours() + ":" + period.getMinutes() + ":" + period.getSeconds());
+                                    java.sql.Timestamp sqlDate2 = new java.sql.Timestamp(resul.getTime()); // coloca pra timestamp do banco
+                                    Atualizar.setTempoEspera(sqlDate2); // calcula o tempo de espera 
+                                    Atualizar.setDataHoraIni(sqlDate); //atualiz a a hora que iniciou o atendimento
                                     Atualizar.setAtendimentoIniciado(true);
                                     Atualizar.setAtendimentoFinalizado(false);
                                     ServidorDAO atualiza = new ServidorDAO();
@@ -257,13 +268,13 @@ public class Server {
                         PesquisarInicio.setAtendimentoIniciado(true);
                         PesquisarInicio.setAtendimentoFinalizado(false);
                         ResultSet rsi;
-
                         rsi = ini.retrivefichaAberta(PesquisarInicio);
 
                         while (rsi.next()) {
                             idAtendimento = rsi.getInt("cod");
                             tipo = rsi.getString("tipo");
                             numero = rsi.getInt("numero");
+                            // date_impressao = rsi.getTimestamp("data_hora_impre");
                             numero = Integer.parseInt(String.format("%03d", numero));
                             message.setIdFinalizar(idAtendimento);
                             finalizar(message);
@@ -297,6 +308,7 @@ public class Server {
                             idAtendimento = rsi.getInt("cod");
                             tipo = rsi.getString("tipo");
                             numero = rsi.getInt("numero");
+                            date_impressao = rsi.getTimestamp("data_hora_impre");
                             numero = Integer.parseInt(String.format("%03d", numero));
                             message.setIdFinalizar(idAtendimento);
                             finalizar(message);
@@ -315,17 +327,24 @@ public class Server {
                                 ResultSet rs = c.retriveficha(Pesquisar);
                                 while (rs.next()) {
                                     idAtendimento = rs.getInt("cod");
+                                    date_impressao = rs.getTimestamp("data_hora_impre");
                                 }
                                 ServidorBean Atualizar = new ServidorBean();
                                 Atualizar.setCodigo(idAtendimento);
                                 Atualizar.setIdcaixa(message.getName());
                                 try {
-                                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-                                    java.util.Date minhaData;
-                                    minhaData = dateFormat.parse(getDateTime());
-                                    java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData.getTime());
-                                    Atualizar.setTempoEspera(sqlDate);
-                                    Atualizar.setDataHoraIni(sqlDate);
+                                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");//formata a data e hora atual                                    
+                                    java.util.Date minhaData;//cria a minha data e hora atual                                   
+                                    minhaData = dateFormat.parse(getDateTime()); //minha data  recebe a data e hora                                     
+                                    java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData.getTime()); // coloca pra timestamp do banco
+                                    LocalTime start = new LocalTime(date_impressao);// pesquisar data no banco e por aqui
+                                    LocalTime end = new LocalTime(sqlDate);
+                                    Period period = new Period(start, end);
+                                    java.util.Date resul;
+                                    resul = dateFormat.parse(getDate() + " " + period.getHours() + ":" + period.getMinutes() + ":" + period.getSeconds());
+                                    java.sql.Timestamp sqlDate2 = new java.sql.Timestamp(resul.getTime()); // coloca pra timestamp do banco
+                                    Atualizar.setTempoEspera(sqlDate2); // calcula o tempo de espera 
+                                    Atualizar.setDataHoraIni(sqlDate); //atualiz a a hora que iniciou o atendimento
                                     Atualizar.setAtendimentoIniciado(true);
                                     Atualizar.setAtendimentoFinalizado(false);
                                     ServidorDAO atualiza = new ServidorDAO();
@@ -402,6 +421,7 @@ public class Server {
                             idAtendimento = rsi.getInt("cod");
                             tipo = rsi.getString("tipo");
                             numero = rsi.getInt("numero");
+                            date_impressao = rsi.getTimestamp("data_hora_impre");
                             numero = Integer.parseInt(String.format("%03d", numero));
                             message.setIdFinalizar(idAtendimento);
                             finalizar(message);
@@ -419,17 +439,24 @@ public class Server {
                                 ResultSet rs = c.retriveficha(Pesquisar);
                                 while (rs.next()) {
                                     idAtendimento = rs.getInt("cod");
+                                    date_impressao = rs.getTimestamp("data_hora_impre");
                                 }
                                 ServidorBean Atualizar = new ServidorBean();
                                 Atualizar.setCodigo(idAtendimento);
                                 Atualizar.setIdcaixa(message.getName());
                                 try {
-                                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-                                    java.util.Date minhaData;
-                                    minhaData = dateFormat.parse(getDateTime());
-                                    java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData.getTime());
-                                    Atualizar.setTempoEspera(sqlDate);
-                                    Atualizar.setDataHoraIni(sqlDate);
+                                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");//formata a data e hora atual                                    
+                                    java.util.Date minhaData;//cria a minha data e hora atual                                   
+                                    minhaData = dateFormat.parse(getDateTime()); //minha data  recebe a data e hora                                     
+                                    java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData.getTime()); // coloca pra timestamp do banco
+                                    LocalTime start = new LocalTime(date_impressao);// pesquisar data no banco e por aqui
+                                    LocalTime end = new LocalTime(sqlDate);
+                                    Period period = new Period(start, end);
+                                    java.util.Date resul;
+                                    resul = dateFormat.parse(getDate() + " " + period.getHours() + ":" + period.getMinutes() + ":" + period.getSeconds());
+                                    java.sql.Timestamp sqlDate2 = new java.sql.Timestamp(resul.getTime()); // coloca pra timestamp do banco
+                                    Atualizar.setTempoEspera(sqlDate2); // calcula o tempo de espera 
+                                    Atualizar.setDataHoraIni(sqlDate); //atualiz a a hora que iniciou o atendimento
                                     Atualizar.setAtendimentoIniciado(true);
                                     Atualizar.setAtendimentoFinalizado(false);
                                     ServidorDAO atualiza = new ServidorDAO();
@@ -510,17 +537,34 @@ public class Server {
                 AtualizarFinalizar.setCodigo(message.getIdFinalizar());
                 AtualizarFinalizar.setIdcaixa(message.getName());
                 try {
-                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                     java.util.Date minhaData1;
                     minhaData1 = dateFormat.parse(getDateTime());
                     java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData1.getTime());
+
+                   
+                    ServidorBean AtualizarFinalizar1 = new ServidorBean();
+                    ServidorDAO c = new ServidorDAO();
+                    AtualizarFinalizar1.setTipo(filacomum.primeiro().substring(0, 1));
+                    AtualizarFinalizar1.setNumeroFicha(Integer.parseInt(filacomum.primeiro().substring(1, 4)));
+                    ResultSet rs = c.retriveficha(AtualizarFinalizar1);
+                    while (rs.next()) {
+                        date_fim = rs.getTimestamp("data_hora_impre");
+                    }
+
+                    LocalTime start = new LocalTime(date_fim);// pesquisar data no banco e por aqui
+                    LocalTime end = new LocalTime(sqlDate);
+                    Period period = new Period(start, end);
+                    java.util.Date resul;
+                    resul = dateFormat.parse(getDate() + " " + period.getHours() + ":" + period.getMinutes() + ":" + period.getSeconds());
+                    java.sql.Timestamp sqlDate2 = new java.sql.Timestamp(resul.getTime()); // coloca pra timestamp do banco
+                    AtualizarFinalizar.setTempoAtendimento(sqlDate2);
                     AtualizarFinalizar.setDataHoraFim(sqlDate);
-                    AtualizarFinalizar.setTempoAtendimento(sqlDate);
                     AtualizarFinalizar.setAtendimentoIniciado(true);
                     AtualizarFinalizar.setAtendimentoFinalizado(true);
                     AtualizarFinalizar.setEstouroAtendimento("Finalizado");
                     ServidorDAO atualiza = new ServidorDAO();
-                    atualiza.updatefinalizar(AtualizarFinalizar);  
+                    atualiza.updatefinalizar(AtualizarFinalizar);
                     finalizou = true;
                 } catch (SQLException ex) {
 
@@ -718,7 +762,7 @@ public class Server {
 
     private void disconnect(Mensagem message, ObjectOutputStream output) {
         mapOnlines.remove(message.getName());
-        message.setAction(Action.SEND_ONE);        
+        message.setAction(Action.SEND_ONE);
         System.out.println(message.getName() + " ::..  FECHADO!" + "\n");
     }
 
@@ -921,13 +965,17 @@ public class Server {
             }
         }
     }
-
     private String getDateTime() {
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         return dateFormat.format(date);
     }
 
+    private String getDate() {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
     public static void main(String args[]) {
         if (SystemTray.isSupported()) {
             SystemTray tray = SystemTray.getSystemTray();
