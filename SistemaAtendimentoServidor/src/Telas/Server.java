@@ -541,17 +541,14 @@ public class Server {
                     java.util.Date minhaData1;
                     minhaData1 = dateFormat.parse(getDateTime());
                     java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData1.getTime());
-
-                   
                     ServidorBean AtualizarFinalizar1 = new ServidorBean();
                     ServidorDAO c = new ServidorDAO();
-                    AtualizarFinalizar1.setTipo(filacomum.primeiro().substring(0, 1));
-                    AtualizarFinalizar1.setNumeroFicha(Integer.parseInt(filacomum.primeiro().substring(1, 4)));
+                    AtualizarFinalizar1.setTipo(message.getTipo());
+                    AtualizarFinalizar1.setNumeroFicha(message.getNumero());
                     ResultSet rs = c.retriveficha(AtualizarFinalizar1);
                     while (rs.next()) {
                         date_fim = rs.getTimestamp("data_hora_impre");
                     }
-
                     LocalTime start = new LocalTime(date_fim);// pesquisar data no banco e por aqui
                     LocalTime end = new LocalTime(sqlDate);
                     Period period = new Period(start, end);
@@ -583,12 +580,27 @@ public class Server {
                 AtualizarFinalizar.setCodigo(message.getIdFinalizar());
                 AtualizarFinalizar.setIdcaixa(message.getName());
                 try {
-                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                     java.util.Date minhaData1;
                     minhaData1 = dateFormat.parse(getDateTime());
                     java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData1.getTime());
+
+                    ServidorBean AtualizarFinalizar2 = new ServidorBean();
+                    ServidorDAO p = new ServidorDAO();
+                    AtualizarFinalizar2.setTipo(message.getTipo());
+                    AtualizarFinalizar2.setNumeroFicha(message.getNumero());
+                    ResultSet rs = p.retriveficha(AtualizarFinalizar2);
+                    while (rs.next()) {
+                        date_fim = rs.getTimestamp("data_hora_impre");
+                    }
+                    LocalTime start = new LocalTime(date_fim);// pesquisar data no banco e por aqui
+                    LocalTime end = new LocalTime(sqlDate);
+                    Period period = new Period(start, end);
+                    java.util.Date resul;
+                    resul = dateFormat.parse(getDate() + " " + period.getHours() + ":" + period.getMinutes() + ":" + period.getSeconds());
+                    java.sql.Timestamp sqlDate2 = new java.sql.Timestamp(resul.getTime()); // coloca pra timestamp do banco          
                     AtualizarFinalizar.setDataHoraFim(sqlDate);
-                    AtualizarFinalizar.setTempoAtendimento(sqlDate);
+                    AtualizarFinalizar.setTempoAtendimento(sqlDate2);
                     AtualizarFinalizar.setAtendimentoIniciado(true);
                     AtualizarFinalizar.setAtendimentoFinalizado(true);
                     AtualizarFinalizar.setEstouroAtendimento("Finalizado");
@@ -615,8 +627,23 @@ public class Server {
                     java.util.Date minhaData1;
                     minhaData1 = dateFormat.parse(getDateTime());
                     java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData1.getTime());
+
+                    ServidorBean AtualizarFinalizar3 = new ServidorBean();
+                    ServidorDAO f = new ServidorDAO();
+                    AtualizarFinalizar3.setTipo(message.getTipo());
+                    AtualizarFinalizar3.setNumeroFicha(message.getNumero());
+                    ResultSet rs = f.retriveficha(AtualizarFinalizar3);
+                    while (rs.next()) {
+                        date_fim = rs.getTimestamp("data_hora_impre");
+                    }
+                    LocalTime start = new LocalTime(date_fim);// pesquisar data no banco e por aqui
+                    LocalTime end = new LocalTime(sqlDate);
+                    Period period = new Period(start, end);
+                    java.util.Date resul;
+                    resul = dateFormat.parse(getDate() + " " + period.getHours() + ":" + period.getMinutes() + ":" + period.getSeconds());
+                    java.sql.Timestamp sqlDate2 = new java.sql.Timestamp(resul.getTime()); // coloca pra timestamp do banco
                     AtualizarFinalizar.setDataHoraFim(sqlDate);
-                    AtualizarFinalizar.setTempoAtendimento(sqlDate);
+                    AtualizarFinalizar.setTempoAtendimento(sqlDate2);
                     AtualizarFinalizar.setAtendimentoIniciado(true);
                     AtualizarFinalizar.setAtendimentoFinalizado(true);
                     AtualizarFinalizar.setEstouroAtendimento("Finalizado");
@@ -965,6 +992,7 @@ public class Server {
             }
         }
     }
+
     private String getDateTime() {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
@@ -976,6 +1004,7 @@ public class Server {
         Date date = new Date();
         return dateFormat.format(date);
     }
+
     public static void main(String args[]) {
         if (SystemTray.isSupported()) {
             SystemTray tray = SystemTray.getSystemTray();
