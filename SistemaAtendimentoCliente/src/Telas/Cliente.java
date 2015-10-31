@@ -248,9 +248,9 @@ public class Cliente extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Não á clientes a serem atendidos! \n        Verififique outras Filas!", "Inove Systems - Informação", JOptionPane.INFORMATION_MESSAGE);
             }
         }
-//        //avisa que tem clientes a finalizar
+        //avisa que tem clientes a finalizar
         if (message.getStatus().equals("finalizar")) {
-
+            // verifica se a ficha a finalizar é do caixa que esta chamando uma nova, se for ele diz pra finalizar antes de chamar proxima senha
             if (message.getName().equals(caixa)) {
                 int resposta = JOptionPane.showConfirmDialog(null, "VOCÊ DEVE FINALIZAR O ATENDIMENTO ANTERIOR! \n" + "DESEJA FINALIZAR O ATENDIMENTO  " + message.getTipo() + String.format("%03d", message.getNumero()) + " ?");
 
@@ -303,6 +303,62 @@ public class Cliente extends javax.swing.JFrame {
                     }
                 }
             }
+        }
+
+        if (message.getStatus().equals("erro_impressao")) {
+            if (message.getName().equals(caixa)) {
+                int resposta = JOptionPane.showConfirmDialog(null, "Erro de Impressão! Verifique o Painel de Impressão! \n" + "Tudo pronto? \n" + "Deseja reimprimir a ficha de atendimento?");
+
+                if (resposta == JOptionPane.YES_OPTION) {
+                    text = "yes";
+                    if (!text.isEmpty()) {
+                        message.setName(message.getName());
+                       // message.setText(text);
+                        message.setIdFinalizar(message.getIdFinalizar());
+                        message.setStatus("yes");
+                        message.setAction(Mensagem.Action.REIMPRIMIR);
+                        service.send(message);
+                    }
+                }
+
+                if (resposta == JOptionPane.NO_OPTION) {
+                    text = "no";
+                    if (!text.isEmpty()) {
+                        message.setName(message.getName());
+                       // message.setText(text);
+                        message.setIdFinalizar(message.getIdFinalizar());
+                        message.setStatus("no");
+                        message.setAction(Mensagem.Action.REIMPRIMIR);
+                        service.send(message);
+                    }
+                }
+
+                if (resposta == JOptionPane.CANCEL_OPTION) {
+                    text = "no";
+                    if (!text.isEmpty()) {
+                        message.setName(message.getName());
+                       // message.setText(text);
+                        message.setIdFinalizar(message.getIdFinalizar());
+                        message.setStatus("no");
+                        message.setAction(Mensagem.Action.REIMPRIMIR);
+                        service.send(message);
+                    }
+                }
+
+                if (resposta == JOptionPane.CLOSED_OPTION) {
+                    text = "no";
+                    if (!text.isEmpty()) {
+                        message.setName(message.getName());
+                       // message.setText(text);
+                        message.setIdFinalizar(message.getIdFinalizar());
+                        message.setStatus("no");
+                        message.setAction(Mensagem.Action.REIMPRIMIR);
+                        service.send(message);
+                    }
+                }
+
+            }
+
         }
 
     }

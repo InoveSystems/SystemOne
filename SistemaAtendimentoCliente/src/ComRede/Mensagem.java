@@ -23,7 +23,7 @@ public class Mensagem implements Serializable {
 
     public enum Action {
 
-        CONNECT, DISCONNECT, SEND_ONE, SEND_ALL, USERS_ONLINE, PRINT, CALL, FINALIZAR
+        CONNECT, DISCONNECT, SEND_ONE, SEND_ALL, USERS_ONLINE, PRINT, CALL, FINALIZAR ,REIMPRIMIR
     }
 
     public Set<String> getSetOnlines() {
