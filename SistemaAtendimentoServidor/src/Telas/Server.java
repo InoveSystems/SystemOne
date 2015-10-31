@@ -71,6 +71,10 @@ public class Server {
     java.util.Date date_impressao;
     java.util.Date date_fim;
     boolean finalizou2 = false;
+    String sc = null;
+    String sp = null;
+    String sf = null;
+    String bloquear_atendimento = "no";
 
     public Server() {
 
@@ -132,9 +136,10 @@ public class Server {
                         chamar(message);
                     } else if (action.equals(action.PRINT)) {
                         imprimir(message);
-
                     } else if (action.equals(action.FINALIZAR)) {
                         finalizacao(message);
+                    } else if (action.equals(action.REIMPRIMIR)) {
+                        reimprimir(message);
                     }
 
                 }
@@ -170,349 +175,350 @@ public class Server {
 
     private void chamar(Mensagem message) {
         int idAtendimento = 0;
-
-        if (message.getText().equals("convencional")) {
-            if (filaprioritaria.estaVazia()) {
-                if (filacomum.estaVazia() == false) {
-                    finalizou = false;
-                    try {
-                        //Pesquisa se tem ficha em aberto para aquele caixa
-                        ServidorBean PesquisarInicio = new ServidorBean();
-                        ServidorDAO ini = new ServidorDAO();
-                        PesquisarInicio.setIdcaixa(message.getName());
-                        PesquisarInicio.setAtendimentoIniciado(true);
-                        PesquisarInicio.setAtendimentoFinalizado(false);
-                        ResultSet rsi;
-                        rsi = ini.retrivefichaAberta(PesquisarInicio);
-                        while (rsi.next()) {
-                            idAtendimento = rsi.getInt("cod");
-                            tipo = rsi.getString("tipo");
-                            numero = rsi.getInt("numero");
-                            date_impressao = rsi.getTimestamp("data_hora_impre");
-                            numero = Integer.parseInt(String.format("%03d", numero));
-                            message.setIdFinalizar(idAtendimento);
-                            finalizar(message);
-                            finalizou = true;
-                        }
-                        if (!finalizou) {
-                            //se nao tiver ficha aberta Pesquisa ID da ficha e adiciona um caixa a ela iniciando atendimento = true
-                            try {
-                                System.out.println("CAIXA: " + message.getName());
-                                System.out.println("chamando: " + filacomum.primeiro());
-                                ServidorBean Pesquisar = new ServidorBean();
-                                ServidorDAO c = new ServidorDAO();
-                                Pesquisar.setTipo(filacomum.primeiro().substring(0, 1));
-                                Pesquisar.setNumeroFicha(Integer.parseInt(filacomum.primeiro().substring(1, 4)));
-                                ResultSet rs = c.retriveficha(Pesquisar);
-                                while (rs.next()) {
-                                    idAtendimento = rs.getInt("cod");
-                                    date_impressao = rs.getTimestamp("data_hora_impre");
-                                }
-                                ServidorBean Atualizar = new ServidorBean();
-                                Atualizar.setCodigo(idAtendimento);
-                                Atualizar.setIdcaixa(message.getName());
-                                try {
-                                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");//formata a data e hora atual                                    
-                                    java.util.Date minhaData;//cria a minha data e hora atual                                   
-                                    minhaData = dateFormat.parse(getDateTime()); //minha data  recebe a data e hora                                     
-                                    java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData.getTime()); // coloca pra timestamp do banco
-                                    LocalTime start = new LocalTime(date_impressao);// pesquisar data no banco e por aqui
-                                    LocalTime end = new LocalTime(sqlDate);
-                                    Period period = new Period(start, end);
-                                    java.util.Date resul;
-                                    resul = dateFormat.parse(getDate() + " " + period.getHours() + ":" + period.getMinutes() + ":" + period.getSeconds());
-                                    java.sql.Timestamp sqlDate2 = new java.sql.Timestamp(resul.getTime()); // coloca pra timestamp do banco
-                                    Atualizar.setTempoEspera(sqlDate2); // calcula o tempo de espera 
-                                    Atualizar.setDataHoraIni(sqlDate); //atualiz a a hora que iniciou o atendimento
-                                    Atualizar.setAtendimentoIniciado(true);
-                                    Atualizar.setAtendimentoFinalizado(false);
-                                    ServidorDAO atualiza = new ServidorDAO();
-                                    new Thread() {
-                                        @Override
-                                        public void run() {
-                                            try {
-                                                atualiza.update(Atualizar);
-                                            } catch (SQLException ex) {
-
-                                            }
-                                        }
-                                    }.start();
-                                    message.setStatus("yes");
-                                    message.setAtual(filacomum.primeiro());
-                                    message.setUltima(ultima);
-                                    message.setPenultima(penultima);
-                                    message.setAntepenultima(antepenultima);
-                                    filacomum.remover();
-                                    atualizarPainel(message);
-                                    tes = antepenultima;
-                                    antepenultima = penultima;
-                                    penultima = ultima;
-                                    ultima = message.getAtual();
-                                } catch (ParseException ex) {
-
-                                }
-                            } catch (SQLException ex) {
-
+        if (bloquear_atendimento.equals("no")){
+            if (message.getText().equals("convencional")) {
+                if (filaprioritaria.estaVazia()) {
+                    if (filacomum.estaVazia() == false) {
+                        finalizou = false;
+                        try {
+                            //Pesquisa se tem ficha em aberto para aquele caixa
+                            ServidorBean PesquisarInicio = new ServidorBean();
+                            ServidorDAO ini = new ServidorDAO();
+                            PesquisarInicio.setIdcaixa(message.getName());
+                            PesquisarInicio.setAtendimentoIniciado(true);
+                            PesquisarInicio.setAtendimentoFinalizado(false);
+                            ResultSet rsi;
+                            rsi = ini.retrivefichaAberta(PesquisarInicio);
+                            while (rsi.next()) {
+                                idAtendimento = rsi.getInt("cod");
+                                tipo = rsi.getString("tipo");
+                                numero = rsi.getInt("numero");
+                                date_impressao = rsi.getTimestamp("data_hora_impre");
+                                numero = Integer.parseInt(String.format("%03d", numero));
+                                message.setIdFinalizar(idAtendimento);
+                                finalizar(message);
+                                finalizou = true;
                             }
+                            if (!finalizou) {
+                                //se nao tiver ficha aberta Pesquisa ID da ficha e adiciona um caixa a ela iniciando atendimento = true
+                                try {
+                                    System.out.println("CAIXA: " + message.getName());
+                                    System.out.println("chamando: " + filacomum.primeiro());
+                                    ServidorBean Pesquisar = new ServidorBean();
+                                    ServidorDAO c = new ServidorDAO();
+                                    Pesquisar.setTipo(filacomum.primeiro().substring(0, 1));
+                                    Pesquisar.setNumeroFicha(Integer.parseInt(filacomum.primeiro().substring(1, 4)));
+                                    ResultSet rs = c.retriveficha(Pesquisar);
+                                    while (rs.next()) {
+                                        idAtendimento = rs.getInt("cod");
+                                        date_impressao = rs.getTimestamp("data_hora_impre");
+                                    }
+                                    ServidorBean Atualizar = new ServidorBean();
+                                    Atualizar.setCodigo(idAtendimento);
+                                    Atualizar.setIdcaixa(message.getName());
+                                    try {
+                                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");//formata a data e hora atual                                    
+                                        java.util.Date minhaData;//cria a minha data e hora atual                                   
+                                        minhaData = dateFormat.parse(getDateTime()); //minha data  recebe a data e hora                                     
+                                        java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData.getTime()); // coloca pra timestamp do banco
+                                        LocalTime start = new LocalTime(date_impressao);// pesquisar data no banco e por aqui
+                                        LocalTime end = new LocalTime(sqlDate);
+                                        Period period = new Period(start, end);
+                                        java.util.Date resul;
+                                        resul = dateFormat.parse(getDate() + " " + period.getHours() + ":" + period.getMinutes() + ":" + period.getSeconds());
+                                        java.sql.Timestamp sqlDate2 = new java.sql.Timestamp(resul.getTime()); // coloca pra timestamp do banco
+                                        Atualizar.setTempoEspera(sqlDate2); // calcula o tempo de espera 
+                                        Atualizar.setDataHoraIni(sqlDate); //atualiz a a hora que iniciou o atendimento
+                                        Atualizar.setAtendimentoIniciado(true);
+                                        Atualizar.setAtendimentoFinalizado(false);
+                                        ServidorDAO atualiza = new ServidorDAO();
+                                        new Thread() {
+                                            @Override
+                                            public void run() {
+                                                try {
+                                                    atualiza.update(Atualizar);
+                                                } catch (SQLException ex) {
+
+                                                }
+                                            }
+                                        }.start();
+                                        message.setStatus("yes");
+                                        message.setAtual(filacomum.primeiro());
+                                        message.setUltima(ultima);
+                                        message.setPenultima(penultima);
+                                        message.setAntepenultima(antepenultima);
+                                        filacomum.remover();
+                                        atualizarPainel(message);
+                                        tes = antepenultima;
+                                        antepenultima = penultima;
+                                        penultima = ultima;
+                                        ultima = message.getAtual();
+                                    } catch (ParseException ex) {
+
+                                    }
+                                } catch (SQLException ex) {
+
+                                }
+                            }
+                        } catch (SQLException ex) {
+
                         }
-                    } catch (SQLException ex) {
+                    } else {
+
+                        try {
+                            //se vazia filaa Pesquisa se tem ficha em aberto para aquele caixa
+                            ServidorBean PesquisarInicio = new ServidorBean();
+                            ServidorDAO ini = new ServidorDAO();
+                            PesquisarInicio.setIdcaixa(message.getName());
+                            PesquisarInicio.setAtendimentoIniciado(true);
+                            PesquisarInicio.setAtendimentoFinalizado(false);
+                            ResultSet rsi;
+                            rsi = ini.retrivefichaAberta(PesquisarInicio);
+
+                            while (rsi.next()) {
+                                idAtendimento = rsi.getInt("cod");
+                                tipo = rsi.getString("tipo");
+                                numero = rsi.getInt("numero");
+                                // date_impressao = rsi.getTimestamp("data_hora_impre");
+                                numero = Integer.parseInt(String.format("%03d", numero));
+                                message.setIdFinalizar(idAtendimento);
+                                finalizar(message);
+                                finalizou = true;
+                            }
+
+                        } catch (SQLException ex) {
+
+                        }
+                        message.setStatus("no");
+                        message.setAtual(ultima);
+                        message.setUltima(penultima);
+                        message.setPenultima(antepenultima);
+                        message.setAntepenultima(tes);
+                        atualizarPainel(message);
 
                     }
                 } else {
+                    if (filaprioritaria.estaVazia() == false) {
+                        finalizou1 = false;
+                        try {
+                            //Pesquisa se tem ficha em aberto para aquele caixa
+                            ServidorBean PesquisarInicio = new ServidorBean();
+                            ServidorDAO ini = new ServidorDAO();
+                            PesquisarInicio.setIdcaixa(message.getName());
+                            PesquisarInicio.setAtendimentoIniciado(true);
+                            PesquisarInicio.setAtendimentoFinalizado(false);
+                            ResultSet rsi;
+                            rsi = ini.retrivefichaAberta(PesquisarInicio);
+                            while (rsi.next()) {
+                                idAtendimento = rsi.getInt("cod");
+                                tipo = rsi.getString("tipo");
+                                numero = rsi.getInt("numero");
+                                date_impressao = rsi.getTimestamp("data_hora_impre");
+                                numero = Integer.parseInt(String.format("%03d", numero));
+                                message.setIdFinalizar(idAtendimento);
+                                finalizar(message);
+                                finalizou1 = true;
 
-                    try {
-                        //se vazia filaa Pesquisa se tem ficha em aberto para aquele caixa
-                        ServidorBean PesquisarInicio = new ServidorBean();
-                        ServidorDAO ini = new ServidorDAO();
-                        PesquisarInicio.setIdcaixa(message.getName());
-                        PesquisarInicio.setAtendimentoIniciado(true);
-                        PesquisarInicio.setAtendimentoFinalizado(false);
-                        ResultSet rsi;
-                        rsi = ini.retrivefichaAberta(PesquisarInicio);
+                            }
+                            if (!finalizou1) {
+                                //se nao tiver ficha aberta Pesquisa ID da ficha e adiciona um caixa a ela iniciando atendimento = true
+                                try {
+                                    System.out.println("CAIXA: " + message.getName());
+                                    System.out.println("chamando: " + filaprioritaria.primeiro());
+                                    ServidorBean Pesquisar = new ServidorBean();
+                                    ServidorDAO c = new ServidorDAO();
+                                    Pesquisar.setTipo(filaprioritaria.primeiro().substring(0, 1));
+                                    Pesquisar.setNumeroFicha(Integer.parseInt(filaprioritaria.primeiro().substring(1, 4)));
+                                    ResultSet rs = c.retriveficha(Pesquisar);
+                                    while (rs.next()) {
+                                        idAtendimento = rs.getInt("cod");
+                                        date_impressao = rs.getTimestamp("data_hora_impre");
+                                    }
+                                    ServidorBean Atualizar = new ServidorBean();
+                                    Atualizar.setCodigo(idAtendimento);
+                                    Atualizar.setIdcaixa(message.getName());
+                                    try {
+                                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");//formata a data e hora atual                                    
+                                        java.util.Date minhaData;//cria a minha data e hora atual                                   
+                                        minhaData = dateFormat.parse(getDateTime()); //minha data  recebe a data e hora                                     
+                                        java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData.getTime()); // coloca pra timestamp do banco
+                                        LocalTime start = new LocalTime(date_impressao);// pesquisar data no banco e por aqui
+                                        LocalTime end = new LocalTime(sqlDate);
+                                        Period period = new Period(start, end);
+                                        java.util.Date resul;
+                                        resul = dateFormat.parse(getDate() + " " + period.getHours() + ":" + period.getMinutes() + ":" + period.getSeconds());
+                                        java.sql.Timestamp sqlDate2 = new java.sql.Timestamp(resul.getTime()); // coloca pra timestamp do banco
+                                        Atualizar.setTempoEspera(sqlDate2); // calcula o tempo de espera 
+                                        Atualizar.setDataHoraIni(sqlDate); //atualiz a a hora que iniciou o atendimento
+                                        Atualizar.setAtendimentoIniciado(true);
+                                        Atualizar.setAtendimentoFinalizado(false);
+                                        ServidorDAO atualiza = new ServidorDAO();
+                                        atualiza.update(Atualizar);
+                                        message.setStatus("yes");
+                                        message.setAtual(filaprioritaria.primeiro());
+                                        message.setUltima(ultima);
+                                        message.setPenultima(penultima);
+                                        message.setAntepenultima(antepenultima);
+                                        filaprioritaria.remover();
+                                        atualizarPainel(message);
+                                        tes = antepenultima;
+                                        antepenultima = penultima;
+                                        penultima = ultima;
+                                        ultima = message.getAtual();
+                                    } catch (ParseException ex) {
 
-                        while (rsi.next()) {
-                            idAtendimento = rsi.getInt("cod");
-                            tipo = rsi.getString("tipo");
-                            numero = rsi.getInt("numero");
-                            // date_impressao = rsi.getTimestamp("data_hora_impre");
-                            numero = Integer.parseInt(String.format("%03d", numero));
-                            message.setIdFinalizar(idAtendimento);
-                            finalizar(message);
-                            finalizou = true;
+                                    }
+                                } catch (SQLException ex) {
+
+                                }
+                            }
+                        } catch (SQLException ex) {
+
                         }
+                    } else {
 
-                    } catch (SQLException ex) {
+                        try {
+                            //se vazia filaa Pesquisa se tem ficha em aberto para aquele caixa
+                            ServidorBean PesquisarInicio = new ServidorBean();
+                            ServidorDAO ini = new ServidorDAO();
+                            PesquisarInicio.setIdcaixa(message.getName());
+                            PesquisarInicio.setAtendimentoIniciado(true);
+                            PesquisarInicio.setAtendimentoFinalizado(false);
+                            ResultSet rsi;
+
+                            rsi = ini.retrivefichaAberta(PesquisarInicio);
+
+                            while (rsi.next()) {
+                                idAtendimento = rsi.getInt("cod");
+                                tipo = rsi.getString("tipo");
+                                numero = rsi.getInt("numero");
+                                numero = Integer.parseInt(String.format("%03d", numero));
+                                message.setIdFinalizar(idAtendimento);
+                                finalizar(message);
+                                finalizou1 = true;
+                            }
+                        } catch (SQLException ex) {
+
+                        }
+                        message.setStatus("no");
+                        message.setAtual(ultima);
+                        message.setUltima(penultima);
+                        message.setPenultima(antepenultima);
+                        message.setAntepenultima(tes);
+                        atualizarPainel(message);
 
                     }
-                    message.setStatus("no");
-                    message.setAtual(ultima);
-                    message.setUltima(penultima);
-                    message.setPenultima(antepenultima);
-                    message.setAntepenultima(tes);
-                    atualizarPainel(message);
-
                 }
             } else {
-                if (filaprioritaria.estaVazia() == false) {
-                    finalizou1 = false;
-                    try {
-                        //Pesquisa se tem ficha em aberto para aquele caixa
-                        ServidorBean PesquisarInicio = new ServidorBean();
-                        ServidorDAO ini = new ServidorDAO();
-                        PesquisarInicio.setIdcaixa(message.getName());
-                        PesquisarInicio.setAtendimentoIniciado(true);
-                        PesquisarInicio.setAtendimentoFinalizado(false);
-                        ResultSet rsi;
-                        rsi = ini.retrivefichaAberta(PesquisarInicio);
-                        while (rsi.next()) {
-                            idAtendimento = rsi.getInt("cod");
-                            tipo = rsi.getString("tipo");
-                            numero = rsi.getInt("numero");
-                            date_impressao = rsi.getTimestamp("data_hora_impre");
-                            numero = Integer.parseInt(String.format("%03d", numero));
-                            message.setIdFinalizar(idAtendimento);
-                            finalizar(message);
-                            finalizou1 = true;
-
-                        }
-                        if (!finalizou1) {
-                            //se nao tiver ficha aberta Pesquisa ID da ficha e adiciona um caixa a ela iniciando atendimento = true
-                            try {
-                                System.out.println("CAIXA: " + message.getName());
-                                System.out.println("chamando: " + filaprioritaria.primeiro());
-                                ServidorBean Pesquisar = new ServidorBean();
-                                ServidorDAO c = new ServidorDAO();
-                                Pesquisar.setTipo(filaprioritaria.primeiro().substring(0, 1));
-                                Pesquisar.setNumeroFicha(Integer.parseInt(filaprioritaria.primeiro().substring(1, 4)));
-                                ResultSet rs = c.retriveficha(Pesquisar);
-                                while (rs.next()) {
-                                    idAtendimento = rs.getInt("cod");
-                                    date_impressao = rs.getTimestamp("data_hora_impre");
-                                }
-                                ServidorBean Atualizar = new ServidorBean();
-                                Atualizar.setCodigo(idAtendimento);
-                                Atualizar.setIdcaixa(message.getName());
-                                try {
-                                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");//formata a data e hora atual                                    
-                                    java.util.Date minhaData;//cria a minha data e hora atual                                   
-                                    minhaData = dateFormat.parse(getDateTime()); //minha data  recebe a data e hora                                     
-                                    java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData.getTime()); // coloca pra timestamp do banco
-                                    LocalTime start = new LocalTime(date_impressao);// pesquisar data no banco e por aqui
-                                    LocalTime end = new LocalTime(sqlDate);
-                                    Period period = new Period(start, end);
-                                    java.util.Date resul;
-                                    resul = dateFormat.parse(getDate() + " " + period.getHours() + ":" + period.getMinutes() + ":" + period.getSeconds());
-                                    java.sql.Timestamp sqlDate2 = new java.sql.Timestamp(resul.getTime()); // coloca pra timestamp do banco
-                                    Atualizar.setTempoEspera(sqlDate2); // calcula o tempo de espera 
-                                    Atualizar.setDataHoraIni(sqlDate); //atualiz a a hora que iniciou o atendimento
-                                    Atualizar.setAtendimentoIniciado(true);
-                                    Atualizar.setAtendimentoFinalizado(false);
-                                    ServidorDAO atualiza = new ServidorDAO();
-                                    atualiza.update(Atualizar);
-                                    message.setStatus("yes");
-                                    message.setAtual(filaprioritaria.primeiro());
-                                    message.setUltima(ultima);
-                                    message.setPenultima(penultima);
-                                    message.setAntepenultima(antepenultima);
-                                    filaprioritaria.remover();
-                                    atualizarPainel(message);
-                                    tes = antepenultima;
-                                    antepenultima = penultima;
-                                    penultima = ultima;
-                                    ultima = message.getAtual();
-                                } catch (ParseException ex) {
-
-                                }
-                            } catch (SQLException ex) {
-
+                if (message.getText().equals("popular")) {
+                    if (filapopular.estaVazia() == false) {
+                        finalizou2 = false;
+                        try {
+                            //Pesquisa se tem ficha em aberto para aquele caixa
+                            ServidorBean PesquisarInicio = new ServidorBean();
+                            ServidorDAO ini = new ServidorDAO();
+                            PesquisarInicio.setIdcaixa(message.getName());
+                            PesquisarInicio.setAtendimentoIniciado(true);
+                            PesquisarInicio.setAtendimentoFinalizado(false);
+                            ResultSet rsi;
+                            rsi = ini.retrivefichaAberta(PesquisarInicio);
+                            while (rsi.next()) {
+                                idAtendimento = rsi.getInt("cod");
+                                tipo = rsi.getString("tipo");
+                                numero = rsi.getInt("numero");
+                                date_impressao = rsi.getTimestamp("data_hora_impre");
+                                numero = Integer.parseInt(String.format("%03d", numero));
+                                message.setIdFinalizar(idAtendimento);
+                                finalizar(message);
+                                finalizou2 = true;
                             }
-                        }
-                    } catch (SQLException ex) {
-
-                    }
-                } else {
-
-                    try {
-                        //se vazia filaa Pesquisa se tem ficha em aberto para aquele caixa
-                        ServidorBean PesquisarInicio = new ServidorBean();
-                        ServidorDAO ini = new ServidorDAO();
-                        PesquisarInicio.setIdcaixa(message.getName());
-                        PesquisarInicio.setAtendimentoIniciado(true);
-                        PesquisarInicio.setAtendimentoFinalizado(false);
-                        ResultSet rsi;
-
-                        rsi = ini.retrivefichaAberta(PesquisarInicio);
-
-                        while (rsi.next()) {
-                            idAtendimento = rsi.getInt("cod");
-                            tipo = rsi.getString("tipo");
-                            numero = rsi.getInt("numero");
-                            numero = Integer.parseInt(String.format("%03d", numero));
-                            message.setIdFinalizar(idAtendimento);
-                            finalizar(message);
-                            finalizou1 = true;
-                        }
-                    } catch (SQLException ex) {
-
-                    }
-                    message.setStatus("no");
-                    message.setAtual(ultima);
-                    message.setUltima(penultima);
-                    message.setPenultima(antepenultima);
-                    message.setAntepenultima(tes);
-                    atualizarPainel(message);
-
-                }
-            }
-        } else {
-            if (message.getText().equals("popular")) {
-                if (filapopular.estaVazia() == false) {
-                    finalizou2 = false;
-                    try {
-                        //Pesquisa se tem ficha em aberto para aquele caixa
-                        ServidorBean PesquisarInicio = new ServidorBean();
-                        ServidorDAO ini = new ServidorDAO();
-                        PesquisarInicio.setIdcaixa(message.getName());
-                        PesquisarInicio.setAtendimentoIniciado(true);
-                        PesquisarInicio.setAtendimentoFinalizado(false);
-                        ResultSet rsi;
-                        rsi = ini.retrivefichaAberta(PesquisarInicio);
-                        while (rsi.next()) {
-                            idAtendimento = rsi.getInt("cod");
-                            tipo = rsi.getString("tipo");
-                            numero = rsi.getInt("numero");
-                            date_impressao = rsi.getTimestamp("data_hora_impre");
-                            numero = Integer.parseInt(String.format("%03d", numero));
-                            message.setIdFinalizar(idAtendimento);
-                            finalizar(message);
-                            finalizou2 = true;
-                        }
-                        if (!finalizou2) {
-                            //se nao tiver ficha aberta Pesquisa ID da ficha e adiciona um caixa a ela iniciando atendimento = true
-                            try {
-                                System.out.println("CAIXA: " + message.getName());
-                                System.out.println("chamando: " + filapopular.primeiro());
-                                ServidorBean Pesquisar = new ServidorBean();
-                                ServidorDAO c = new ServidorDAO();
-                                Pesquisar.setTipo(filapopular.primeiro().substring(0, 1));
-                                Pesquisar.setNumeroFicha(Integer.parseInt(filapopular.primeiro().substring(1, 4)));
-                                ResultSet rs = c.retriveficha(Pesquisar);
-                                while (rs.next()) {
-                                    idAtendimento = rs.getInt("cod");
-                                    date_impressao = rs.getTimestamp("data_hora_impre");
-                                }
-                                ServidorBean Atualizar = new ServidorBean();
-                                Atualizar.setCodigo(idAtendimento);
-                                Atualizar.setIdcaixa(message.getName());
+                            if (!finalizou2) {
+                                //se nao tiver ficha aberta Pesquisa ID da ficha e adiciona um caixa a ela iniciando atendimento = true
                                 try {
-                                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");//formata a data e hora atual                                    
-                                    java.util.Date minhaData;//cria a minha data e hora atual                                   
-                                    minhaData = dateFormat.parse(getDateTime()); //minha data  recebe a data e hora                                     
-                                    java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData.getTime()); // coloca pra timestamp do banco
-                                    LocalTime start = new LocalTime(date_impressao);// pesquisar data no banco e por aqui
-                                    LocalTime end = new LocalTime(sqlDate);
-                                    Period period = new Period(start, end);
-                                    java.util.Date resul;
-                                    resul = dateFormat.parse(getDate() + " " + period.getHours() + ":" + period.getMinutes() + ":" + period.getSeconds());
-                                    java.sql.Timestamp sqlDate2 = new java.sql.Timestamp(resul.getTime()); // coloca pra timestamp do banco
-                                    Atualizar.setTempoEspera(sqlDate2); // calcula o tempo de espera 
-                                    Atualizar.setDataHoraIni(sqlDate); //atualiz a a hora que iniciou o atendimento
-                                    Atualizar.setAtendimentoIniciado(true);
-                                    Atualizar.setAtendimentoFinalizado(false);
-                                    ServidorDAO atualiza = new ServidorDAO();
-                                    atualiza.update(Atualizar);
-                                    message.setStatus("yes");
-                                    message.setAtual(filapopular.primeiro());
-                                    message.setUltima(ultima);
-                                    message.setPenultima(penultima);
-                                    message.setAntepenultima(antepenultima);
-                                    filapopular.remover();
-                                    atualizarPainel(message);
-                                    tes = antepenultima;
-                                    antepenultima = penultima;
-                                    penultima = ultima;
-                                    ultima = message.getAtual();
-                                } catch (ParseException ex) {
+                                    System.out.println("CAIXA: " + message.getName());
+                                    System.out.println("chamando: " + filapopular.primeiro());
+                                    ServidorBean Pesquisar = new ServidorBean();
+                                    ServidorDAO c = new ServidorDAO();
+                                    Pesquisar.setTipo(filapopular.primeiro().substring(0, 1));
+                                    Pesquisar.setNumeroFicha(Integer.parseInt(filapopular.primeiro().substring(1, 4)));
+                                    ResultSet rs = c.retriveficha(Pesquisar);
+                                    while (rs.next()) {
+                                        idAtendimento = rs.getInt("cod");
+                                        date_impressao = rs.getTimestamp("data_hora_impre");
+                                    }
+                                    ServidorBean Atualizar = new ServidorBean();
+                                    Atualizar.setCodigo(idAtendimento);
+                                    Atualizar.setIdcaixa(message.getName());
+                                    try {
+                                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");//formata a data e hora atual                                    
+                                        java.util.Date minhaData;//cria a minha data e hora atual                                   
+                                        minhaData = dateFormat.parse(getDateTime()); //minha data  recebe a data e hora                                     
+                                        java.sql.Timestamp sqlDate = new java.sql.Timestamp(minhaData.getTime()); // coloca pra timestamp do banco
+                                        LocalTime start = new LocalTime(date_impressao);// pesquisar data no banco e por aqui
+                                        LocalTime end = new LocalTime(sqlDate);
+                                        Period period = new Period(start, end);
+                                        java.util.Date resul;
+                                        resul = dateFormat.parse(getDate() + " " + period.getHours() + ":" + period.getMinutes() + ":" + period.getSeconds());
+                                        java.sql.Timestamp sqlDate2 = new java.sql.Timestamp(resul.getTime()); // coloca pra timestamp do banco
+                                        Atualizar.setTempoEspera(sqlDate2); // calcula o tempo de espera 
+                                        Atualizar.setDataHoraIni(sqlDate); //atualiz a a hora que iniciou o atendimento
+                                        Atualizar.setAtendimentoIniciado(true);
+                                        Atualizar.setAtendimentoFinalizado(false);
+                                        ServidorDAO atualiza = new ServidorDAO();
+                                        atualiza.update(Atualizar);
+                                        message.setStatus("yes");
+                                        message.setAtual(filapopular.primeiro());
+                                        message.setUltima(ultima);
+                                        message.setPenultima(penultima);
+                                        message.setAntepenultima(antepenultima);
+                                        filapopular.remover();
+                                        atualizarPainel(message);
+                                        tes = antepenultima;
+                                        antepenultima = penultima;
+                                        penultima = ultima;
+                                        ultima = message.getAtual();
+                                    } catch (ParseException ex) {
+
+                                    }
+                                } catch (SQLException ex) {
 
                                 }
-                            } catch (SQLException ex) {
-
                             }
+                        } catch (SQLException ex) {
+
                         }
-                    } catch (SQLException ex) {
+                    } else {
 
-                    }
-                } else {
+                        try {
+                            //se vazia filaa Pesquisa se tem ficha em aberto para aquele caixa
+                            ServidorBean PesquisarInicio = new ServidorBean();
+                            ServidorDAO ini = new ServidorDAO();
+                            PesquisarInicio.setIdcaixa(message.getName());
+                            PesquisarInicio.setAtendimentoIniciado(true);
+                            PesquisarInicio.setAtendimentoFinalizado(false);
+                            ResultSet rsi;
 
-                    try {
-                        //se vazia filaa Pesquisa se tem ficha em aberto para aquele caixa
-                        ServidorBean PesquisarInicio = new ServidorBean();
-                        ServidorDAO ini = new ServidorDAO();
-                        PesquisarInicio.setIdcaixa(message.getName());
-                        PesquisarInicio.setAtendimentoIniciado(true);
-                        PesquisarInicio.setAtendimentoFinalizado(false);
-                        ResultSet rsi;
+                            rsi = ini.retrivefichaAberta(PesquisarInicio);
 
-                        rsi = ini.retrivefichaAberta(PesquisarInicio);
+                            while (rsi.next()) {
+                                idAtendimento = rsi.getInt("cod");
+                                tipo = rsi.getString("tipo");
+                                numero = rsi.getInt("numero");
+                                numero = Integer.parseInt(String.format("%03d", numero));
+                                message.setIdFinalizar(idAtendimento);
+                                finalizar(message);
+                                finalizou2 = true;
+                            }
+                        } catch (SQLException ex) {
 
-                        while (rsi.next()) {
-                            idAtendimento = rsi.getInt("cod");
-                            tipo = rsi.getString("tipo");
-                            numero = rsi.getInt("numero");
-                            numero = Integer.parseInt(String.format("%03d", numero));
-                            message.setIdFinalizar(idAtendimento);
-                            finalizar(message);
-                            finalizou2 = true;
                         }
-                    } catch (SQLException ex) {
-
+                        message.setStatus("no");
+                        message.setAtual(ultima);
+                        message.setUltima(penultima);
+                        message.setPenultima(antepenultima);
+                        message.setAntepenultima(tes);
+                        atualizarPainel(message);
                     }
-                    message.setStatus("no");
-                    message.setAtual(ultima);
-                    message.setUltima(penultima);
-                    message.setPenultima(antepenultima);
-                    message.setAntepenultima(tes);
-                    atualizarPainel(message);
                 }
             }
         }
@@ -664,8 +670,7 @@ public class Server {
 
     }
 
-    private void imprime(String ficha) {
-
+    private void imprime(String ficha, Mensagem message) {
         new Thread() {
             @Override
             public void run() {
@@ -701,6 +706,7 @@ public class Server {
                                 Envios.setAtendimentoFinalizado(Status);
                                 ServidorDAO enviar = new ServidorDAO();
                                 enviar.create(Envios);
+                                bloquear_atendimento = "no";
                             } catch (SQLException ex) {
 
                             }
@@ -712,10 +718,21 @@ public class Server {
                 } catch (IOException ex) {
 
                 } catch (PrinterException ex) {
-                    JOptionPane.showMessageDialog(null, "Problemas com a impressão! \n * Verifique se há impressora instalada! \n * Verifique os cabos da impressorea! \n Entre em contato com o suporte! ", "Inove Systems - Informação", JOptionPane.INFORMATION_MESSAGE);
+                    bloquear_atendimento = "yes";
+                    message.setStatus("erro_impressao");
+                    message.setAtual(ultima);
+                    message.setUltima(penultima);
+                    message.setPenultima(antepenultima);
+                    message.setAntepenultima(tes);
+                    atualizarPainel(message);
+                    //deve enviar a mensagem erro de imp. para onde foi solicitada a impressão
+                    //JOptionPane.showMessageDialog(null, "Problemas com a impressão! \n * Verifique se há impressora instalada! \n * Verifique os cabos da impressorea! \n Entre em contato com o suporte! ", "Inove Systems - Informação", JOptionPane.INFORMATION_MESSAGE);
+
                 }
+
             }
         }.start();
+
     }
 
     private void imprimir(Mensagem message) {
@@ -723,51 +740,82 @@ public class Server {
         if (message.getText().equals("C")) {
             if (SenhaComum <= 998) {
                 SenhaComum = SenhaComum + 1;
-                String sc = String.format("%03d", SenhaComum);
+                sc = null;
+                sc = String.format("%03d", SenhaComum);
                 System.out.println("C" + sc);
                 filacomum.adicionar("C" + sc);
-                imprime("C" + sc);
+                imprime("C" + sc, message);
             } else {
                 SenhaComum = 0;
-                String sc = String.format("%03d", SenhaComum);
+                sc = null;
+                sc = String.format("%03d", SenhaComum);
                 System.out.println("C" + sc);
                 filacomum.adicionar("C" + sc);
-                imprime("C" + sc);
+                imprime("C" + sc, message);
             }
         } else {
             if (message.getText().equals("P")) {
                 if (SenhaPrioritaria <= 998) {
                     SenhaPrioritaria = SenhaPrioritaria + 1;
-                    String sp = String.format("%03d", SenhaPrioritaria);
+                    sp = null;
+                    sp = String.format("%03d", SenhaPrioritaria);
                     System.out.println("P" + sp);
                     filaprioritaria.adicionar("P" + sp);
-                    imprime("P" + sp);
+                    imprime("P" + sp, message);
                 } else {
                     SenhaPrioritaria = 0;
-                    String sp = String.format("%03d", SenhaPrioritaria);
+                    sp = null;
+                    sp = String.format("%03d", SenhaPrioritaria);
                     System.out.println("P" + sp);
                     filaprioritaria.adicionar("P" + sp);
-                    imprime("P" + sp);
+                    imprime("P" + sp, message);
                 }
             } else {
                 if (message.getText().equals("F")) {
 
                     if (SenhaPopular <= 998) {
                         SenhaPopular = SenhaPopular + 1;
-                        String sf = String.format("%03d", SenhaPopular);
+                        sf = null;
+                        sf = String.format("%03d", SenhaPopular);
                         System.out.println("F" + sf);
                         filapopular.adicionar("F" + sf);
-                        imprime("F" + sf);
+                        imprime("F" + sf, message);
                     } else {
                         SenhaPopular = 0;
-                        String sf = String.format("%03d", SenhaPopular);
+                        sc = null;
+                        sf = String.format("%03d", SenhaPopular);
                         System.out.println("F" + sf);
                         filapopular.adicionar("F" + sf);
-                        imprime("F" + sf);
+                        imprime("F" + sf, message);
                     }
                 }
             }
         }
+    }
+
+    public void reimprimir(Mensagem message) {
+        if (message.getStatus().equals("yes")) {
+            if (message.getText().equals("F")) {
+                imprime("F" + sf, message);
+            }
+
+            if (message.getText().equals("P")) {
+                imprime("P" + sp, message);
+            }
+
+            if (message.getText().equals("C")) {
+                imprime("C" + sc, message);
+            }
+
+        } else {
+            message.setStatus("erro_impressao");
+            message.setAtual(ultima);
+            message.setUltima(penultima);
+            message.setPenultima(antepenultima);
+            message.setAntepenultima(tes);
+            atualizarPainel(message);
+        }
+
     }
 
     private boolean connect(Mensagem message, ObjectOutputStream output) {
@@ -1024,4 +1072,5 @@ public class Server {
         Server serv = new Server();
         serv.Conect();
     }
+
 }

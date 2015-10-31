@@ -50,7 +50,7 @@ public class Imprimir {
 
         PrintService[] pservices = PrinterJob.lookupPrintServices();
 
-        System.out.println(pservices.length);
+        //System.out.println(pservices.length);
         if (pservices.length > 0) {
             for (PrintService ps : pservices) {
                 System.out.println("Impressora Encontrada: " + ps.getName());
@@ -113,7 +113,7 @@ class PDFPrintPage implements Printable {
                 page.waitForFinish();
                 pgs.run();
             } catch (InterruptedException ie) {
-                System.out.println(ie.toString());
+                // System.out.println(ie.toString());
             }
             return PAGE_EXISTS;
         } else {
