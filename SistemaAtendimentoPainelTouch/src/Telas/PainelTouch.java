@@ -266,17 +266,19 @@ public class PainelTouch extends javax.swing.JFrame {
         String text;
         if (message.getStatus().equals("erro_impressao")) {
             if (message.getName().equals(caixa)) {
+//                if (!((message.getText().equals("convencional"))||((message.getText().equals("popular"))))) {
                 int resposta = JOptionPane.showConfirmDialog(null, "Erro de Impressão! Verifique o Painel de Impressão! \n" + "Tudo pronto? \n" + "Deseja reimprimir a ficha de atendimento?");
 
                 if (resposta == JOptionPane.YES_OPTION) {
                     text = "yes";
                     if (!text.isEmpty()) {
                         message.setName(message.getName());
-                        message.setText(text);
+                        // message.setText(text);
                         message.setIdFinalizar(message.getIdFinalizar());
                         message.setStatus("yes");
                         message.setAction(Mensagem.Action.REIMPRIMIR);
                         service.send(message);
+                        System.out.println("teste: " + message.getText());
                     }
                 }
 
@@ -284,11 +286,12 @@ public class PainelTouch extends javax.swing.JFrame {
                     text = "no";
                     if (!text.isEmpty()) {
                         message.setName(message.getName());
-                        message.setText(text);
+                        // message.setText(text);
                         message.setIdFinalizar(message.getIdFinalizar());
                         message.setStatus("no");
                         message.setAction(Mensagem.Action.REIMPRIMIR);
                         service.send(message);
+                        System.out.println("teste: " + message.getText());
                     }
                 }
 
@@ -296,11 +299,12 @@ public class PainelTouch extends javax.swing.JFrame {
                     text = "no";
                     if (!text.isEmpty()) {
                         message.setName(message.getName());
-                        message.setText(text);
+                        // message.setText(text);
                         message.setIdFinalizar(message.getIdFinalizar());
                         message.setStatus("no");
                         message.setAction(Mensagem.Action.REIMPRIMIR);
                         service.send(message);
+                        System.out.println("teste: " + message.getText());
                     }
                 }
 
@@ -308,16 +312,15 @@ public class PainelTouch extends javax.swing.JFrame {
                     text = "no";
                     if (!text.isEmpty()) {
                         message.setName(message.getName());
-                        message.setText(text);
-                        message.setIdFinalizar(message.getIdFinalizar());
+                        // message.setText(text);
+                        // message.setIdFinalizar(message.getIdFinalizar());
                         message.setStatus("no");
                         message.setAction(Mensagem.Action.REIMPRIMIR);
                         service.send(message);
+                        System.out.println("teste: " + message.getText());
                     }
                 }
-
             }
-
         }
 
     }
@@ -552,6 +555,7 @@ public class PainelTouch extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MousePressed
+
         new Thread() {
             @Override
             public void run() {
@@ -584,6 +588,7 @@ public class PainelTouch extends javax.swing.JFrame {
 
             }
         }.start();
+
 
     }//GEN-LAST:event_jLabel2MousePressed
 
