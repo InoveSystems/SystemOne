@@ -307,17 +307,19 @@ public class Cliente extends javax.swing.JFrame {
 
         if (message.getStatus().equals("erro_impressao")) {
             if (message.getName().equals(caixa)) {
-                int resposta = JOptionPane.showConfirmDialog(null, "Erro de Impressão! Verifique o Painel de Impressão! \n" + "Tudo pronto? \n" + "Deseja reimprimir a ficha de atendimento?");
+//                if (!((message.getText().equals("convencional"))||((message.getText().equals("popular"))))) {
+                int resposta = JOptionPane.showConfirmDialog(null, " ERRO DE IMPRESSÃO! VERIFIQUE O PAINEL DE IMPRESSÃO! \n" + " TUDO PRONTO? \n" + " DESEJA REIMPRIMIR A FICHA DE ATENDIMENTO?");
 
                 if (resposta == JOptionPane.YES_OPTION) {
                     text = "yes";
                     if (!text.isEmpty()) {
                         message.setName(message.getName());
-                       // message.setText(text);
+                        // message.setText(text);
                         message.setIdFinalizar(message.getIdFinalizar());
                         message.setStatus("yes");
                         message.setAction(Mensagem.Action.REIMPRIMIR);
                         service.send(message);
+                        System.out.println("teste: " + message.getText());
                     }
                 }
 
@@ -325,11 +327,12 @@ public class Cliente extends javax.swing.JFrame {
                     text = "no";
                     if (!text.isEmpty()) {
                         message.setName(message.getName());
-                       // message.setText(text);
+                        // message.setText(text);
                         message.setIdFinalizar(message.getIdFinalizar());
                         message.setStatus("no");
                         message.setAction(Mensagem.Action.REIMPRIMIR);
                         service.send(message);
+                        System.out.println("teste: " + message.getText());
                     }
                 }
 
@@ -337,11 +340,12 @@ public class Cliente extends javax.swing.JFrame {
                     text = "no";
                     if (!text.isEmpty()) {
                         message.setName(message.getName());
-                       // message.setText(text);
+                        // message.setText(text);
                         message.setIdFinalizar(message.getIdFinalizar());
                         message.setStatus("no");
                         message.setAction(Mensagem.Action.REIMPRIMIR);
                         service.send(message);
+                        System.out.println("teste: " + message.getText());
                     }
                 }
 
@@ -349,14 +353,19 @@ public class Cliente extends javax.swing.JFrame {
                     text = "no";
                     if (!text.isEmpty()) {
                         message.setName(message.getName());
-                       // message.setText(text);
-                        message.setIdFinalizar(message.getIdFinalizar());
+                            // message.setText(text);
+                        // message.setIdFinalizar(message.getIdFinalizar());
                         message.setStatus("no");
                         message.setAction(Mensagem.Action.REIMPRIMIR);
                         service.send(message);
+                        System.out.println("teste: " + message.getText());
                     }
                 }
 
+//                } else {
+//                    JOptionPane.showMessageDialog(null, "Erro de Impressão! Verifique o Painel de Impressão! \n" + "Tudo pronto? \n" + "Deseja chamar uma nova ficha?");
+//
+//                }
             }
 
         }
