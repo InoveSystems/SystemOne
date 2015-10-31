@@ -11,10 +11,7 @@ import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author mertins
- */
+
 public class Conexao {
 
     private Socket socket;

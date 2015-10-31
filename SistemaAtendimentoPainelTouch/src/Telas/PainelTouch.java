@@ -263,6 +263,63 @@ public class PainelTouch extends javax.swing.JFrame {
 
     private void receive(Mensagem message) {
 
+        String text;
+        if (message.getStatus().equals("erro_impressao")) {
+            if (message.getName().equals(caixa)) {
+                int resposta = JOptionPane.showConfirmDialog(null, "Erro de Impressão! Verifique o Painel de Impressão! \n" + "Tudo pronto? \n" + "Deseja reimprimir a ficha de atendimento?");
+
+                if (resposta == JOptionPane.YES_OPTION) {
+                    text = "yes";
+                    if (!text.isEmpty()) {
+                        message.setName(message.getName());
+                        message.setText(text);
+                        message.setIdFinalizar(message.getIdFinalizar());
+                        message.setStatus("yes");
+                        message.setAction(Mensagem.Action.REIMPRIMIR);
+                        service.send(message);
+                    }
+                }
+
+                if (resposta == JOptionPane.NO_OPTION) {
+                    text = "no";
+                    if (!text.isEmpty()) {
+                        message.setName(message.getName());
+                        message.setText(text);
+                        message.setIdFinalizar(message.getIdFinalizar());
+                        message.setStatus("no");
+                        message.setAction(Mensagem.Action.REIMPRIMIR);
+                        service.send(message);
+                    }
+                }
+
+                if (resposta == JOptionPane.CANCEL_OPTION) {
+                    text = "no";
+                    if (!text.isEmpty()) {
+                        message.setName(message.getName());
+                        message.setText(text);
+                        message.setIdFinalizar(message.getIdFinalizar());
+                        message.setStatus("no");
+                        message.setAction(Mensagem.Action.REIMPRIMIR);
+                        service.send(message);
+                    }
+                }
+
+                if (resposta == JOptionPane.CLOSED_OPTION) {
+                    text = "no";
+                    if (!text.isEmpty()) {
+                        message.setName(message.getName());
+                        message.setText(text);
+                        message.setIdFinalizar(message.getIdFinalizar());
+                        message.setStatus("no");
+                        message.setAction(Mensagem.Action.REIMPRIMIR);
+                        service.send(message);
+                    }
+                }
+
+            }
+
+        }
+
     }
 
     private void refreshOnlines(Mensagem message) {
