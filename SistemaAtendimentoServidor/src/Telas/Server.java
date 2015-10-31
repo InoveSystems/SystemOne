@@ -75,6 +75,7 @@ public class Server {
     String sp = null;
     String sf = null;
     String bloquear_atendimento = "no";
+    String reimpressao = "";
 
     public Server() {
 
@@ -175,7 +176,7 @@ public class Server {
 
     private void chamar(Mensagem message) {
         int idAtendimento = 0;
-        if (bloquear_atendimento.equals("no")){
+        if (bloquear_atendimento.equals("no")) {
             if (message.getText().equals("convencional")) {
                 if (filaprioritaria.estaVazia()) {
                     if (filacomum.estaVazia() == false) {
@@ -521,6 +522,14 @@ public class Server {
                     }
                 }
             }
+        } else {
+            //
+            message.setStatus("erro_impressao");
+            message.setAtual(ultima);
+            message.setUltima(penultima);
+            message.setPenultima(antepenultima);
+            message.setAntepenultima(tes);
+            atualizarPainel(message);
         }
     }
 
@@ -718,16 +727,28 @@ public class Server {
                 } catch (IOException ex) {
 
                 } catch (PrinterException ex) {
-                    bloquear_atendimento = "yes";
-                    message.setStatus("erro_impressao");
-                    message.setAtual(ultima);
-                    message.setUltima(penultima);
-                    message.setPenultima(antepenultima);
-                    message.setAntepenultima(tes);
-                    atualizarPainel(message);
+                    if (bloquear_atendimento.equals("no")) {
+                        bloquear_atendimento = "yes";
+                        reimpressao = message.getText();
+                        message.setStatus("erro_impressao");
+                        message.setAtual(ultima);
+                        message.setUltima(penultima);
+                        message.setPenultima(antepenultima);
+                        message.setAntepenultima(tes);
+                        atualizarPainel(message);
                     //deve enviar a mensagem erro de imp. para onde foi solicitada a impressão
-                    //JOptionPane.showMessageDialog(null, "Problemas com a impressão! \n * Verifique se há impressora instalada! \n * Verifique os cabos da impressorea! \n Entre em contato com o suporte! ", "Inove Systems - Informação", JOptionPane.INFORMATION_MESSAGE);
+                        //JOptionPane.showMessageDialog(null, "Problemas com a impressão! \n * Verifique se há impressora instalada! \n * Verifique os cabos da impressorea! \n Entre em contato com o suporte! ", "Inove Systems - Informação", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        bloquear_atendimento = "yes";
+                        //reimpressao = message.getText();
+                        message.setStatus("erro_impressao");
+                        message.setAtual(ultima);
+                        message.setUltima(penultima);
+                        message.setPenultima(antepenultima);
+                        message.setAntepenultima(tes);
+                        atualizarPainel(message);
 
+                    }
                 }
 
             }
@@ -736,74 +757,84 @@ public class Server {
     }
 
     private void imprimir(Mensagem message) {
-
-        if (message.getText().equals("C")) {
-            if (SenhaComum <= 998) {
-                SenhaComum = SenhaComum + 1;
-                sc = null;
-                sc = String.format("%03d", SenhaComum);
-                System.out.println("C" + sc);
-                filacomum.adicionar("C" + sc);
-                imprime("C" + sc, message);
-            } else {
-                SenhaComum = 0;
-                sc = null;
-                sc = String.format("%03d", SenhaComum);
-                System.out.println("C" + sc);
-                filacomum.adicionar("C" + sc);
-                imprime("C" + sc, message);
-            }
-        } else {
-            if (message.getText().equals("P")) {
-                if (SenhaPrioritaria <= 998) {
-                    SenhaPrioritaria = SenhaPrioritaria + 1;
-                    sp = null;
-                    sp = String.format("%03d", SenhaPrioritaria);
-                    System.out.println("P" + sp);
-                    filaprioritaria.adicionar("P" + sp);
-                    imprime("P" + sp, message);
+        if (bloquear_atendimento.equals("no")) {
+            if (message.getText().equals("C")) {
+                if (SenhaComum <= 998) {
+                    SenhaComum = SenhaComum + 1;
+                    sc = null;
+                    sc = String.format("%03d", SenhaComum);
+                    System.out.println("C" + sc);
+                    filacomum.adicionar("C" + sc);
+                    imprime("C" + sc, message);
                 } else {
-                    SenhaPrioritaria = 0;
-                    sp = null;
-                    sp = String.format("%03d", SenhaPrioritaria);
-                    System.out.println("P" + sp);
-                    filaprioritaria.adicionar("P" + sp);
-                    imprime("P" + sp, message);
+                    SenhaComum = 0;
+                    sc = null;
+                    sc = String.format("%03d", SenhaComum);
+                    System.out.println("C" + sc);
+                    filacomum.adicionar("C" + sc);
+                    imprime("C" + sc, message);
                 }
             } else {
-                if (message.getText().equals("F")) {
-
-                    if (SenhaPopular <= 998) {
-                        SenhaPopular = SenhaPopular + 1;
-                        sf = null;
-                        sf = String.format("%03d", SenhaPopular);
-                        System.out.println("F" + sf);
-                        filapopular.adicionar("F" + sf);
-                        imprime("F" + sf, message);
+                if (message.getText().equals("P")) {
+                    if (SenhaPrioritaria <= 998) {
+                        SenhaPrioritaria = SenhaPrioritaria + 1;
+                        sp = null;
+                        sp = String.format("%03d", SenhaPrioritaria);
+                        System.out.println("P" + sp);
+                        filaprioritaria.adicionar("P" + sp);
+                        imprime("P" + sp, message);
                     } else {
-                        SenhaPopular = 0;
-                        sc = null;
-                        sf = String.format("%03d", SenhaPopular);
-                        System.out.println("F" + sf);
-                        filapopular.adicionar("F" + sf);
-                        imprime("F" + sf, message);
+                        SenhaPrioritaria = 0;
+                        sp = null;
+                        sp = String.format("%03d", SenhaPrioritaria);
+                        System.out.println("P" + sp);
+                        filaprioritaria.adicionar("P" + sp);
+                        imprime("P" + sp, message);
+                    }
+                } else {
+                    if (message.getText().equals("F")) {
+
+                        if (SenhaPopular <= 998) {
+                            SenhaPopular = SenhaPopular + 1;
+                            sf = null;
+                            sf = String.format("%03d", SenhaPopular);
+                            System.out.println("F" + sf);
+                            filapopular.adicionar("F" + sf);
+                            imprime("F" + sf, message);
+                        } else {
+                            SenhaPopular = 0;
+                            sc = null;
+                            sf = String.format("%03d", SenhaPopular);
+                            System.out.println("F" + sf);
+                            filapopular.adicionar("F" + sf);
+                            imprime("F" + sf, message);
+                        }
                     }
                 }
             }
+        } else {
+            message.setStatus("erro_impressao");
+            message.setText(reimpressao);
+            message.setAtual(ultima);
+            message.setUltima(penultima);
+            message.setPenultima(antepenultima);
+            message.setAntepenultima(tes);
+            atualizarPainel(message);
         }
     }
 
     public void reimprimir(Mensagem message) {
+        System.out.println(reimpressao);
         if (message.getStatus().equals("yes")) {
-            if (message.getText().equals("F")) {
+            if (reimpressao.equals("F")) {
                 imprime("F" + sf, message);
             }
 
-            if (message.getText().equals("P")) {
+            if (reimpressao.equals("P")) {
                 imprime("P" + sp, message);
             }
 
-            if (message.getText().equals("C")) {
+            if (reimpressao.equals("C")) {
                 imprime("C" + sc, message);
             }
 
