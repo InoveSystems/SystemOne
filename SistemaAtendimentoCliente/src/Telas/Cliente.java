@@ -28,17 +28,19 @@ import javax.swing.filechooser.FileSystemView;
 
 public class Cliente extends javax.swing.JFrame {
 
+    
+    Config config = new Config();
     private Socket socket;
     private Mensagem message;
-    private Conexao service;
-    String caixa = "20";
+    public Conexao service;
+    public String caixa = "20";
     //File arquivo = new File(getClass().getResource("/Config/CaixaConfig.txt").getFile());
     //File arquivo = new File("C://SistemaAtendimentoCliente/CaixaConfig.txt");
     boolean StatusMensage;
-    String IPCom = "127.0.0.1";
-    String diretorioUsuario = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
-    File IPConfig = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "IPConfig.txt");
-    File arquivo = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "CaixaConfig.txt");
+    public String IPCom = "127.0.0.1";
+    public String diretorioUsuario = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
+    public File IPConfig = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "IPConfig.txt");
+    public File arquivo = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "CaixaConfig.txt");
 
     public Cliente() {
         initComponents();
@@ -218,7 +220,7 @@ public class Cliente extends javax.swing.JFrame {
         statuslabel.setText("Conexão realizada com sucesso!");
     }
 
-    private void disconnected() {
+    public void disconnected() {
         try {
             socket.close();
         } catch (IOException ex) {
@@ -353,7 +355,7 @@ public class Cliente extends javax.swing.JFrame {
                     text = "no";
                     if (!text.isEmpty()) {
                         message.setName(message.getName());
-                            // message.setText(text);
+                        // message.setText(text);
                         // message.setIdFinalizar(message.getIdFinalizar());
                         message.setStatus("no");
                         message.setAction(Mensagem.Action.REIMPRIMIR);
@@ -832,6 +834,7 @@ public class Cliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbConvencionalPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConvencionalPrintActionPerformed
+       
         String text = "C";
         String name = this.message.getName();
         if (!text.isEmpty()) {
@@ -896,6 +899,7 @@ public class Cliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel4MouseClicked
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+
         String caixaProb;
         this.message = new Mensagem();
         this.message.setAtual(atuallabel.getText());
@@ -985,6 +989,11 @@ public class Cliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel16MouseClicked
 
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
+
+//        config.setVisible(true);
+//        config.jTabbedPane1.setSelectedIndex(0);
+//        config.setLocationRelativeTo(null);
+
         String ipconexao;
         int resposta = 0;
         ipconexao = JOptionPane.showInputDialog(null, "QUAL O IP DO SERVIDOR?", "3D Soluções Tecnológicas - Configuração", 3);
@@ -1079,7 +1088,8 @@ public class Cliente extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Cliente().setVisible(true);
+                Cliente cliente = new Cliente();
+                cliente.setVisible(true);
 
             }
         });
