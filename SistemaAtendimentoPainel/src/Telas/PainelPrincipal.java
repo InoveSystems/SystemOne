@@ -29,6 +29,8 @@ import javazoom.jl.decoder.JavaLayerException;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileSystemView;
 
@@ -52,11 +54,14 @@ public class PainelPrincipal extends javax.swing.JFrame {
     PainelPrincipal.Fila f1 = new PainelPrincipal.Fila();
     String teste = " ";
     String IPCom = "127.0.0.1";
+    private static final String MEDIA_URL
+            = "http://download.oracle.com/otndocs/products/javafx/oow2010-2.flv";
 
     /**
      * Creates new form PainelPrincipal
      */
     public PainelPrincipal() {
+//        
         setExtendedState(MAXIMIZED_BOTH);
         setUndecorated(true);
         initComponents();
@@ -107,7 +112,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
             }
         }.
                 start();
-
+        
     }
 
     private class ListenerSocket implements Runnable {
