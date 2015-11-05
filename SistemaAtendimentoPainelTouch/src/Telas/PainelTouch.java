@@ -40,7 +40,7 @@ public class PainelTouch extends javax.swing.JFrame {
     LeitorXml leitor = new LeitorXml();
     int inicio;
     int fim;
-    PainelTouch.FilaComum f1 = new PainelTouch.FilaComum();
+    PainelTouch.Fila f12 = new PainelTouch.Fila();
     String teste = " ";
     String IPCom = "127.0.0.1";
     String diretorioUsuario = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
@@ -49,11 +49,11 @@ public class PainelTouch extends javax.swing.JFrame {
 
     public PainelTouch() {
 
-        //setExtendedState(MAXIMIZED_BOTH);
-        //setUndecorated(true);
-        //Image cursorImage = Toolkit.getDefaultToolkit().getImage("xparent.gif");
-        //Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImage, new Point(0, 0), "");
-        //setCursor(blankCursor);
+        setExtendedState(MAXIMIZED_BOTH);
+        setUndecorated(true);
+        Image cursorImage = Toolkit.getDefaultToolkit().getImage("xparent.gif");
+        Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImage, new Point(0, 0), "");
+        setCursor(blankCursor);
         initComponents();
         new Thread() {
             @Override
@@ -69,7 +69,7 @@ public class PainelTouch extends javax.swing.JFrame {
                 }
             }
         }.start();
-        f1.adicionar();
+        f12.adicionar();
 
         //lendo ou criando arquivo com o ip do servidor
         new Thread() {
@@ -347,25 +347,23 @@ public class PainelTouch extends javax.swing.JFrame {
         return true;
     }
 
-    class FilaComum {
+    class Fila {
 
         int inicio;
         int fim;
         int tamanho;
         int qtdeElementos;
-        String filaComum[];
+        String fila[];
 
-        public FilaComum() {
+        public Fila() {
             add = leitor.adicionar();
             inicio = fim = -1;
             tamanho = add.length();
-            filaComum = new String[tamanho];
-
             qtdeElementos = 0;
         }
 
         public String primeiro() {
-            return filaComum[inicio];
+            return fila[inicio];
         }
 
         public boolean estaVazia() {
@@ -383,7 +381,7 @@ public class PainelTouch extends javax.swing.JFrame {
         }
 
         public void adicionar() {
-            filaComum = new String[tamanho];
+            fila = new String[tamanho];
             new Thread() {
                 @Override
                 public void run() {
@@ -393,7 +391,7 @@ public class PainelTouch extends javax.swing.JFrame {
                             inicio = 0;
                         }
                         for (int i = 0; i < add.length(); i++) {
-                            filaComum[i] = String.valueOf(add.charAt(i));
+                            fila[i] = String.valueOf(add.charAt(i));
                             fim++;
                             qtdeElementos++;
                         }
@@ -403,7 +401,7 @@ public class PainelTouch extends javax.swing.JFrame {
                     new Thread() {
                         @Override
                         public void run() {
-                            f1.remover();
+                            f12.remover();
                         }
                     }.start();
                 }
@@ -414,30 +412,44 @@ public class PainelTouch extends javax.swing.JFrame {
         public void remover() {
 
             while (!estaVazia()) {
-
                 teste = "";
                 for (int i = inicio; i < fim; i++) {
-
-                    teste = teste + filaComum[i];
-
+                    teste = teste + fila[i];
                 }
                 inicio++;
                 qtdeElementos--;
-
                 if (inicio == 1) {
                     try {
-                        TextExemplo.setText("            ..:: 3D - Soluções Tecnológicas ::..");
+                        new Thread() {
+                            @Override
+                            public void run() {
+                            //    TempValue.setText(temperatura.adicionar());
+                            }
+                        }.start();
+                        TextExemplo.setText("                       ..:: INOVE SYSTEMS ::..");
                         Thread.currentThread().sleep(5000);
-                        TextExemplo.setText("     TELEFONE: (53) 32481203 - Pinheiro Machado-RS");
+                        TextExemplo.setText("TELEFONE: (53) 32481203 - Pinheiro Machado-RS");
                         Thread.currentThread().sleep(5000);
-                        TextExemplo.setText(teste);
-                        Thread.currentThread().sleep(1000);
+                        TextExemplo.setText("                     www.inovesystems.com.br");
+                        Thread.currentThread().sleep(5000);
+
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                System.gc();
+                                add = "";
+                                add = leitor.adicionar();
+                                TextExemplo.setText(teste);
+                            }
+                        }.start();
+                        Thread.currentThread().sleep(150);
                     } catch (InterruptedException ex) {
 
                     }
                 }
                 TextExemplo.setText("");
                 TextExemplo.setText(teste);
+
                 try {
                     Thread.currentThread().sleep(150);
                 } catch (InterruptedException ex) {
@@ -445,18 +457,33 @@ public class PainelTouch extends javax.swing.JFrame {
                 }
             }
             if (estaVazia()) {
-                inicio = 0;
-                fim = 0;
-                tamanho = 0;
-                for (int i = 0; i < add.length(); i++) {
-                    filaComum[i] = "";
-                }
-                new Thread() {
-                    @Override
-                    public void run() {
-                        f1.adicionar();
+                try {
+                    inicio = 0;
+                    fim = 0;
+                    tamanho = 0;
+
+                    for (int i = 0; i < add.length(); i++) {
+                        fila[i] = "";
                     }
-                }.start();
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            tamanho = add.length();
+                            f12.adicionar();
+                        }
+                    }.start();
+                } catch (ArrayIndexOutOfBoundsException ex) {
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            for (int i = 0; i < fila.length; i++) {
+                                fila[i] = "";
+                            }
+                            tamanho = add.length();
+                            f12.adicionar();
+                        }
+                    }.start();
+                }
             }
         }
 

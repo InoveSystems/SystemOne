@@ -26,15 +26,15 @@ import org.xml.sax.SAXException;
  */
 public class LeitorXml {
 
-    String channel = " ";
-    String item = " ";
+    String channel = "";
+    String item = "";
     InputStream is;
 
     public LeitorXml() {
 
     }
 
-   public String adicionar() {
+    public String adicionar() {
         channel="";
         item="";
         is=null;
