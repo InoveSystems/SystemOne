@@ -429,11 +429,11 @@ public class PainelTouch extends javax.swing.JFrame {
                                 //    TempValue.setText(temperatura.adicionar());
                             }
                         }.start();
-                        TextExemplo.setText("                       ..:: INOVE SYSTEMS ::..");
+                        TextExemplo.setText("                            ..:: INOVE SYSTEMS ::..");
                         Thread.currentThread().sleep(5000);
-                        TextExemplo.setText("TELEFONE: (53) 32481203 - Pinheiro Machado-RS");
+                        TextExemplo.setText("                  TELEFONE: (53) 32481203 - Pinheiro Machado-RS");
                         Thread.currentThread().sleep(5000);
-                        TextExemplo.setText("                     www.inovesystems.com.br");
+                        TextExemplo.setText("                            www.inovesystems.com.br");
                         Thread.currentThread().sleep(5000);
 
                         new Thread() {
