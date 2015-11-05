@@ -29,7 +29,7 @@ import javax.swing.filechooser.FileSystemView;
 public class Cliente extends javax.swing.JFrame {
 
     
-    Config config = new Config();
+    //Config config = new Config();
     private Socket socket;
     private Mensagem message;
     public Conexao service;
