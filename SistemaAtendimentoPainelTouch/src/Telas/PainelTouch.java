@@ -46,6 +46,9 @@ public class PainelTouch extends javax.swing.JFrame {
     String diretorioUsuario = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
     File IPConfig = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "IPConfig.txt");
     File arquivo = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "PainelConfig.txt");
+    boolean block_P = false;
+    boolean block_C = false;
+    boolean block_F = false;
 
     public PainelTouch() {
 
@@ -423,7 +426,7 @@ public class PainelTouch extends javax.swing.JFrame {
                         new Thread() {
                             @Override
                             public void run() {
-                            //    TempValue.setText(temperatura.adicionar());
+                                //    TempValue.setText(temperatura.adicionar());
                             }
                         }.start();
                         TextExemplo.setText("                       ..:: INOVE SYSTEMS ::..");
@@ -582,109 +585,124 @@ public class PainelTouch extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MousePressed
-
-        new Thread() {
-            @Override
-            public void run() {
-                jLabel2.setEnabled(false);
-                ImagemAguarde.setEnabled(true);
-                ImagemAguarde.setVisible(true);
-            }
-        }.start();
-        String text = "F";
-        String name = this.message.getName();
-        if (!text.isEmpty()) {
-            this.message = new Mensagem();
-            this.message.setName(name);
-            this.message.setText(text);
-            this.message.setAction(Mensagem.Action.PRINT);
-            this.service.send(this.message);
-        }
-
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    Thread.currentThread().sleep(4000);
-                    jLabel2.setEnabled(true);
-                    ImagemAguarde.setEnabled(false);
-                    ImagemAguarde.setVisible(false);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(PainelTouch.class.getName()).log(Level.SEVERE, null, ex);
+        if (!block_F) {
+            new Thread() {
+                @Override
+                public void run() {
+                    block_F = true;
+                    jLabel2.setEnabled(false);
+                    ImagemAguarde.setEnabled(true);
+                    ImagemAguarde.setVisible(true);
                 }
-
+            }.start();
+            String text = "F";
+            String name = this.message.getName();
+            if (!text.isEmpty()) {
+                this.message = new Mensagem();
+                this.message.setName(name);
+                this.message.setText(text);
+                this.message.setAction(Mensagem.Action.PRINT);
+                this.service.send(this.message);
             }
-        }.start();
+            new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.currentThread().sleep(5000);
+                        jLabel2.setEnabled(true);
+                        ImagemAguarde.setEnabled(false);
+                        ImagemAguarde.setVisible(false);
+                        block_F = false;
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(PainelTouch.class.getName()).log(Level.SEVERE, null, ex);
+                    }
 
+                }
+            }.start();
+        } else {
+            System.out.println("Surto de Impressão F Ativado!");
+        }
 
     }//GEN-LAST:event_jLabel2MousePressed
 
     private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
-        new Thread() {
-            @Override
-            public void run() {
-                jLabel1.setEnabled(false);
-                ImagemAguarde.setEnabled(true);
-                ImagemAguarde.setVisible(true);
-            }
-        }.start();
-        String text = "C";
-        String name = this.message.getName();
-        if (!text.isEmpty()) {
-            this.message = new Mensagem();
-            this.message.setName(name);
-            this.message.setText(text);
-            this.message.setAction(Mensagem.Action.PRINT);
-            this.service.send(this.message);
-        }
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    Thread.currentThread().sleep(4000);
-                    jLabel1.setEnabled(true);
-                    ImagemAguarde.setEnabled(false);
-                    ImagemAguarde.setVisible(false);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(PainelTouch.class.getName()).log(Level.SEVERE, null, ex);
+        if (!block_C) {
+            new Thread() {
+                @Override
+                public void run() {
+                    block_C = true;
+                    jLabel1.setEnabled(false);
+                    ImagemAguarde.setEnabled(true);
+                    ImagemAguarde.setVisible(true);
                 }
-
+            }.start();
+            String text = "C";
+            String name = this.message.getName();
+            if (!text.isEmpty()) {
+                this.message = new Mensagem();
+                this.message.setName(name);
+                this.message.setText(text);
+                this.message.setAction(Mensagem.Action.PRINT);
+                this.service.send(this.message);
             }
-        }.start();
+            new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.currentThread().sleep(4000);
+                        jLabel1.setEnabled(true);
+                        ImagemAguarde.setEnabled(false);
+                        ImagemAguarde.setVisible(false);
+                        block_C = false;
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(PainelTouch.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+            }.start();
+        } else {
+            System.out.println("Surto de Impressão C Ativado!");
+        }
     }//GEN-LAST:event_jLabel1MousePressed
 
     private void jLabel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MousePressed
-        new Thread() {
-            @Override
-            public void run() {
-                jLabel3.setEnabled(false);
-                ImagemAguarde.setEnabled(true);
-                ImagemAguarde.setVisible(true);
-            }
-        }.start();
-        String text = "P";
-        String name = this.message.getName();
-        if (!text.isEmpty()) {
-            this.message = new Mensagem();
-            this.message.setName(name);
-            this.message.setText(text);
-            this.message.setAction(Mensagem.Action.PRINT);
-            this.service.send(this.message);
-        }
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    Thread.currentThread().sleep(4000);
-                    jLabel3.setEnabled(true);
-                    ImagemAguarde.setEnabled(false);
-                    ImagemAguarde.setVisible(false);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(PainelTouch.class.getName()).log(Level.SEVERE, null, ex);
+        if (!block_P) {
+            new Thread() {
+                @Override
+                public void run() {
+                    block_P = true;
+                    jLabel3.setEnabled(false);
+                    ImagemAguarde.setEnabled(true);
+                    ImagemAguarde.setVisible(true);
                 }
-
+            }.start();
+            String text = "P";
+            String name = this.message.getName();
+            if (!text.isEmpty()) {
+                this.message = new Mensagem();
+                this.message.setName(name);
+                this.message.setText(text);
+                this.message.setAction(Mensagem.Action.PRINT);
+                this.service.send(this.message);
             }
-        }.start();
+            new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.currentThread().sleep(4000);
+                        jLabel3.setEnabled(true);
+                        ImagemAguarde.setEnabled(false);
+                        ImagemAguarde.setVisible(false);
+                        block_P = false;
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(PainelTouch.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+            }.start();
+        } else {
+            System.out.println("Surto de Impressão P Ativado!");
+        }
     }//GEN-LAST:event_jLabel3MousePressed
 
     private void jConfigMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jConfigMouseClicked
