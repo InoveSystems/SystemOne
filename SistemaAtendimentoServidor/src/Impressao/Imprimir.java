@@ -16,20 +16,23 @@ import java.nio.ByteBuffer;
 import com.sun.pdfview.PDFFile;
 import com.sun.pdfview.PDFPage;
 import com.sun.pdfview.PDFRenderer;
+import java.io.File;
 import javax.print.PrintService;
+import javax.swing.filechooser.FileSystemView;
 
 public class Imprimir {
 
     private PrinterJob pjob = null;
-    static String imp = "";
+    static String imp = "3DSTimp";
     private PrintService impressora = null;
 
     public void main(String[] args) throws IOException, PrinterException {
-
-        imp = "3DSTimp";
-        FileInputStream fis = new FileInputStream(getClass().getResource("/Config/SENHAS.pdf").getFile());
-        Imprimir printPDFFile = new Imprimir(fis, "SENHAS.pdf");
-        printPDFFile.print();
+        // imp = "3DSTimp";
+//        String diretorioUsuario = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
+//        System.out.println("teste"+diretorioUsuario);
+//        FileInputStream fis = new FileInputStream(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "SENHAS.pdf");
+//        Imprimir printPDFFile = new Imprimir(fis, "SENHAS.pdf");
+//        printPDFFile.print();
     }
 
     public Imprimir(InputStream inputStream, String jobName) throws IOException, PrinterException {
@@ -44,17 +47,13 @@ public class Imprimir {
 
     private void initialize(byte[] pdfContent, String jobName) throws IOException, PrinterException {
         ByteBuffer bb = ByteBuffer.wrap(pdfContent);
-
         PDFFile pdfFile = new PDFFile(bb);
         PDFPrintPage pages = new PDFPrintPage(pdfFile);
-
         PrintService[] pservices = PrinterJob.lookupPrintServices();
-
         //System.out.println(pservices.length);
         if (pservices.length > 0) {
             for (PrintService ps : pservices) {
                 System.out.println("Impressora Encontrada: " + ps.getName());
-
                 if (ps.getName().contains(imp)) {
                     System.out.println("Impressora Selecionada: " + ps.getName());
                     impressora = ps;
@@ -65,16 +64,12 @@ public class Imprimir {
         if (impressora != null) {
             pjob = PrinterJob.getPrinterJob();
             pjob.setPrintService(impressora);
-
             PageFormat pf = PrinterJob.getPrinterJob().defaultPage();
-
             pjob.setJobName(jobName);
             Book book = new Book();
             book.append(pages, pf, pdfFile.getNumPages());
             pjob.setPageable(book);
-
             Paper paper = new Paper();
-
             paper.setImageableArea(0, 0, paper.getWidth(), paper.getHeight());
             pf.setPaper(paper);
         }
@@ -104,7 +99,6 @@ class PDFPrintPage implements Printable {
         if ((pagenum >= 1) && (pagenum <= file.getNumPages())) {
             Graphics2D g2 = (Graphics2D) g;
             PDFPage page = file.getPage(pagenum);
-
             Rectangle imageArea = new Rectangle((int) format.getImageableX(), (int) format.getImageableY(),
                     (int) format.getImageableWidth(), (int) format.getImageableHeight());
             g2.translate(0, 0);
@@ -113,7 +107,7 @@ class PDFPrintPage implements Printable {
                 page.waitForFinish();
                 pgs.run();
             } catch (InterruptedException ie) {
-                // System.out.println(ie.toString());
+                System.out.println(ie.toString());
             }
             return PAGE_EXISTS;
         } else {

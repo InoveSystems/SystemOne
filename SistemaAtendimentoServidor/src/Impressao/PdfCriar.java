@@ -10,9 +10,12 @@ import java.io.IOException;
 import com.itextpdf.text.*;
 import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import javax.swing.filechooser.FileSystemView;
 
 public class PdfCriar {
 
@@ -20,9 +23,10 @@ public class PdfCriar {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         System.out.println(sdf.format(new Date()));
         Document document = new Document(PageSize.B4, 10, 10, 10, 10);
-
         try {
-            PdfWriter.getInstance(document, new FileOutputStream(getClass().getResource("/Config/SENHAS.pdf").getFile()));
+            String diretorioUsuario = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
+            FileOutputStream fis = new FileOutputStream(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "SENHAS.pdf");
+            PdfWriter.getInstance(document, fis);
             document.open();
             // adicionando um parágrafo ao documento 
             Font f = new Font(FontFamily.HELVETICA, 15, Font.NORMAL);
@@ -35,14 +39,12 @@ public class PdfCriar {
             document.add(new Paragraph("           " + sdf.format(new Date()), f));
             document.add(new Paragraph("--------------------------------------------", f));
             document.add(new Paragraph("..:: 3D Soluções Tecnológicas ::..    ", f));
-
         } catch (DocumentException de) {
             System.err.println(de.getMessage());
         } catch (IOException ioe) {
             System.err.println(ioe.getMessage());
         }
         document.close();
-
     }
 
     private String getDateTime() {

@@ -27,6 +27,7 @@ import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -36,11 +37,13 @@ import java.text.SimpleDateFormat;
 import static java.time.Instant.now;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileSystemView;
 import org.joda.time.LocalTime;
 import org.joda.time.Period;
 
 public class Server {
 
+    String diretorioUsuario = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
     ServidorDAO servidorDAO = new ServidorDAO();
     ServidorBean servidorBean = new ServidorBean();
     static Image image = Toolkit.getDefaultToolkit().getImage("C:/Users/EngComp/Documents/NetBeansProjects/Sanar/SistemaAtendimentoCliente/src/Imagens/3D.png");
@@ -689,66 +692,69 @@ public class Server {
         new Thread() {
             @Override
             public void run() {
-                FileInputStream fis;
                 try {
+                    String diretorioUsuario = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
+                    FileInputStream fis = null;
+                    fis = new FileInputStream(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "SENHAS.pdf");
                     try {
-                        Thread.currentThread().sleep(1000);
+                        try {
+                            Thread.currentThread().sleep(1000);
+                        } catch (InterruptedException ex) {
 
-                    } catch (InterruptedException ex) {
-
-                    }
-
-                    fis = new FileInputStream("C:/SENHAS.pdf");
-                    Imprimir printPDFFile = new Imprimir(fis, "SENHAS.pdf");
-                    printPDFFile.print();
-                    new Thread() {
-                        @Override
-                        public void run() {
-                            try {
-                                int teste;
-                                ServidorBean Envios = new ServidorBean();
-                                boolean Status = false;
-                                Envios.setTipo(ficha.substring(0, 1));
-                                teste = (Integer.parseInt(ficha.substring(1, 4)));
-                                Envios.setNumeroFicha(Integer.parseInt(String.format("%03d", teste)));
-                                Envios.setAtendimentoIniciado(Status);
-                                Envios.setAtendimentoFinalizado(Status);
-                                ServidorDAO enviar = new ServidorDAO();
-                                enviar.create(Envios);
-                                bloquear_atendimento = "no";
-                            } catch (SQLException ex) {
-
-                            }
                         }
-                    }.start();
+                        Imprimir printPDFFile = new Imprimir(fis, "SENHAS.pdf");
+                        printPDFFile.print();
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                try {
+                                    int teste;
+                                    ServidorBean Envios = new ServidorBean();
+                                    boolean Status = false;
+                                    Envios.setTipo(ficha.substring(0, 1));
+                                    teste = (Integer.parseInt(ficha.substring(1, 4)));
+                                    Envios.setNumeroFicha(Integer.parseInt(String.format("%03d", teste)));
+                                    Envios.setAtendimentoIniciado(Status);
+                                    Envios.setAtendimentoFinalizado(Status);
+                                    ServidorDAO enviar = new ServidorDAO();
+                                    enviar.create(Envios);
+                                    bloquear_atendimento = "no";
+                                } catch (SQLException ex) {
 
-                } catch (FileNotFoundException ex) {
+                                }
+                            }
+                        }.start();
 
-                } catch (IOException ex) {
+                    } catch (FileNotFoundException ex) {
 
-                } catch (PrinterException ex) {
-                    if (bloquear_atendimento.equals("no")) {
-                        bloquear_atendimento = "yes";
-                        reimpressao = message.getText();
-                        message.setStatus("erro_impressao");
-                        message.setAtual(ultima);
-                        message.setUltima(penultima);
-                        message.setPenultima(antepenultima);
-                        message.setAntepenultima(tes);
-                        atualizarPainel(message);
-                    //deve enviar a mensagem erro de imp. para onde foi solicitada a impressão
-                        //JOptionPane.showMessageDialog(null, "Problemas com a impressão! \n * Verifique se há impressora instalada! \n * Verifique os cabos da impressorea! \n Entre em contato com o suporte! ", "Inove Systems - Informação", JOptionPane.INFORMATION_MESSAGE);
-                    } else {
-                        bloquear_atendimento = "yes";
-                        //reimpressao = message.getText();
-                        message.setStatus("erro_impressao");
-                        message.setAtual(ultima);
-                        message.setUltima(penultima);
-                        message.setPenultima(antepenultima);
-                        message.setAntepenultima(tes);
-                        atualizarPainel(message);
+                    } catch (IOException ex) {
 
+                    } catch (PrinterException ex) {
+                        if (bloquear_atendimento.equals("no")) {
+                            bloquear_atendimento = "yes";
+                            reimpressao = message.getText();
+                            message.setStatus("erro_impressao");
+                            message.setAtual(ultima);
+                            message.setUltima(penultima);
+                            message.setPenultima(antepenultima);
+                            message.setAntepenultima(tes);
+                            atualizarPainel(message);
+                            //deve enviar a mensagem erro de imp. para onde foi solicitada a impressão
+                            //JOptionPane.showMessageDialog(null, "Problemas com a impressão! \n * Verifique se há impressora instalada! \n * Verifique os cabos da impressorea! \n Entre em contato com o suporte! ", "Inove Systems - Informação", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            bloquear_atendimento = "yes";
+                            //reimpressao = message.getText();
+                            message.setStatus("erro_impressao");
+                            message.setAtual(ultima);
+                            message.setUltima(penultima);
+                            message.setPenultima(antepenultima);
+                            message.setAntepenultima(tes);
+                            atualizarPainel(message);
+
+                        }
                     }
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }
