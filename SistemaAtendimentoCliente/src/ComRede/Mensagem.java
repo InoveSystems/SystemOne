@@ -6,7 +6,6 @@ import java.util.Set;
 import javax.swing.Action;
 
 public class Mensagem implements Serializable {
-
     private Set<String> setOnlines = new HashSet<String>();
     private Action action;
     private String name;
@@ -23,7 +22,7 @@ public class Mensagem implements Serializable {
 
     public enum Action {
 
-        CONNECT, DISCONNECT, SEND_ONE, SEND_ALL, USERS_ONLINE, PRINT, CALL, FINALIZAR ,REIMPRIMIR
+        CONNECT, DISCONNECT, SEND_ONE, SEND_ALL, USERS_ONLINE, PRINT, CALL, FINALIZAR, REIMPRIMIR
     }
 
     public Set<String> getSetOnlines() {
