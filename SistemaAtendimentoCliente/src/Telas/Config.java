@@ -133,7 +133,7 @@ public class Config extends javax.swing.JFrame {
         jPanel13 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("3D - Soluções Tecnológicas - Configurações");
+        setTitle("Inove Systems - Configurações");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -992,7 +992,7 @@ public class Config extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (jPesquisar.getText().trim().equals("")) {
-            JOptionPane.showMessageDialog(null, "DIGITE UM ITEM DE PESQUISA VÁLIDO!", "3D Soluções Tecnológicas - Informação", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "DIGITE UM ITEM DE PESQUISA VÁLIDO!", "Inove Systems - Informação", JOptionPane.ERROR_MESSAGE);
             atualizarTabela();
             jPesquisar.grabFocus();
         } else {
@@ -1020,7 +1020,7 @@ public class Config extends javax.swing.JFrame {
                     }
                 }
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "PESQUISA INVÁLIDA!" + "\n" + "VERIFIQUE OS DADOS PESQUISADOS!", "3D Soluções Tecnológicas - Informação", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "PESQUISA INVÁLIDA!" + "\n" + "VERIFIQUE OS DADOS PESQUISADOS!", "Inove Systems - Informação", JOptionPane.ERROR_MESSAGE);
                 atualizarTabela();
                 jPesquisar.grabFocus();
             }
@@ -1107,7 +1107,7 @@ public class Config extends javax.swing.JFrame {
                 System.out.println("Erro ao salvar os dados no banco!");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "A SENHA NÃO CONFERE!" + "\n" + "VERIFIFIQUE SUA SENHA!", "3D Soluções Tecnológicas - Informação", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "A SENHA NÃO CONFERE!" + "\n" + "VERIFIFIQUE SUA SENHA!", "Inove Systems - Informação", JOptionPane.ERROR_MESSAGE);
             jSenha.setText(null);
             jConSenha.setText(null);
             jSenha.grabFocus();
@@ -1349,7 +1349,7 @@ public class Config extends javax.swing.JFrame {
                     jRadioAdministrador.setSelected(administrador);
                 } while (rs.next());
             } else {
-                JOptionPane.showMessageDialog(null, "NÃO FOI POSSÍVEL LOCALIZAR ESTE CADASTRO!" + "\n" + "VERIFIQUE OS DADOS DE PESQUISA!", "3D Soluções Tecnológicas - Informação", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "NÃO FOI POSSÍVEL LOCALIZAR ESTE CADASTRO!" + "\n" + "VERIFIQUE OS DADOS DE PESQUISA!", "Inove Systems - Informação", JOptionPane.ERROR_MESSAGE);
                 atualizarTabela();
             }
         } catch (SQLException ex) {
@@ -1442,7 +1442,7 @@ public class Config extends javax.swing.JFrame {
                         model.addRow(new Object[]{cod, nome, CPF, TelefoneMv, TelefoneRs});
                     } while (rs.next());
                 } else {
-                    JOptionPane.showMessageDialog(null, "NÃO FOI POSSÍVEL LOCALIZAR ESTE CADASTRO!" + "\n" + "VERIFIQUE OS DADOS DE PESQUISA!", "3D Soluções Tecnológicas - Informação", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "NÃO FOI POSSÍVEL LOCALIZAR ESTE CADASTRO!" + "\n" + "VERIFIQUE OS DADOS DE PESQUISA!", "Inove Systems - Informação", JOptionPane.ERROR_MESSAGE);
                     atualizarTabela();
                 }
 
@@ -1460,7 +1460,7 @@ public class Config extends javax.swing.JFrame {
                             model.addRow(new Object[]{cod, nome, CPF, TelefoneMv, TelefoneRs});
                         } while (rs.next());
                     } else {
-                        JOptionPane.showMessageDialog(null, "NÃO FOI POSSÍVEL LOCALIZAR ESTE CADASTRO!" + "\n" + "VERIFIQUE OS DADOS DE PESQUISA!", "3D Soluções Tecnológicas - Informação", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "NÃO FOI POSSÍVEL LOCALIZAR ESTE CADASTRO!" + "\n" + "VERIFIQUE OS DADOS DE PESQUISA!", "Inove Systems - Informação", JOptionPane.ERROR_MESSAGE);
 
                         atualizarTabela();
                     }
@@ -1480,7 +1480,7 @@ public class Config extends javax.swing.JFrame {
                                 model.addRow(new Object[]{cod, nome, CPF, TelefoneMv, TelefoneRs});
                             } while (rs.next());
                         } else {
-                            JOptionPane.showMessageDialog(null, "NÃO FOI POSSÍVEL LOCALIZAR ESTE CADASTRO!" + "\n" + "VERIFIQUE OS DADOS DE PESQUISA!", "3D Soluções Tecnológicas - Informação", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "NÃO FOI POSSÍVEL LOCALIZAR ESTE CADASTRO!" + "\n" + "VERIFIQUE OS DADOS DE PESQUISA!", "Inove Systems - Informação", JOptionPane.ERROR_MESSAGE);
                             atualizarTabela();
                         }
 
