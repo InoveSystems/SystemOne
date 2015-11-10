@@ -31,8 +31,6 @@ import javax.swing.table.DefaultTableModel;
 public class Config extends javax.swing.JFrame {
 
     private Socket socket;
-    FuncionarioDAO funvionarioDAO = new FuncionarioDAO();
-    FuncionarioBean funcionarioBean = new FuncionarioBean();
     String cod1;
     boolean novo = true;
 

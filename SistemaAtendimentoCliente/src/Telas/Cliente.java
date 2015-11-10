@@ -28,7 +28,7 @@ import javax.swing.filechooser.FileSystemView;
 
 public class Cliente extends javax.swing.JFrame {
 
-    
+    //Login login = new Login();
     //Config config = new Config();
     private Socket socket;
     private Mensagem message;
@@ -42,7 +42,99 @@ public class Cliente extends javax.swing.JFrame {
     public File IPConfig = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "IPConfig.txt");
     public File arquivo = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "CaixaConfig.txt");
 
+    public Cliente(int cod, String nome) {
+
+        initComponents();
+        jatendente.setText("Atendente: " + cod + " " + nome);
+
+        //lendo ou criando arquivo com o ip do servidor
+        new Thread() {
+            @Override
+            public void run() {
+                FileReader fr;
+                try {
+                    if (!IPConfig.exists()) {
+                        try {
+                            IPConfig.createNewFile();
+                            FileWriter fw = new FileWriter(IPConfig, false);
+                            BufferedWriter bw = new BufferedWriter(fw);
+                            bw.write(IPCom);
+                            bw.newLine();
+                            bw.close();
+                            fw.close();
+                        } catch (IOException ex) {
+                            statuslabel.setText("Erro ao criar IPConfig!");
+                            //JOptionPane.showMessageDialog(null, " erro ao criar arquivo", "3D Soluções Tecnológicas - Informação", 1);
+                        }
+                    } else {
+                        fr = new FileReader(IPConfig);
+                        BufferedReader br = new BufferedReader(fr);
+                        while (br.ready()) {
+                            String linha = br.readLine();
+                            IPCom = linha;
+                        }
+                        br.close();
+                        fr.close();
+                    }
+                } catch (FileNotFoundException ex) {
+                    //JOptionPane.showMessageDialog(null, " erro arquivo nao encontrado ", "3D Soluções Tecnológicas - Informação", 1);
+                    statuslabel.setText("Erro! IPConfig não encontrado!");
+                } catch (IOException ex) {
+
+                }
+
+            }
+        }.
+                start();
+
+        new Thread() {
+            @Override
+            public void run() {
+                FileReader fr;
+                try {
+                    if (!arquivo.exists()) {
+                        try {
+                            arquivo.createNewFile();
+                            FileWriter fw = new FileWriter(arquivo, false);
+                            BufferedWriter bw = new BufferedWriter(fw);
+                            bw.write(caixa);
+                            bw.newLine();
+                            bw.close();
+                            fw.close();
+                        } catch (IOException ex) {
+                            statuslabel.setText("Erro ao criar CaixaConfig!");
+                        }
+                    } else {
+                        fr = new FileReader(arquivo);
+                        BufferedReader br = new BufferedReader(fr);
+                        while (br.ready()) {
+                            String linha = br.readLine();
+                            caixa = linha;
+                        }
+                        br.close();
+                        fr.close();
+                    }
+                } catch (FileNotFoundException ex) {
+                    statuslabel.setText("Arquivo de config. não encontrado!");
+                } catch (IOException ex) {
+                    statuslabel.setText("Erro ao ler Configurações!");
+                }
+                new Thread() {
+                    @Override
+                    public void run() {
+                        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), " Caixa " + caixa, javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14))); // NOI18N
+                        ConectarServidor();
+                    }
+                }.start();
+
+            }
+        }.
+                start();
+
+    }
+
     public Cliente() {
+
         initComponents();
         //lendo ou criando arquivo com o ip do servidor
         new Thread() {
@@ -418,7 +510,7 @@ public class Cliente extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
-        idlabel1 = new javax.swing.JLabel();
+        jatendente = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         atuallabel = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
@@ -443,6 +535,11 @@ public class Cliente extends javax.swing.JFrame {
         setTitle("Inove Systems - Cliente");
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -605,10 +702,10 @@ public class Cliente extends javax.swing.JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Popular");
 
-        idlabel1.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
-        idlabel1.setForeground(new java.awt.Color(51, 51, 51));
-        idlabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        idlabel1.setText("Atendente Cod:23 CLAUDIOMAR");
+        jatendente.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        jatendente.setForeground(new java.awt.Color(51, 51, 51));
+        jatendente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jatendente.setText("Atendente: 23 CLAUDIOMAR");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -631,13 +728,13 @@ public class Cliente extends javax.swing.JFrame {
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(2, 2, 2))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addComponent(idlabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jatendente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(1, 1, 1))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(idlabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jatendente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -654,7 +751,7 @@ public class Cliente extends javax.swing.JFrame {
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), " Senhas  ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), " Senhas ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14))); // NOI18N
 
         atuallabel.setFont(new java.awt.Font("Arial", 1, 60)); // NOI18N
         atuallabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -845,7 +942,7 @@ public class Cliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbConvencionalPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConvencionalPrintActionPerformed
-       
+
         String text = "C";
         String name = this.message.getName();
         if (!text.isEmpty()) {
@@ -1004,7 +1101,6 @@ public class Cliente extends javax.swing.JFrame {
 //        config.setVisible(true);
 //        config.jTabbedPane1.setSelectedIndex(0);
 //        config.setLocationRelativeTo(null);
-
         String ipconexao;
         int resposta = 0;
         ipconexao = JOptionPane.showInputDialog(null, "QUAL O IP DO SERVIDOR?", "3D Soluções Tecnológicas - Configuração", 3);
@@ -1067,6 +1163,15 @@ public class Cliente extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jLabel14MouseClicked
 
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+
+//        login.setAlwaysOnTop(true);
+//        login.setVisible(true);
+//        login.setLocationRelativeTo(null);
+        //setEnabled(false);        
+    }//GEN-LAST:event_formWindowOpened
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1110,7 +1215,6 @@ public class Cliente extends javax.swing.JFrame {
     private javax.swing.JLabel antepenultimalabel;
     private javax.swing.JLabel atuallabel;
     private javax.swing.JLabel idlabel;
-    private javax.swing.JLabel idlabel1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -1139,6 +1243,7 @@ public class Cliente extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
+    private javax.swing.JLabel jatendente;
     private javax.swing.JButton jbConvencional;
     private javax.swing.JButton jbConvencionalPrint;
     private javax.swing.JButton jbPopular;

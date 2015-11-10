@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.postgresql.util.PSQLException;
 
 /**
  *
@@ -30,10 +31,10 @@ public class ConnectionFactory {
             }
             try {
                 con = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5433/Inovesystems", "postgres", "inove+1052");
-             //  JOptionPane.showMessageDialog(null, "Conexão efetuada com sucesso! \nInicializando o Sistema... \nInove Systems - www.inovesystems.com.br", "Inove Systems - Informação", JOptionPane.INFORMATION_MESSAGE);
+                //  JOptionPane.showMessageDialog(null, "Conexão efetuada com sucesso! \nInicializando o Sistema... \nInove Systems - www.inovesystems.com.br", "Inove Systems - Informação", JOptionPane.INFORMATION_MESSAGE);
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Erro ao conectar com o banco de dados! \nEntre em contado com o administrador do sistema! \nInove Systems - www.inovesystems.com.br", "Inove Systems - Informação", JOptionPane.ERROR_MESSAGE);
-                Logger.getLogger(ConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
+                // Logger.getLogger(ConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
                 System.exit(0);
             }
         }
