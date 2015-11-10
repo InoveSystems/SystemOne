@@ -33,20 +33,20 @@ public class Config extends javax.swing.JFrame {
     private Socket socket;
     FuncionarioDAO funvionarioDAO = new FuncionarioDAO();
     FuncionarioBean funcionarioBean = new FuncionarioBean();
+    String cod1;
+    boolean novo = true;
 
     public Config() {
         initComponents();
-
         ImageIcon tab1Icon = new ImageIcon(
-                this.getClass().getResource("/Imagens/idoso.png"));
-//        ImageIcon tab2Icon = new ImageIcon(
-//                this.getClass().getResource("/Imagens/normal.png"));
-//        ImageIcon tab3Icon = new ImageIcon(
-//                this.getClass().getResource("/Imagens/add2.png"));
-
+                this.getClass().getResource("/Imagens/funcionariocad.png"));
+        ImageIcon tab2Icon = new ImageIcon(
+                this.getClass().getResource("/Imagens/grafico.png"));
+        ImageIcon tab3Icon = new ImageIcon(
+                this.getClass().getResource("/Imagens/config.png"));
         jTabbedPane1.setIconAt(0, tab1Icon);
-//        jTabbedPane1.setIconAt(1, tab2Icon);
-
+        jTabbedPane1.setIconAt(1, tab2Icon);
+        jTabbedPane1.setIconAt(2, tab3Icon);
     }
 
     public void disconnected() {
@@ -133,6 +133,7 @@ public class Config extends javax.swing.JFrame {
         jPanel13 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("3D - Soluções Tecnológicas - Configurações");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -162,14 +163,19 @@ public class Config extends javax.swing.JFrame {
             }
         });
         jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setMinWidth(130);
             jTable1.getColumnModel().getColumn(0).setPreferredWidth(130);
             jTable1.getColumnModel().getColumn(0).setMaxWidth(130);
-            jTable1.getColumnModel().getColumn(1).setMinWidth(340);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(340);
-            jTable1.getColumnModel().getColumn(1).setMaxWidth(340);
+            jTable1.getColumnModel().getColumn(1).setMinWidth(420);
+            jTable1.getColumnModel().getColumn(1).setPreferredWidth(420);
+            jTable1.getColumnModel().getColumn(1).setMaxWidth(420);
             jTable1.getColumnModel().getColumn(2).setMinWidth(150);
             jTable1.getColumnModel().getColumn(2).setPreferredWidth(150);
             jTable1.getColumnModel().getColumn(2).setMaxWidth(150);
@@ -340,9 +346,11 @@ public class Config extends javax.swing.JFrame {
         jLabel32.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel32.setText("Código:");
 
+        jCod.setEditable(false);
         jCod.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jCod.setForeground(new java.awt.Color(51, 51, 51));
         jCod.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jCod.setEnabled(false);
         jCod.setMaximumSize(new java.awt.Dimension(1000, 10000));
         jCod.setPreferredSize(new java.awt.Dimension(500, 25));
         jCod.addActionListener(new java.awt.event.ActionListener() {
@@ -435,11 +443,11 @@ public class Config extends javax.swing.JFrame {
                             .addGroup(jPanel10Layout.createSequentialGroup()
                                 .addComponent(jLabel27)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addComponent(jNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel28)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jBairro, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE))
+                                .addComponent(jBairro, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE))
                             .addGroup(jPanel10Layout.createSequentialGroup()
                                 .addComponent(jLabel24)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -656,7 +664,7 @@ public class Config extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, 673, Short.MAX_VALUE)
+                        .addComponent(jPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, 759, Short.MAX_VALUE)
                         .addGap(3, 3, 3)
                         .addComponent(jComboPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(3, 3, 3)
@@ -721,7 +729,7 @@ public class Config extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(86, 86, 86)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(849, Short.MAX_VALUE))
+                .addContainerGap(935, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -945,7 +953,7 @@ public class Config extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(224, Short.MAX_VALUE)
+                .addContainerGap(310, Short.MAX_VALUE)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(188, 188, 188))
         );
@@ -984,7 +992,7 @@ public class Config extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (jPesquisar.getText().trim().equals("")) {
-            JOptionPane.showMessageDialog(null, "DIGITE UM ITEM DE PESQUISA VÁLIDO!!", "3D Soluções Tecnológicas - Informação", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "DIGITE UM ITEM DE PESQUISA VÁLIDO!", "3D Soluções Tecnológicas - Informação", JOptionPane.ERROR_MESSAGE);
             atualizarTabela();
             jPesquisar.grabFocus();
         } else {
@@ -995,26 +1003,35 @@ public class Config extends javax.swing.JFrame {
                 }
             }.
                     start();
-            FuncionarioBean funcionario = new FuncionarioBean();
-            if (jComboPesquisar.getSelectedIndex() == 0) {
-                funcionario.setCodigo(Integer.parseInt(jPesquisar.getText()));
-                Pesquisar(funcionario);
-            } else {
-                if (jComboPesquisar.getSelectedIndex() == 1) {
-                    funcionario.setCPF(jPesquisar.getText());
+            try {
+                FuncionarioBean funcionario = new FuncionarioBean();
+                if (jComboPesquisar.getSelectedIndex() == 0) {
+                    funcionario.setCodigo(Integer.parseInt(jPesquisar.getText()));
                     Pesquisar(funcionario);
                 } else {
-                    if (jComboPesquisar.getSelectedIndex() == 2) {
-                        funcionario.setNome(jPesquisar.getText());
+                    if (jComboPesquisar.getSelectedIndex() == 1) {
+                        funcionario.setCPF(jPesquisar.getText());
                         Pesquisar(funcionario);
+                    } else {
+                        if (jComboPesquisar.getSelectedIndex() == 2) {
+                            funcionario.setNome(jPesquisar.getText());
+                            Pesquisar(funcionario);
+                        }
                     }
                 }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "PESQUISA INVÁLIDA!" + "\n" + "VERIFIQUE OS DADOS PESQUISADOS!", "3D Soluções Tecnológicas - Informação", JOptionPane.ERROR_MESSAGE);
+                atualizarTabela();
+                jPesquisar.grabFocus();
             }
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void buttonCalcelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCalcelarActionPerformed
+        novo = true;
+        jCod.setText(cod1);
+        jCod.setEnabled(false);
         jSenha.setEnabled(false);
         jConSenha.setEnabled(false);
         jNome.setEnabled(false);
@@ -1039,29 +1056,79 @@ public class Config extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonCalcelarActionPerformed
 
     private void buttonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSalvarActionPerformed
-        FuncionarioBean funcionario = new FuncionarioBean();
-        FuncionarioDAO enviar = new FuncionarioDAO();
-        String Estado;
+        if (jSenha.getText().equals(jConSenha.getText())) {
+            FuncionarioBean funcionario = new FuncionarioBean();
+            FuncionarioDAO enviar = new FuncionarioDAO();
+            String Estado;
+            try {
+                funcionario.setCodigo(Integer.parseInt(jCod.getText()));
+                funcionario.setNome(jNome.getText().toUpperCase());
+                funcionario.setCPF(jCPF.getText().toUpperCase());
+                funcionario.setSenha(jSenha.getText().toUpperCase());
+                funcionario.setEmail(jEmail.getText().toLowerCase());
+                funcionario.setCidade(jCidade.getText().toUpperCase());
+                Estado = jComboEstado.getSelectedItem() + "".toUpperCase();
+                funcionario.setEstado(Estado);
+                funcionario.setLogradouro(jLogradouro.getText().toUpperCase());
+                funcionario.setNumero(jNumero.getText().toUpperCase());
+                funcionario.setBairro(jBairro.getText().toUpperCase());
+                funcionario.setComplemento(jComplemento.getText().toUpperCase());
+                funcionario.setTelefone_mv(jTelMo.getText().toUpperCase());
+                funcionario.setTelefone_rs(jTelRe.getText().toUpperCase());
+                funcionario.setTelefone_cm(jTelCo.getText().toUpperCase());
+                funcionario.setAdministrador(jRadioAdministrador.isSelected());
+                if (novo) {
+                    enviar.create(funcionario);
+                } else {
+                    enviar.update(funcionario);
+                }
+                jCod.setEnabled(false);
+                jSenha.setEnabled(false);
+                jConSenha.setEnabled(false);
+                jNome.setEnabled(false);
+                jCPF.setEnabled(false);
+                jEmail.setEnabled(false);
+                jTelCo.setEnabled(false);
+                jTelMo.setEnabled(false);
+                jTelRe.setEnabled(false);
+                jCidade.setEnabled(false);
+                jComboEstado.setEnabled(false);
+                jNumero.setEnabled(false);
+                jBairro.setEnabled(false);
+                jComplemento.setEnabled(false);
+                jLogradouro.setEnabled(false);
+                jRadioAdministrador.setEnabled(false);
+                buttonCalcelar.setEnabled(false);
+                buttonNovo.setEnabled(true);
+                buttonSalvar.setEnabled(false);
+                atualizarTabela();
+                LimparTela();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao salvar os dados no banco!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "A SENHA NÃO CONFERE!" + "\n" + "VERIFIFIQUE SUA SENHA!", "3D Soluções Tecnológicas - Informação", JOptionPane.ERROR_MESSAGE);
+            jSenha.setText(null);
+            jConSenha.setText(null);
+            jSenha.grabFocus();
+        }
+
+    }//GEN-LAST:event_buttonSalvarActionPerformed
+
+    private void buttonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExcluirActionPerformed
+
         try {
-            funcionario.setNome(jNome.getText());
-            funcionario.setCPF(jCPF.getText());
-            funcionario.setSenha(jSenha.getText());
-            funcionario.setEmail(jEmail.getText());
-            funcionario.setCidade(jCidade.getText());
-            Estado = jComboEstado.getSelectedItem() + "";
-            funcionario.setEstado(Estado);
-            funcionario.setLogradouro(jLogradouro.getText());
-            funcionario.setNumero(jNumero.getText());
-            funcionario.setBairro(jBairro.getText());
-            funcionario.setComplemento(jComplemento.getText());
-            funcionario.setTelefone_mv(jTelMo.getText());
-            funcionario.setTelefone_rs(jTelRe.getText());
-            funcionario.setTelefone_cm(jTelCo.getText());
-            funcionario.setAdministrador(jRadioAdministrador.isSelected());
-            enviar.create(funcionario);
+            FuncionarioBean funcionario = new FuncionarioBean();
+            FuncionarioDAO enviar = new FuncionarioDAO();
+            funcionario.setCodigo(Integer.parseInt(jCod.getText()));
+            enviar.delete(funcionario);
+            buttonNovo.setEnabled(true);
+            buttonEditar.setEnabled(false);
+            buttonCalcelar.setEnabled(false);
+            buttonSalvar.setEnabled(false);
+            buttonExcluir.setEnabled(false);
             jCod.setEnabled(false);
             jSenha.setEnabled(false);
-            jConSenha.setEnabled(false);
             jNome.setEnabled(false);
             jCPF.setEnabled(false);
             jEmail.setEnabled(false);
@@ -1075,42 +1142,40 @@ public class Config extends javax.swing.JFrame {
             jComplemento.setEnabled(false);
             jLogradouro.setEnabled(false);
             jRadioAdministrador.setEnabled(false);
-            buttonCalcelar.setEnabled(false);
-            buttonNovo.setEnabled(true);
-            buttonSalvar.setEnabled(false);
             atualizarTabela();
             LimparTela();
         } catch (SQLException ex) {
-            System.out.println("Erro ao salvar os dados no banco!");
+            System.out.println("Erro ao excluir os dados do banco!");
         }
-
-
-    }//GEN-LAST:event_buttonSalvarActionPerformed
-
-    private void buttonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExcluirActionPerformed
-        jSenha.setEnabled(false);
-        jConSenha.setEnabled(false);
-        jNome.setEnabled(false);
-        jCPF.setEnabled(false);
-        jEmail.setEnabled(false);
-        jTelCo.setEnabled(false);
-        jTelMo.setEnabled(false);
-        jTelRe.setEnabled(false);
-        jCidade.setEnabled(false);
-        jComboEstado.setEnabled(false);
-        jNumero.setEnabled(false);
-        jBairro.setEnabled(false);
-        jComplemento.setEnabled(false);
-        jLogradouro.setEnabled(false);
-        jRadioAdministrador.setEnabled(false);
-        LimparTela();
     }//GEN-LAST:event_buttonExcluirActionPerformed
 
     private void buttonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditarActionPerformed
-        // TODO add your handling code here:
+        novo = false;
+        buttonExcluir.setEnabled(false);
+        buttonEditar.setEnabled(false);
+        buttonSalvar.setEnabled(true);
+        jCod.setEnabled(true);
+        jCod.setEditable(false);
+        jSenha.setEnabled(true);
+        jConSenha.setEnabled(true);
+        jNome.setEnabled(true);
+        jCPF.setEnabled(true);
+        jEmail.setEnabled(true);
+        jTelCo.setEnabled(true);
+        jTelMo.setEnabled(true);
+        jTelRe.setEnabled(true);
+        jCidade.setEnabled(true);
+        jComboEstado.setEnabled(true);
+        jNumero.setEnabled(true);
+        jBairro.setEnabled(true);
+        jComplemento.setEnabled(true);
+        jLogradouro.setEnabled(true);
+        jRadioAdministrador.setEnabled(true);
+
     }//GEN-LAST:event_buttonEditarActionPerformed
 
     private void buttonNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNovoActionPerformed
+        novo = true;
         jCod.setEnabled(true);
         jCod.setEditable(false);
         jSenha.setEnabled(true);
@@ -1132,14 +1197,6 @@ public class Config extends javax.swing.JFrame {
         buttonCalcelar.setEnabled(true);
         buttonNovo.setEnabled(false);
     }//GEN-LAST:event_buttonNovoActionPerformed
-
-    private void jConSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jConSenhaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jConSenhaActionPerformed
-
-    private void jSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSenhaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jSenhaActionPerformed
 
     private void jCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCodActionPerformed
         // TODO add your handling code here:
@@ -1220,8 +1277,87 @@ public class Config extends javax.swing.JFrame {
     }//GEN-LAST:event_jComplementoActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        atualizarTabela();
+        new Thread() {
+            @Override
+            public void run() {
+                atualizarTabela();
+            }
+        }.
+                start();
+
     }//GEN-LAST:event_formWindowOpened
+
+    private void jConSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jConSenhaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jConSenhaActionPerformed
+
+    private void jSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSenhaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jSenhaActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        buttonNovo.setEnabled(false);
+        buttonExcluir.setEnabled(true);
+        buttonCalcelar.setEnabled(true);
+        buttonEditar.setEnabled(true);
+        int cod = 0;
+        DefaultTableModel Model = (DefaultTableModel) jTable1.getModel();
+        int row = jTable1.getSelectedRow();
+        cod = Integer.parseInt(Model.getValueAt(row, 0).toString());
+        try {
+            FuncionarioBean Funcionario = new FuncionarioBean();
+            FuncionarioDAO funcionario = new FuncionarioDAO();
+            Funcionario.setCodigo(cod);
+            ResultSet rs;
+            rs = funcionario.retriveId(Funcionario);
+            if (rs.next()) {
+                do {
+                    cod = rs.getInt("cod");
+                    jCod.setText(Integer.toString(cod));
+                    String senha = rs.getString("senha");
+                    jSenha.setText(senha);
+                    jConSenha.setText(senha);
+                    String nome = rs.getString("nome");
+                    jNome.setText(nome);
+                    String CPF = rs.getString("cpf");
+                    jCPF.setText(CPF);
+                    String TelefoneMv = rs.getString("telefone_mv");
+                    jTelMo.setText(TelefoneMv);
+                    String TelefoneRs = rs.getString("telefone_rs");
+                    jTelRe.setText(TelefoneRs);
+                    String email = rs.getString("email");
+                    jEmail.setText(email);
+                    String cidade = rs.getString("cidade");
+                    jCidade.setText(cidade);
+                    String estado = rs.getString("estado");
+                    for (int i = 0; i < jComboEstado.getItemCount(); i++) {
+                        if (estado.equals(jComboEstado.getItemAt(i))) {
+                            jComboEstado.setSelectedIndex(i);
+                        }
+                    }
+                    String telefoneCm = rs.getString("telefone_cm");
+                    jTelCo.setText(telefoneCm);
+                    String logradouro = rs.getString("logradouro");
+                    jLogradouro.setText(logradouro);
+                    String numero = rs.getString("numero");
+                    jNumero.setText(numero);
+                    String bairro = rs.getString("bairro");
+                    jBairro.setText(bairro);
+                    String complemento = rs.getString("complemento");
+                    jComplemento.setText(complemento);
+                    boolean administrador = rs.getBoolean("administrador");
+                    jRadioAdministrador.setSelected(administrador);
+                } while (rs.next());
+            } else {
+                JOptionPane.showMessageDialog(null, "NÃO FOI POSSÍVEL LOCALIZAR ESTE CADASTRO!" + "\n" + "VERIFIQUE OS DADOS DE PESQUISA!", "3D Soluções Tecnológicas - Informação", JOptionPane.ERROR_MESSAGE);
+                atualizarTabela();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+    }//GEN-LAST:event_jTable1MouseClicked
     public void LimparTela() {
         jBairro.setText(null);
         jCPF.setText(null);
@@ -1236,9 +1372,11 @@ public class Config extends javax.swing.JFrame {
         jLogradouro.setText(null);
         jNumero.setText(null);
         jNome.setText(null);
+        jPesquisar.setText(null);
     }
 
     public void clearTable() {
+
         try {
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.getDataVector().removeAllElements();
@@ -1248,34 +1386,34 @@ public class Config extends javax.swing.JFrame {
         } catch (NullPointerException ex) {
 
         }
+
     }
 
     public void atualizarTabela() {
-        try {
-            int cod = 0;
-            new Thread() {
-                @Override
-                public void run() {
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    int cod = 0;
                     clearTable();
+                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                    FuncionarioDAO funcionario = new FuncionarioDAO();
+                    ResultSet rs = funcionario.retriveTotal();
+                    while (rs.next()) {
+                        cod = rs.getInt("cod");
+                        String nome = rs.getString("nome");
+                        String CPF = rs.getString("cpf");
+                        String TelefoneMv = rs.getString("telefone_mv");
+                        String TelefoneRs = rs.getString("telefone_rs");
+                        model.addRow(new Object[]{cod, nome, CPF, TelefoneMv, TelefoneRs});
+                    }
+                    cod1 = cod + 1 + "";
+                    jCod.setText(cod1);
+                } catch (SQLException e) {
+                    System.out.println("Erro de sql3");
                 }
-            }.
-                    start();
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            FuncionarioDAO funcionario = new FuncionarioDAO();
-            ResultSet rs = funcionario.retriveTotal();
-            while (rs.next()) {
-                cod = rs.getInt("cod");
-                String nome = rs.getString("nome");
-                String CPF = rs.getString("cpf");
-                String TelefoneMv = rs.getString("telefone_mv");
-                String TelefoneRs = rs.getString("telefone_rs");
-                model.addRow(new Object[]{cod, nome, CPF, TelefoneMv, TelefoneRs});
             }
-            String cod1 = cod + 1 + "";
-            jCod.setText(cod1);
-        } catch (SQLException e) {
-            System.out.println("Erro de sql3");
-        }
+        }.start();
     }
 
     public void Pesquisar(FuncionarioBean Funcionario) {
@@ -1292,7 +1430,7 @@ public class Config extends javax.swing.JFrame {
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             FuncionarioDAO funcionario = new FuncionarioDAO();
             if (jComboPesquisar.getSelectedIndex() == 0) {
-               
+
                 ResultSet rs = funcionario.retriveId(Funcionario);
                 if (rs.next()) {
                     do {
@@ -1304,13 +1442,13 @@ public class Config extends javax.swing.JFrame {
                         model.addRow(new Object[]{cod, nome, CPF, TelefoneMv, TelefoneRs});
                     } while (rs.next());
                 } else {
-                    JOptionPane.showMessageDialog(null, "NÃO FOI POSSÍVEL LOCALIZAR ESTE CADASTRO." + "\n" + "VERIFIQUE OS DADOS DE PESQUISA!", "3D Soluções Tecnológicas - Informação", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "NÃO FOI POSSÍVEL LOCALIZAR ESTE CADASTRO!" + "\n" + "VERIFIQUE OS DADOS DE PESQUISA!", "3D Soluções Tecnológicas - Informação", JOptionPane.ERROR_MESSAGE);
                     atualizarTabela();
                 }
 
             } else {
                 if (jComboPesquisar.getSelectedIndex() == 2) {
-                    
+
                     ResultSet rs = funcionario.retriveNome(Funcionario);
                     if (rs.next()) {
                         do {
@@ -1322,14 +1460,14 @@ public class Config extends javax.swing.JFrame {
                             model.addRow(new Object[]{cod, nome, CPF, TelefoneMv, TelefoneRs});
                         } while (rs.next());
                     } else {
-                        JOptionPane.showMessageDialog(null, "NÃO FOI POSSÍVEL LOCALIZAR ESTE CADASTRO." + "\n" + "VERIFIQUE OS DADOS DE PESQUISA!", "3D Soluções Tecnológicas - Informação", 1);
+                        JOptionPane.showMessageDialog(null, "NÃO FOI POSSÍVEL LOCALIZAR ESTE CADASTRO!" + "\n" + "VERIFIQUE OS DADOS DE PESQUISA!", "3D Soluções Tecnológicas - Informação", JOptionPane.ERROR_MESSAGE);
 
                         atualizarTabela();
                     }
 
                 } else {
                     if (jComboPesquisar.getSelectedIndex() == 1) {
-                      
+
                         ResultSet rs = funcionario.retriveCPF(Funcionario);
                         if (rs.next()) {
 
@@ -1342,7 +1480,7 @@ public class Config extends javax.swing.JFrame {
                                 model.addRow(new Object[]{cod, nome, CPF, TelefoneMv, TelefoneRs});
                             } while (rs.next());
                         } else {
-                            JOptionPane.showMessageDialog(null, "NÃO FOI POSSÍVEL LOCALIZAR ESTE CADASTRO." + "\n" + "VERIFIQUE OS DADOS DE PESQUISA!", "3D Soluções Tecnológicas - Informação", 1);
+                            JOptionPane.showMessageDialog(null, "NÃO FOI POSSÍVEL LOCALIZAR ESTE CADASTRO!" + "\n" + "VERIFIQUE OS DADOS DE PESQUISA!", "3D Soluções Tecnológicas - Informação", JOptionPane.ERROR_MESSAGE);
                             atualizarTabela();
                         }
 

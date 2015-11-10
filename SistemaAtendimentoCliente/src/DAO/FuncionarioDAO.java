@@ -54,7 +54,8 @@ public class FuncionarioDAO {
     }
 
     public void update(FuncionarioBean funcionario) throws SQLException {
-        String sql = "UPDATE funcionarios SET nome?,cpf?,email?,telefone_mv?,telefone_rs?,telefone_cm?,cidade?,estado?,logradouro?,numero?,bairro?,complemento?,senha?,administrador? WHERE cod=?";
+
+        String sql = "UPDATE funcionarios SET nome=?,cpf=?,email=?,telefone_mv=?,telefone_rs=?,telefone_cm=?,cidade=?,estado=?,logradouro=?,numero=?,bairro=?,complemento=?,senha=?,administrador=? WHERE cod=?";
         PreparedStatement pst = this.conexao.prepareStatement(sql);
         pst.setString(1, funcionario.getNome());
         pst.setString(2, funcionario.getCPF());
@@ -86,7 +87,9 @@ public class FuncionarioDAO {
     public ResultSet retriveNome(FuncionarioBean funcionario) throws SQLException {
         Statement stm = this.conexao.createStatement();
         ResultSet rs;
-        String sql = "SELECT * FROM funcionarios WHERE nome='" + funcionario.getNome()+"'";
+
+        String sql = "SELECT * FROM funcionarios WHERE nome LIKE'" + funcionario.getNome().toUpperCase() + '%' + "'";
+        //  String sql = "SELECT * FROM funcionarios WHERE nome='" + funcionario.getNome() + "'";
         rs = stm.executeQuery(sql);
         return rs;
     }
@@ -94,7 +97,7 @@ public class FuncionarioDAO {
     public ResultSet retriveCPF(FuncionarioBean funcionario) throws SQLException {
         Statement stm = this.conexao.createStatement();
         ResultSet rs;
-        String sql = "SELECT * FROM funcionarios WHERE cpf='" + funcionario.getCPF()+"'";
+        String sql = "SELECT * FROM funcionarios WHERE cpf LIKE'" + funcionario.getCPF().toUpperCase() + '%' + "'";
         rs = stm.executeQuery(sql);
         return rs;
     }
@@ -102,9 +105,17 @@ public class FuncionarioDAO {
     public ResultSet retriveTotal() throws SQLException {
         Statement stm = this.conexao.createStatement();
         ResultSet rs;
-        String sql = "SELECT * FROM funcionarios ";
+        String sql = "SELECT * FROM funcionarios ORDER BY cod ASC";
         rs = stm.executeQuery(sql);
         return rs;
+    }
+
+    public void delete(FuncionarioBean funcionario) throws SQLException {
+        String sql = "DELETE FROM funcionarios WHERE cod=?";
+        PreparedStatement pst = this.conexao.prepareStatement(sql);
+        pst.setInt(1, funcionario.getCodigo());
+        pst.executeUpdate();
+        pst.close();
     }
 
 }
