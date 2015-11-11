@@ -5,8 +5,10 @@
  */
 package Telas;
 
+import Bean.FuncionarioBean;
 import ComRede.Conexao;
 import ComRede.Mensagem;
+import DAO.FuncionarioDAO;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,6 +20,8 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.URISyntaxException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,24 +32,23 @@ import javax.swing.filechooser.FileSystemView;
 
 public class Cliente extends javax.swing.JFrame {
 
-    //Login login = new Login();
     Config config = new Config();
     private Socket socket;
     private Mensagem message;
     public Conexao service;
     public String caixa = "20";
-    //File arquivo = new File(getClass().getResource("/Config/CaixaConfig.txt").getFile());
-    //File arquivo = new File("C://SistemaAtendimentoCliente/CaixaConfig.txt");
     boolean StatusMensage;
     public String IPCom = "127.0.0.1";
     public String diretorioUsuario = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
     public File IPConfig = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "IPConfig.txt");
     public File arquivo = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "CaixaConfig.txt");
+    public int codigo;
+    public String nome;
 
-    public Cliente(int cod, String nome) {
-
+    public Cliente(int codi, String nome) {
+        codigo = codi;
         initComponents();
-        jatendente.setText("Atendente: " + cod + " " + nome);
+        jatendente.setText("Atendente: " + codi + " " + nome);
 
         //lendo ou criando arquivo com o ip do servidor
         new Thread() {
@@ -64,7 +67,6 @@ public class Cliente extends javax.swing.JFrame {
                             fw.close();
                         } catch (IOException ex) {
                             statuslabel.setText("Erro ao criar IPConfig!");
-                            //JOptionPane.showMessageDialog(null, " erro ao criar arquivo", "3D Soluções Tecnológicas - Informação", 1);
                         }
                     } else {
                         fr = new FileReader(IPConfig);
@@ -77,7 +79,6 @@ public class Cliente extends javax.swing.JFrame {
                         fr.close();
                     }
                 } catch (FileNotFoundException ex) {
-                    //JOptionPane.showMessageDialog(null, " erro arquivo nao encontrado ", "3D Soluções Tecnológicas - Informação", 1);
                     statuslabel.setText("Erro! IPConfig não encontrado!");
                 } catch (IOException ex) {
 
@@ -484,6 +485,41 @@ public class Cliente extends javax.swing.JFrame {
             this.service.send(message);
         }
         return true;
+    }
+
+    public void Pesquisar(FuncionarioBean Funcionario) {
+        try {
+            int cod = 0;
+            String nome = "";
+            String senha = "";
+            boolean admin = false;
+            FuncionarioDAO funcionario = new FuncionarioDAO();
+            ResultSet rs;
+            rs = funcionario.retriveId(Funcionario);
+            if (rs.next()) {
+                do {
+                    cod = rs.getInt("cod");
+                    nome = rs.getString("nome");
+                    senha = rs.getString("senha");
+                    admin = rs.getBoolean("administrador");
+                } while (rs.next());
+                if (admin) {
+                    config.setVisible(true);
+                    config.jTabbedPane1.setSelectedIndex(0);
+                    config.setLocationRelativeTo(null);
+//                    setVisible(false);
+//                    Cliente cliente = new Cliente(cod, nome);
+//                    cliente.setVisible(true);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "VOCÊ NAO POSSUI PERMISSÃO DE ACESSO!", "Inove Systems - Informação", JOptionPane.ERROR_MESSAGE);
+
+                }
+            }
+        } catch (SQLException ex) {
+
+        }
+
     }
 
     @SuppressWarnings("unchecked")
@@ -1097,9 +1133,11 @@ public class Cliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel16MouseClicked
 
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
-        config.setVisible(true);
-        config.jTabbedPane1.setSelectedIndex(0);
-        config.setLocationRelativeTo(null);
+        System.out.println(codigo);
+        FuncionarioBean funcionario = new FuncionarioBean();
+        funcionario.setCodigo(codigo);
+        Pesquisar(funcionario);
+
 //        String ipconexao;
 //        int resposta = 0;
 //        ipconexao = JOptionPane.showInputDialog(null, "QUAL O IP DO SERVIDOR?", "3D Soluções Tecnológicas - Configuração", 3);

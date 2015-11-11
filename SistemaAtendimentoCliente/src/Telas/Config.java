@@ -1258,7 +1258,7 @@ public class Config extends javax.swing.JFrame {
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
         //Cliente cliente = new Cliente();
-        disconnected();
+        //disconnected();
 
     }//GEN-LAST:event_jButton18ActionPerformed
 
