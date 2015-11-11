@@ -7,11 +7,19 @@ package DAO;
 
 import Bean.FuncionarioBean;
 import ConecctionFactory.ConnectionFactory;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.filechooser.FileSystemView;
 
 /**
  *
@@ -19,10 +27,49 @@ import java.sql.Statement;
  */
 public class FuncionarioDAO {
 
+    public String IPCom = "127.0.0.1";
+    public String diretorioUsuario = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
+    public File IPConfig = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "IPConfig.txt");
     Connection conexao;
 
     public FuncionarioDAO() {
-        this.conexao = ConnectionFactory.openConnection();
+        new Thread() {
+            @Override
+            public void run() {
+                FileReader fr;
+                try {
+                    if (!IPConfig.exists()) {
+                        try {
+                            IPConfig.createNewFile();
+                            FileWriter fw = new FileWriter(IPConfig, false);
+                            BufferedWriter bw = new BufferedWriter(fw);
+                            bw.write(IPCom);
+                            bw.newLine();
+                            bw.close();
+                            fw.close();
+                        } catch (IOException ex) {
+                            //JOptionPane.showMessageDialog(null, " erro ao criar arquivo", "3D Soluções Tecnológicas - Informação", 1);
+                        }
+                    } else {
+                        fr = new FileReader(IPConfig);
+                        BufferedReader br = new BufferedReader(fr);
+                        while (br.ready()) {
+                            String linha = br.readLine();
+                            IPCom = linha;
+                        }
+                        br.close();
+                        fr.close();
+                    }
+                } catch (FileNotFoundException ex) {
+                    //JOptionPane.showMessageDialog(null, " erro arquivo nao encontrado ", "3D Soluções Tecnológicas - Informação", 1);
+                } catch (IOException ex) {
+
+                }
+
+            }
+        }.
+                start();
+        this.conexao = ConnectionFactory.openConnection(IPCom);
     }
 
     public void create(FuncionarioBean funcionario) throws SQLException {

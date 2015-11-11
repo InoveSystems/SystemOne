@@ -118,7 +118,6 @@
               <Font name="Arial" size="16" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="usuario"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButton1">
@@ -138,7 +137,7 @@
               <Font name="Arial" size="16" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="usuario"/>
+            <Property name="text" type="java.lang.String" value="USU&#xc1;RIO"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">

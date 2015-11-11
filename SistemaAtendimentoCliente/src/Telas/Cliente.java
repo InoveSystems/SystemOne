@@ -29,7 +29,7 @@ import javax.swing.filechooser.FileSystemView;
 public class Cliente extends javax.swing.JFrame {
 
     //Login login = new Login();
-    //Config config = new Config();
+    Config config = new Config();
     private Socket socket;
     private Mensagem message;
     public Conexao service;
@@ -1097,69 +1097,68 @@ public class Cliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel16MouseClicked
 
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
-
-//        config.setVisible(true);
-//        config.jTabbedPane1.setSelectedIndex(0);
-//        config.setLocationRelativeTo(null);
-        String ipconexao;
-        int resposta = 0;
-        ipconexao = JOptionPane.showInputDialog(null, "QUAL O IP DO SERVIDOR?", "3D Soluções Tecnológicas - Configuração", 3);
-        try {
-            if ((!ipconexao.equals(null)) && (!ipconexao.equals(""))) {
-                resposta = JOptionPane.showConfirmDialog(null, "CERTIFIQUE-SE QUE ESTE IP EXISTA NA REDE! \n" + "ESTE É O IP DO SERVIDOR " + ipconexao + " ?");
-                if (resposta == JOptionPane.YES_OPTION) {
-                    IPCom = ipconexao;
-                    JOptionPane.showMessageDialog(null, "IP " + IPCom + " CONFIGURADO COM SUCESSO!", "3D Soluções Tecnológicas - Informação", 1);
-                    disconnected();
-
-                } else {
-
-                }
-            } else {
-                do {
-                    ipconexao = JOptionPane.showInputDialog(null, "ERRO GRAVE! IP INVALIDO! \nQUAL O IP DO SERVIDOR ?", "3D Soluções Tecnológicas - Configuração", 3);
-                } while ((ipconexao.equals(null)) || (ipconexao.equals("")));
-                resposta = JOptionPane.showConfirmDialog(null, "CERTIFIQUE-SE QUE ESTE IP EXISTA NA REDE! \n" + "ESTE É O IP DO SERVIDOR " + ipconexao + " ?");
-                if (resposta == JOptionPane.YES_OPTION) {
-                    IPCom = ipconexao;
-                    JOptionPane.showMessageDialog(null, "IP " + IPCom + " CONFIGURADO COM SUCESSO!", "3D Soluções Tecnológicas - Informação", 1);
-                    disconnected();
-                }
-            }
-        } catch (NullPointerException ex) {
-        }
-
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    if (!IPConfig.exists()) {
-                        try {
-                            IPConfig.createNewFile();
-
-                        } catch (IOException ex) {
-                            JOptionPane.showMessageDialog(null, " Erro ao criar IPConfig! ", "3D Soluções Tecnológicas - Informação", 1);
-
-                        }
-                    }
-                    FileWriter fw;
-                    try {
-                        fw = new FileWriter(IPConfig, false);
-                        BufferedWriter bw = new BufferedWriter(fw);
-                        bw.write(IPCom);
-                        bw.newLine();
-                        bw.close();
-                        fw.close();
-
-                    } catch (IOException ex) {
-                        JOptionPane.showMessageDialog(null, " Erro ao ler IPConfig! ", "3D Soluções Tecnológicas - Informação", 1);
-                        statuslabel.setText("Erro ao ler IPConfig!");
-                    }
-                } catch (NullPointerException ex) {
-                    statuslabel.setText("Erro ao ler IPConfig!");
-                }
-            }
-        }.start();
+        config.setVisible(true);
+        config.jTabbedPane1.setSelectedIndex(0);
+        config.setLocationRelativeTo(null);
+//        String ipconexao;
+//        int resposta = 0;
+//        ipconexao = JOptionPane.showInputDialog(null, "QUAL O IP DO SERVIDOR?", "3D Soluções Tecnológicas - Configuração", 3);
+//        try {
+//            if ((!ipconexao.equals(null)) && (!ipconexao.equals(""))) {
+//                resposta = JOptionPane.showConfirmDialog(null, "CERTIFIQUE-SE QUE ESTE IP EXISTA NA REDE! \n" + "ESTE É O IP DO SERVIDOR " + ipconexao + " ?");
+//                if (resposta == JOptionPane.YES_OPTION) {
+//                    IPCom = ipconexao;
+//                    JOptionPane.showMessageDialog(null, "IP " + IPCom + " CONFIGURADO COM SUCESSO!", "3D Soluções Tecnológicas - Informação", 1);
+//                    disconnected();
+//
+//                } else {
+//
+//                }
+//            } else {
+//                do {
+//                    ipconexao = JOptionPane.showInputDialog(null, "ERRO GRAVE! IP INVALIDO! \nQUAL O IP DO SERVIDOR ?", "3D Soluções Tecnológicas - Configuração", 3);
+//                } while ((ipconexao.equals(null)) || (ipconexao.equals("")));
+//                resposta = JOptionPane.showConfirmDialog(null, "CERTIFIQUE-SE QUE ESTE IP EXISTA NA REDE! \n" + "ESTE É O IP DO SERVIDOR " + ipconexao + " ?");
+//                if (resposta == JOptionPane.YES_OPTION) {
+//                    IPCom = ipconexao;
+//                    JOptionPane.showMessageDialog(null, "IP " + IPCom + " CONFIGURADO COM SUCESSO!", "3D Soluções Tecnológicas - Informação", 1);
+//                    disconnected();
+//                }
+//            }
+//        } catch (NullPointerException ex) {
+//        }
+//
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                try {
+//                    if (!IPConfig.exists()) {
+//                        try {
+//                            IPConfig.createNewFile();
+//
+//                        } catch (IOException ex) {
+//                            JOptionPane.showMessageDialog(null, " Erro ao criar IPConfig! ", "3D Soluções Tecnológicas - Informação", 1);
+//
+//                        }
+//                    }
+//                    FileWriter fw;
+//                    try {
+//                        fw = new FileWriter(IPConfig, false);
+//                        BufferedWriter bw = new BufferedWriter(fw);
+//                        bw.write(IPCom);
+//                        bw.newLine();
+//                        bw.close();
+//                        fw.close();
+//
+//                    } catch (IOException ex) {
+//                        JOptionPane.showMessageDialog(null, " Erro ao ler IPConfig! ", "3D Soluções Tecnológicas - Informação", 1);
+//                        statuslabel.setText("Erro ao ler IPConfig!");
+//                    }
+//                } catch (NullPointerException ex) {
+//                    statuslabel.setText("Erro ao ler IPConfig!");
+//                }
+//            }
+//        }.start();
 
     }//GEN-LAST:event_jLabel14MouseClicked
 

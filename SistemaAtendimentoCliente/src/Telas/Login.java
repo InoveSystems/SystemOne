@@ -20,9 +20,11 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
 
 //    Cliente cliente = new Cliente();
+    Config config = new Config();
+
     public Login() {
         initComponents();
-        setAlwaysOnTop(true);
+        //setAlwaysOnTop(true);
 
     }
 
@@ -64,7 +66,6 @@ public class Login extends javax.swing.JFrame {
 
         jSenha.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jSenha.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jSenha.setText("usuario");
 
         jButton1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jButton1.setText("Confirmar");
@@ -76,7 +77,7 @@ public class Login extends javax.swing.JFrame {
 
         jLogin.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLogin.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jLogin.setText("usuario");
+        jLogin.setText("USUÁRIO");
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/LoginFundo.png"))); // NOI18N
@@ -168,13 +169,17 @@ public class Login extends javax.swing.JFrame {
             jLogin.grabFocus();
         } else {
             try {
-                FuncionarioBean funcionario = new FuncionarioBean();
-                funcionario.setCodigo(Integer.parseInt(jLogin.getText()));
-                Pesquisar(funcionario);
-
+                if ((jLogin.getText().trim().equals("config")) && (jSenha.getText().trim().equals("inove+1052"))) {
+                    config.setVisible(true);
+                } else {
+                    FuncionarioBean funcionario = new FuncionarioBean();
+                    funcionario.setCodigo(Integer.parseInt(jLogin.getText()));
+                    Pesquisar(funcionario);
+                }
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "USUÁRIO INVÁLIDO!" + "\n" + "VERIFIQUE OS DADOS DE LOGIN!", "Inove Systems - Informação", JOptionPane.ERROR_MESSAGE);
             }
+            
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -196,21 +201,21 @@ public class Login extends javax.swing.JFrame {
                     setVisible(false);
                     Cliente cliente = new Cliente(cod, nome);
                     cliente.setVisible(true);
-
+                    
                 } else {
                     JOptionPane.showMessageDialog(null, "SENHA INCORRETA!" + "\n" + "VERIFIQUE SUA SENHA!", "Inove Systems - Informação", JOptionPane.ERROR_MESSAGE);
                     jSenha.grabFocus();
-
+                    
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "NÃO FOI POSSÍVEL LOCALIZAR ESTE USUÁRIO!" + "\n" + "VERIFIQUE OS DADOS DE LOGIN!", "Inove Systems - Informação", JOptionPane.ERROR_MESSAGE);
             }
         } catch (SQLException ex) {
-
+            
         }
-
+        
     }
-
+    
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         System.exit(0);
