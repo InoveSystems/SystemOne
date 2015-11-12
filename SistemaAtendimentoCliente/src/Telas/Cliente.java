@@ -1,10 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Telas;
-
+        
 import Bean.FuncionarioBean;
 import ComRede.Conexao;
 import ComRede.Mensagem;
@@ -48,7 +43,7 @@ public class Cliente extends javax.swing.JFrame {
     public Cliente(int codi, String nome) {
         codigo = codi;
         initComponents();
-        jatendente.setText("Atendente: " + codi + " " + nome);
+        jatendente.setText("Atendente: " +nome);
 
         //lendo ou criando arquivo com o ip do servidor
         new Thread() {
@@ -741,7 +736,7 @@ public class Cliente extends javax.swing.JFrame {
         jatendente.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
         jatendente.setForeground(new java.awt.Color(51, 51, 51));
         jatendente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jatendente.setText("Atendente: 23 CLAUDIOMAR");
+        jatendente.setText("Atendente: CLAUDIOMAR");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -1133,11 +1128,9 @@ public class Cliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel16MouseClicked
 
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
-        System.out.println(codigo);
         FuncionarioBean funcionario = new FuncionarioBean();
         funcionario.setCodigo(codigo);
         Pesquisar(funcionario);
-
 //        String ipconexao;
 //        int resposta = 0;
 //        ipconexao = JOptionPane.showInputDialog(null, "QUAL O IP DO SERVIDOR?", "3D Soluções Tecnológicas - Configuração", 3);

@@ -36,6 +36,7 @@ public class Config extends javax.swing.JFrame {
 
     public Config() {
         initComponents();
+        setAlwaysOnTop(true);
         ImageIcon tab1Icon = new ImageIcon(
                 this.getClass().getResource("/Imagens/funcionariocad.png"));
         ImageIcon tab2Icon = new ImageIcon(
@@ -134,6 +135,9 @@ public class Config extends javax.swing.JFrame {
         setTitle("Inove Systems - Configurações");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -1356,6 +1360,10 @@ public class Config extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+            
+    }//GEN-LAST:event_formWindowClosed
     public void LimparTela() {
         jBairro.setText(null);
         jCPF.setText(null);

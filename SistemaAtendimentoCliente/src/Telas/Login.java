@@ -171,6 +171,7 @@ public class Login extends javax.swing.JFrame {
             try {
                 if ((jLogin.getText().trim().equals("config")) && (jSenha.getText().trim().equals("inove+1052"))) {
                     config.setVisible(true);
+                    setEnabled(false);
                 } else {
                     FuncionarioBean funcionario = new FuncionarioBean();
                     funcionario.setCodigo(Integer.parseInt(jLogin.getText()));
@@ -201,6 +202,7 @@ public class Login extends javax.swing.JFrame {
                     setVisible(false);
                     Cliente cliente = new Cliente(cod, nome);
                     cliente.setVisible(true);
+                    
                     
                 } else {
                     JOptionPane.showMessageDialog(null, "SENHA INCORRETA!" + "\n" + "VERIFIQUE SUA SENHA!", "Inove Systems - Informação", JOptionPane.ERROR_MESSAGE);
