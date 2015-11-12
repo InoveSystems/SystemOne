@@ -31,6 +31,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileSystemView;
 
@@ -54,8 +55,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
     PainelPrincipal.Fila f1 = new PainelPrincipal.Fila();
     String teste = " ";
     String IPCom = "127.0.0.1";
-    private static final String MEDIA_URL
-            = "http://download.oracle.com/otndocs/products/javafx/oow2010-2.flv";
+   
 
     /**
      * Creates new form PainelPrincipal
@@ -339,11 +339,11 @@ public class PainelPrincipal extends javax.swing.JFrame {
                                 TempValue.setText(temperatura.adicionar());
                             }
                         }.start();
-                        TextExemplo.setText("                            ..:: INOVE SYSTEMS ::..");
+                        TextExemplo.setText("                                    ..:: INOVE SYSTEMS ::..");
                         Thread.currentThread().sleep(5000);
-                        TextExemplo.setText("                  TELEFONE: (53) 32481203 - Pinheiro Machado-RS");
+                        TextExemplo.setText("                TELEFONE: (53) 32481203 - Pinheiro Machado-RS");
                         Thread.currentThread().sleep(5000);
-                        TextExemplo.setText("                            www.inovesystems.com.br");
+                        TextExemplo.setText("                                  www.inovesystems.com.br");
                         Thread.currentThread().sleep(5000);
 
                         new Thread() {
@@ -434,7 +434,10 @@ public class PainelPrincipal extends javax.swing.JFrame {
         TextExemplo = new javax.swing.JLabel();
         TempValue = new javax.swing.JLabel();
         DateValue = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jEditorPane1 = new javax.swing.JEditorPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -497,6 +500,10 @@ public class PainelPrincipal extends javax.swing.JFrame {
         getContentPane().add(DateValue);
         DateValue.setBounds(40, 830, 530, 90);
 
+        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\EngComp\\Desktop\\ae5b3b27dd6e8d73f671a02e28f6ca3e.gif")); // NOI18N
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(280, 450, 320, 180);
+
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Principal.png"))); // NOI18N
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -506,6 +513,11 @@ public class PainelPrincipal extends javax.swing.JFrame {
         });
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 1920, 1080);
+
+        jScrollPane1.setViewportView(jEditorPane1);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(390, 470, 108, 22);
 
         pack();
         setLocationRelativeTo(null);
@@ -617,7 +629,10 @@ public class PainelPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel antepenultimalabel;
     private javax.swing.JLabel atuallabel;
     private javax.swing.JLabel idlabel;
+    private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel penultimalabel;
     private javax.swing.JLabel ultimalabel;
     // End of variables declaration//GEN-END:variables

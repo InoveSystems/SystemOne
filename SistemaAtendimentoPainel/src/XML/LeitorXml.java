@@ -35,9 +35,9 @@ public class LeitorXml {
     }
 
     public String adicionar() {
-        channel="";
-        item="";
-        is=null;
+        channel = "";
+        item = "";
+        is = null;
         String urlstring = "http://g1.globo.com/dynamo/rs/rio-grande-do-sul/rss2.xml ";//este é o rss do meu blog
         try {
             is = new URL(urlstring).openConnection().getInputStream();
@@ -57,11 +57,11 @@ public class LeitorXml {
         } catch (UnknownHostException ex) {
             return "VERIFIQUE SUA CONEXÃO COM A INTERNET E RECEBA NOTÍCIAS ATUALIZADAS!";
         } catch (SAXException ex) {
-
+            return "VERIFIQUE SUA CONEXÃO COM A INTERNET E RECEBA NOTÍCIAS ATUALIZADAS!";
         } catch (IOException ex) {
             return "VERIFIQUE SUA CONEXÃO COM A INTERNET E RECEBA NOTÍCIAS ATUALIZADAS!";
         } catch (IllegalArgumentException ex) {
-
+            return "VERIFIQUE SUA CONEXÃO COM A INTERNET E RECEBA NOTÍCIAS ATUALIZADAS!";
         }
         try {
             NodeList list = documento.getElementsByTagName("channel");
