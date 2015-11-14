@@ -496,11 +496,11 @@ public class PainelPrincipal extends javax.swing.JFrame {
         DateValue.setFont(new java.awt.Font("Arial", 1, 83)); // NOI18N
         DateValue.setForeground(new java.awt.Color(255, 255, 255));
         DateValue.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        DateValue.setText("28/06/2015");
+        DateValue.setText("00/00/0000");
         getContentPane().add(DateValue);
         DateValue.setBounds(40, 830, 530, 90);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\EngComp\\Desktop\\ae5b3b27dd6e8d73f671a02e28f6ca3e.gif")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/banner.gif"))); // NOI18N
         getContentPane().add(jLabel2);
         jLabel2.setBounds(280, 450, 320, 180);
 
