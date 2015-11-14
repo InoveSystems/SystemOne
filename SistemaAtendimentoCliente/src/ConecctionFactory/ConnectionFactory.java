@@ -15,13 +15,14 @@ import org.postgresql.util.PSQLException;
 
 /**
  *
- * @author EngComp
+ * @author Ritiele
  */
 public class ConnectionFactory {
 
     public static Connection con;
 
-    public static Connection openConnection(String ip) {
+    public static Connection openConnection(String ip) throws SQLException {
+
         //Se não houver conexão, retorna uma nova instanciada
         if (con == null) {
             try {
@@ -29,14 +30,7 @@ public class ConnectionFactory {
             } catch (ClassNotFoundException ex) {
                 System.out.println("org.postgresql.Driver nao encontrado. Entre em contado com o administrador do sistema!");
             }
-            try {
-                con = DriverManager.getConnection("jdbc:postgresql://"+ip+":5433/Inovesystems", "postgres", "inove+1052");
-                //  JOptionPane.showMessageDialog(null, "Conexão efetuada com sucesso! \nInicializando o Sistema... \nInove Systems - www.inovesystems.com.br", "Inove Systems - Informação", JOptionPane.INFORMATION_MESSAGE);
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Erro ao conectar com o banco de dados! \nEntre em contado com o administrador do sistema! \nInove Systems - www.inovesystems.com.br", "Inove Systems - Informação", JOptionPane.ERROR_MESSAGE);
-                // Logger.getLogger(ConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
-                System.exit(0);
-            }
+            con = DriverManager.getConnection("jdbc:postgresql://" + ip + ":5433/Inovesystems", "postgres", "inove+1052");
         }
         return con;
     }

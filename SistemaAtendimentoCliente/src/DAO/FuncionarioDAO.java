@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAO;
 
 import Bean.FuncionarioBean;
@@ -19,57 +14,56 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileSystemView;
 
 /**
  *
- * @author EngComp
+ * @author Ritiele
  */
 public class FuncionarioDAO {
 
     public String IPCom = "127.0.0.1";
     public String diretorioUsuario = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
     public File IPConfig = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "IPConfig.txt");
-    Connection conexao;
+    public Connection conexao;
 
-    public FuncionarioDAO() {
-        new Thread() {
-            @Override
-            public void run() {
-                FileReader fr;
+    public FuncionarioDAO() throws SQLException {
+        FileReader fr;
+        //lendo ou criando arquivo com o ip do servidor
+        try {
+            if (!IPConfig.exists()) {
                 try {
-                    if (!IPConfig.exists()) {
-                        try {
-                            IPConfig.createNewFile();
-                            FileWriter fw = new FileWriter(IPConfig, false);
-                            BufferedWriter bw = new BufferedWriter(fw);
-                            bw.write(IPCom);
-                            bw.newLine();
-                            bw.close();
-                            fw.close();
-                        } catch (IOException ex) {
-                            //JOptionPane.showMessageDialog(null, " erro ao criar arquivo", "3D Soluções Tecnológicas - Informação", 1);
-                        }
-                    } else {
-                        fr = new FileReader(IPConfig);
-                        BufferedReader br = new BufferedReader(fr);
-                        while (br.ready()) {
-                            String linha = br.readLine();
-                            IPCom = linha;
-                        }
-                        br.close();
-                        fr.close();
-                    }
-                } catch (FileNotFoundException ex) {
-                    //JOptionPane.showMessageDialog(null, " erro arquivo nao encontrado ", "3D Soluções Tecnológicas - Informação", 1);
+                    IPConfig.createNewFile();
+                    FileWriter fw = new FileWriter(IPConfig, false);
+                    BufferedWriter bw = new BufferedWriter(fw);
+                    bw.write(IPCom);
+                    bw.newLine();
+                    bw.close();
+                    fw.close();
                 } catch (IOException ex) {
-
+                    JOptionPane.showMessageDialog(null, "Erro! Não foi possivel criar IPConfig! \nEntre em contado com o administrador do sistema! \nInove Systems - www.inovesystems.com.br", "Inove Systems - Informação", JOptionPane.ERROR_MESSAGE);
+                    System.exit(0);
                 }
+            } else {
+                fr = new FileReader(IPConfig);
+                BufferedReader br = new BufferedReader(fr);
+                while (br.ready()) {
+                    String linha = br.readLine();
+                    IPCom = linha;
+                }
+                br.close();
+                fr.close();
 
             }
-        }.
-                start();
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Erro! IPConfig não encontrado! \nEntre em contado com o administrador do sistema! \nInove Systems - www.inovesystems.com.br", "Inove Systems - Informação", JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
+        } catch (IOException ex) {
+
+        }
         this.conexao = ConnectionFactory.openConnection(IPCom);
+
     }
 
     public void create(FuncionarioBean funcionario) throws SQLException {

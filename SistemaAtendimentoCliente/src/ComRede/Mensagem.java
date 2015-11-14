@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.swing.Action;
 
 public class Mensagem implements Serializable {
+
     private Set<String> setOnlines = new HashSet<String>();
     private Action action;
     private String name;
@@ -19,6 +20,7 @@ public class Mensagem implements Serializable {
     private String tipo;
     private int numero;
     private int idFinalizar;
+    private String NomeFuncionario;
 
     public enum Action {
 
@@ -130,6 +132,14 @@ public class Mensagem implements Serializable {
 
     public void setAntepenultima(String antepenultima) {
         this.antepenultima = antepenultima;
+    }
+
+    public String getNomeFuncionario() {
+        return NomeFuncionario;
+    }
+
+    public void setNomeFuncionario(String NomeFuncionario) {
+        this.NomeFuncionario = NomeFuncionario;
     }
 
 }

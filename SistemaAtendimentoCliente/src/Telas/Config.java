@@ -1,11 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Telas;
 
 import Bean.FuncionarioBean;
+import ComRede.Conexao;
+import ComRede.Mensagem;
 import DAO.FuncionarioDAO;
 import java.awt.BorderLayout;
 import java.io.BufferedWriter;
@@ -26,35 +23,49 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author EngComp
+ * @author Ritiele
  */
 public class Config extends javax.swing.JFrame {
 
     private Socket socket;
-    String cod1;
-    boolean novo = true;
+    private String cod1;
+    private boolean novo = true;
+    private boolean config = false;
+    private Login login = new Login();
+    public String IPCom = "127.0.0.1";
+    public String diretorioUsuario = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
+    public File IPConfig = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "IPConfig.txt");
 
     public Config() {
         initComponents();
-        setAlwaysOnTop(true);
+        //setAlwaysOnTop(true);
+        login.setVisible(false);
+        login.setEnabled(false);
         ImageIcon tab1Icon = new ImageIcon(
                 this.getClass().getResource("/Imagens/funcionariocad.png"));
         ImageIcon tab2Icon = new ImageIcon(
                 this.getClass().getResource("/Imagens/grafico.png"));
         ImageIcon tab3Icon = new ImageIcon(
                 this.getClass().getResource("/Imagens/config.png"));
-        jTabbedPane1.setIconAt(0, tab1Icon);
-        jTabbedPane1.setIconAt(1, tab2Icon);
-        jTabbedPane1.setIconAt(2, tab3Icon);
+        jPanes.setIconAt(0, tab1Icon);
+        jPanes.setIconAt(1, tab2Icon);
+        jPanes.setIconAt(2, tab3Icon);
     }
 
-    public void disconnected() {
-        try {
-            socket.close();
-        } catch (IOException ex) {
-            statuslabel.setText("Erro ao sair! Tente mais tarde.");
-
-        }
+    public Config(Boolean Config) {
+        initComponents();
+        //setAlwaysOnTop(false);
+        setEnabled(true);
+        config = Config;
+        ImageIcon tab1Icon = new ImageIcon(
+                this.getClass().getResource("/Imagens/funcionariocad.png"));
+        ImageIcon tab2Icon = new ImageIcon(
+                this.getClass().getResource("/Imagens/grafico.png"));
+        ImageIcon tab3Icon = new ImageIcon(
+                this.getClass().getResource("/Imagens/config.png"));
+        jPanes.setIconAt(0, tab1Icon);
+        jPanes.setIconAt(1, tab2Icon);
+        jPanes.setIconAt(2, tab3Icon);
     }
 
     /**
@@ -66,7 +77,7 @@ public class Config extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanes = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -118,7 +129,7 @@ public class Config extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
-        jTextField17 = new javax.swing.JTextField();
+        jIPconexao = new javax.swing.JTextField();
         jLabel36 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jTextField3 = new javax.swing.JTextField();
@@ -143,7 +154,7 @@ public class Config extends javax.swing.JFrame {
             }
         });
 
-        jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        jPanes.setTabPlacement(javax.swing.JTabbedPane.LEFT);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -711,7 +722,7 @@ public class Config extends javax.swing.JFrame {
                 .addGap(5, 5, 5))
         );
 
-        jTabbedPane1.addTab("", jPanel1);
+        jPanes.addTab("", jPanel1);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -741,7 +752,7 @@ public class Config extends javax.swing.JFrame {
                 .addContainerGap(378, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("", jPanel2);
+        jPanes.addTab("", jPanel2);
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
         jPanel7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -749,14 +760,14 @@ public class Config extends javax.swing.JFrame {
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jTextField17.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jTextField17.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField17.setText("192.168.2.1");
-        jTextField17.setMaximumSize(new java.awt.Dimension(1000, 10000));
-        jTextField17.setPreferredSize(new java.awt.Dimension(500, 25));
-        jTextField17.addActionListener(new java.awt.event.ActionListener() {
+        jIPconexao.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jIPconexao.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jIPconexao.setText("192.168.2.1");
+        jIPconexao.setMaximumSize(new java.awt.Dimension(1000, 10000));
+        jIPconexao.setPreferredSize(new java.awt.Dimension(500, 25));
+        jIPconexao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField17ActionPerformed(evt);
+                jIPconexaoActionPerformed(evt);
             }
         });
 
@@ -771,7 +782,7 @@ public class Config extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel36)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jIPconexao, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -782,7 +793,7 @@ public class Config extends javax.swing.JFrame {
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addComponent(jLabel36, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
-                    .addComponent(jTextField17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jIPconexao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -967,17 +978,17 @@ public class Config extends javax.swing.JFrame {
                 .addContainerGap(168, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("", jPanel4);
+        jPanes.addTab("", jPanel4);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jPanes)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jPanes)
         );
 
         pack();
@@ -1060,7 +1071,12 @@ public class Config extends javax.swing.JFrame {
     private void buttonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSalvarActionPerformed
         if (jSenha.getText().equals(jConSenha.getText())) {
             FuncionarioBean funcionario = new FuncionarioBean();
-            FuncionarioDAO enviar = new FuncionarioDAO();
+            FuncionarioDAO enviar = null;
+            try {
+                enviar = new FuncionarioDAO();
+            } catch (SQLException ex) {
+
+            }
             String Estado;
             try {
                 funcionario.setCodigo(Integer.parseInt(jCod.getText()));
@@ -1107,6 +1123,8 @@ public class Config extends javax.swing.JFrame {
                 LimparTela();
             } catch (SQLException ex) {
                 System.out.println("Erro ao salvar os dados no banco!");
+            } catch (NumberFormatException ex) {
+
             }
         } else {
             JOptionPane.showMessageDialog(null, "A SENHA NÃO CONFERE!" + "\n" + "VERIFIFIQUE SUA SENHA!", "Inove Systems - Informação", JOptionPane.ERROR_MESSAGE);
@@ -1252,9 +1270,9 @@ public class Config extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
 
-    private void jTextField17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField17ActionPerformed
+    private void jIPconexaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jIPconexaoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField17ActionPerformed
+    }//GEN-LAST:event_jIPconexaoActionPerformed
 
     private void statuslabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statuslabelActionPerformed
         // TODO add your handling code here:
@@ -1267,7 +1285,68 @@ public class Config extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
-        // TODO add your handling code here:
+
+        String ipconexao;
+        int resposta = 0;
+        ipconexao = jIPconexao.getText();
+//        ipconexao = JOptionPane.showInputDialog(null, "QUAL O IP DO SERVIDOR?", "3D Soluções Tecnológicas - Configuração", 3);
+        try {
+            if ((!ipconexao.equals(null)) && (!ipconexao.equals(""))) {
+                resposta = JOptionPane.showConfirmDialog(null, "CERTIFIQUE-SE QUE ESTE IP EXISTA NA REDE! \n" + "ESTE É O IP DO SERVIDOR " + ipconexao + " ?");
+                if (resposta == JOptionPane.YES_OPTION) {
+                    IPCom = ipconexao;
+                    JOptionPane.showMessageDialog(null, "IP " + IPCom + " CONFIGURADO COM SUCESSO!", "3D Soluções Tecnológicas - Informação", 1);
+
+                } else {
+
+                }
+            } else {
+                do {
+                    ipconexao = JOptionPane.showInputDialog(null, "ERRO GRAVE! IP INVALIDO! \nQUAL O IP DO SERVIDOR ?", "3D Soluções Tecnológicas - Configuração", 3);
+                } while ((ipconexao.equals(null)) || (ipconexao.equals("")));
+                resposta = JOptionPane.showConfirmDialog(null, "CERTIFIQUE-SE QUE ESTE IP EXISTA NA REDE! \n" + "ESTE É O IP DO SERVIDOR " + ipconexao + " ?");
+                if (resposta == JOptionPane.YES_OPTION) {
+                    IPCom = ipconexao;
+                    JOptionPane.showMessageDialog(null, "IP " + IPCom + " CONFIGURADO COM SUCESSO!", "3D Soluções Tecnológicas - Informação", 1);
+
+                }
+            }
+        } catch (NullPointerException ex) {
+
+        }
+//
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    if (!IPConfig.exists()) {
+                        try {
+                            IPConfig.createNewFile();
+
+                        } catch (IOException ex) {
+                            JOptionPane.showMessageDialog(null, " Erro ao criar IPConfig! ", "3D Soluções Tecnológicas - Informação", 1);
+
+                        }
+                    }
+                    FileWriter fw;
+                    try {
+                        fw = new FileWriter(IPConfig, false);
+                        BufferedWriter bw = new BufferedWriter(fw);
+                        bw.write(IPCom);
+                        bw.newLine();
+                        bw.close();
+                        fw.close();
+
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(null, " Erro ao ler IPConfig! ", "3D Soluções Tecnológicas - Informação", 1);
+                        statuslabel.setText("Erro ao ler IPConfig!");
+                    }
+                } catch (NullPointerException ex) {
+                    statuslabel.setText("Erro ao ler IPConfig!");
+                }
+            }
+        }.start();
+
     }//GEN-LAST:event_jButton20ActionPerformed
 
     private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
@@ -1279,14 +1358,18 @@ public class Config extends javax.swing.JFrame {
     }//GEN-LAST:event_jComplementoActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        new Thread() {
-            @Override
-            public void run() {
-                atualizarTabela();
-            }
-        }.
-                start();
-
+        if (!config) {
+            new Thread() {
+                @Override
+                public void run() {
+                    atualizarTabela();
+                }
+            }.
+                    start();
+        } else {
+            jPanes.setEnabledAt(0, false);
+            jPanes.setEnabledAt(1, false);
+        }
     }//GEN-LAST:event_formWindowOpened
 
     private void jConSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jConSenhaActionPerformed
@@ -1362,7 +1445,15 @@ public class Config extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-            
+        if (config) {
+            //JOptionPane.showMessageDialog(null, "O SISTEMA FOI FINALIZADO PARA SALVAR AS CONFIGURAÇÕES!" + "\n" + "REINICIE O SISTEMA!", "Inove Systems - Informação", JOptionPane.INFORMATION_MESSAGE);
+            login.setVisible(true);
+            login.setEnabled(true);
+            setVisible(false);
+            setEnabled(false);
+            config = false;
+        }
+
     }//GEN-LAST:event_formWindowClosed
     public void LimparTela() {
         jBairro.setText(null);
@@ -1417,7 +1508,10 @@ public class Config extends javax.swing.JFrame {
                     jCod.setText(cod1);
                 } catch (SQLException e) {
                     System.out.println("Erro de sql3");
+                } catch (NullPointerException ex) {
+                    // JOptionPane.showMessageDialog(null, "Erro ao conectar com o banco de dados! \nEntre em contado com o administrador do sistema! \nInove Systems - www.inovesystems.com.br", "Inove Systems - Informação", JOptionPane.ERROR_MESSAGE);
                 }
+
             }
         }.start();
     }
@@ -1497,6 +1591,8 @@ public class Config extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             System.out.println("Erro banco");
+        } catch (NullPointerException ex) {
+
         }
     }
 
@@ -1559,6 +1655,7 @@ public class Config extends javax.swing.JFrame {
     private javax.swing.JTextField jComplemento;
     private javax.swing.JTextField jConSenha;
     private javax.swing.JTextField jEmail;
+    private javax.swing.JTextField jIPconexao;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -1580,29 +1677,28 @@ public class Config extends javax.swing.JFrame {
     private javax.swing.JTextField jLogradouro;
     private javax.swing.JTextField jNome;
     private javax.swing.JTextField jNumero;
-    private javax.swing.JPanel jPanel1;
+    public javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel2;
+    public javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
+    public javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    public javax.swing.JTabbedPane jPanes;
     private javax.swing.JTextField jPesquisar;
     private javax.swing.JRadioButton jRadioAdministrador;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jSenha;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator4;
-    public javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTelCo;
     private javax.swing.JTextField jTelMo;
     private javax.swing.JTextField jTelRe;
-    private javax.swing.JTextField jTextField17;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField statuslabel;
     // End of variables declaration//GEN-END:variables

@@ -1,5 +1,5 @@
 package Telas;
-        
+
 import Bean.FuncionarioBean;
 import ComRede.Conexao;
 import ComRede.Mensagem;
@@ -25,9 +25,13 @@ import javax.swing.JOptionPane;
 import javax.swing.border.EtchedBorder;
 import javax.swing.filechooser.FileSystemView;
 
+/**
+ *
+ * @author Ritiele
+ */
 public class Cliente extends javax.swing.JFrame {
 
-    Config config = new Config();
+    private Config config = new Config();
     private Socket socket;
     private Mensagem message;
     public Conexao service;
@@ -43,7 +47,7 @@ public class Cliente extends javax.swing.JFrame {
     public Cliente(int codi, String nome) {
         codigo = codi;
         initComponents();
-        jatendente.setText("Atendente: " +nome);
+        jatendente.setText("Atendente: " + nome);
 
         //lendo ou criando arquivo com o ip do servidor
         new Thread() {
@@ -226,11 +230,13 @@ public class Cliente extends javax.swing.JFrame {
             try {
                 this.input = new ObjectInputStream(socket.getInputStream());
             } catch (NullPointerException ex) {
-                statuslabel.setText("Erro ao conectar ao servidor!");
                 try {
-                    Thread.currentThread().sleep(5000);
+                    statuslabel.setText("Erro ao conectar ao servidor!");
+                    Thread.currentThread().sleep(3000);
+                    statuslabel.setText("Verifique a aplicação servidor!");
+                    Thread.currentThread().sleep(3000);
                     statuslabel.setText("Tentando conectar novamente ...");
-                    Thread.currentThread().sleep(5000);
+                    Thread.currentThread().sleep(3000);
                     new Thread() {
                         @Override
                         public void run() {
@@ -451,11 +457,6 @@ public class Cliente extends javax.swing.JFrame {
                         System.out.println("teste: " + message.getText());
                     }
                 }
-
-//                } else {
-//                    JOptionPane.showMessageDialog(null, "Erro de Impressão! Verifique o Painel de Impressão! \n" + "Tudo pronto? \n" + "Deseja chamar uma nova ficha?");
-//
-//                }
             }
 
         }
@@ -469,7 +470,6 @@ public class Cliente extends javax.swing.JFrame {
     }
 
     public boolean ConectarServidor() {
-
         if (!caixa.isEmpty()) {
             message = new Mensagem();
             this.message.setAction(Mensagem.Action.CONNECT);
@@ -500,7 +500,7 @@ public class Cliente extends javax.swing.JFrame {
                 } while (rs.next());
                 if (admin) {
                     config.setVisible(true);
-                    config.jTabbedPane1.setSelectedIndex(0);
+                    config.jPanes.setSelectedIndex(0);
                     config.setLocationRelativeTo(null);
 //                    setVisible(false);
 //                    Cliente cliente = new Cliente(cod, nome);

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Telas;
 
 import Bean.FuncionarioBean;
@@ -19,12 +14,8 @@ import javax.swing.JOptionPane;
  */
 public class Login extends javax.swing.JFrame {
 
-//    Cliente cliente = new Cliente();
-    Config config = new Config();
-
     public Login() {
         initComponents();
-        //setAlwaysOnTop(true);
 
     }
 
@@ -46,10 +37,12 @@ public class Login extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+        jStatus = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("3D - Soluções Tecnológicas - Login");
         setUndecorated(true);
         setResizable(false);
@@ -97,6 +90,12 @@ public class Login extends javax.swing.JFrame {
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
+        jStatus.setBackground(new java.awt.Color(255, 255, 255));
+        jStatus.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jStatus.setText("Digite seu Login de Usuario e Senha!");
+        jStatus.setOpaque(true);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -115,19 +114,23 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(jSenha, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLogin, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(5, 5, 5))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jStatus, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSeparator2))
+                .addGap(1, 1, 1))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jSeparator1)
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -137,7 +140,10 @@ public class Login extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton2)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(3, 3, 3))
+                .addGap(5, 5, 5)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -150,7 +156,7 @@ public class Login extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -163,61 +169,111 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        jLogin.getText();
-        if ((jLogin.getText().trim().equals("")) || (jSenha.getText().trim().equals(""))) {
-            JOptionPane.showMessageDialog(null, "DIGITE UM USUÁRIO/SENHA VÁLIDO!", "Inove Systems - Informação", JOptionPane.ERROR_MESSAGE);
-            jLogin.grabFocus();
-        } else {
-            try {
-                if ((jLogin.getText().trim().equals("config")) && (jSenha.getText().trim().equals("inove+1052"))) {
-                    config.setVisible(true);
-                    setEnabled(false);
+
+        new Thread() {
+            @Override
+            public void run() {
+                jLogin.getText();
+                if ((jLogin.getText().trim().equals("")) || (jSenha.getText().trim().equals(""))) {
+                    try {
+                        jStatus.setText("Digite um USUÁRIO/SENHA válido!");
+                        Thread.currentThread().sleep(2000);
+                        jStatus.setText("Verifique os dados de Login!");
+                        Thread.currentThread().sleep(2000);
+                        jStatus.setText("Digite seu Login de Usuario e Senha!");
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    jLogin.grabFocus();
                 } else {
-                    FuncionarioBean funcionario = new FuncionarioBean();
-                    funcionario.setCodigo(Integer.parseInt(jLogin.getText()));
-                    Pesquisar(funcionario);
+                    try {
+                        if ((jLogin.getText().trim().equals("config")) && (jSenha.getText().trim().equals("inove+1052"))) {
+                            Config config = new Config(true);
+                            config.jPanes.setSelectedIndex(2);
+                            config.setVisible(true);
+                            setEnabled(false);
+                            setVisible(false);
+                        } else {
+                            jStatus.setText("Aguarde! Conectando ao sistema ...");
+                            Thread.currentThread().sleep(2000);
+                            FuncionarioBean funcionario = new FuncionarioBean();
+                            funcionario.setCodigo(Integer.parseInt(jLogin.getText()));
+                            Pesquisar(funcionario);
+                        }
+                    } catch (NumberFormatException ex) {
+                        try {
+                            jStatus.setText("USUÁRIO INVÁLIDO!");
+                            Thread.currentThread().sleep(2000);
+                            jStatus.setText("Verifique os dados de Login!");
+                            Thread.currentThread().sleep(2000);
+                            jStatus.setText("Digite seu Login de Usuario e Senha!");
+                        } catch (InterruptedException ex1) {
+                            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex1);
+                        }
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "USUÁRIO INVÁLIDO!" + "\n" + "VERIFIQUE OS DADOS DE LOGIN!", "Inove Systems - Informação", JOptionPane.ERROR_MESSAGE);
             }
-            
-        }
+        }.start();
 
     }//GEN-LAST:event_jButton1ActionPerformed
     public void Pesquisar(FuncionarioBean Funcionario) {
-        try {
-            int cod = 0;
-            String nome = "";
-            String senha = "";
-            FuncionarioDAO funcionario = new FuncionarioDAO();
-            ResultSet rs;
-            rs = funcionario.retriveId(Funcionario);
-            if (rs.next()) {
-                do {
-                    cod = rs.getInt("cod");
-                    nome = rs.getString("nome");
-                    senha = rs.getString("senha");
-                } while (rs.next());
-                if (jSenha.getText().trim().equals(senha)) {
-                    setVisible(false);
-                    Cliente cliente = new Cliente(cod, nome);
-                    cliente.setVisible(true);
-                    
-                    
-                } else {
-                    JOptionPane.showMessageDialog(null, "SENHA INCORRETA!" + "\n" + "VERIFIQUE SUA SENHA!", "Inove Systems - Informação", JOptionPane.ERROR_MESSAGE);
-                    jSenha.grabFocus();
-                    
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    int cod = 0;
+                    String nome = "";
+                    String senha = "";
+                    FuncionarioDAO funcionario = new FuncionarioDAO();
+                    ResultSet rs;
+                    System.out.println(Funcionario.getCodigo());
+                    rs = funcionario.retriveId(Funcionario);
+                    if (rs.next()) {
+                        do {
+                            cod = rs.getInt("cod");
+                            nome = rs.getString("nome");
+                            senha = rs.getString("senha");
+                        } while (rs.next());
+                        if (jSenha.getText().trim().equals(senha)) {
+                            setVisible(false);
+                            Cliente cliente = new Cliente(cod, nome);
+                            cliente.setVisible(true);
+                        } else {
+                            jStatus.setText("SENHA INCORRETA!");
+                            Thread.currentThread().sleep(2000);
+                            jStatus.setText("Verifique sua Senha!");
+                            Thread.currentThread().sleep(2000);
+                            jStatus.setText("Digite seu Login de Usuario e Senha!");
+                            jSenha.grabFocus();
+                        }
+                    } else {
+                        jStatus.setText("NÃO FOI POSSÍVEL LOCALIZAR ESTE USUÁRIO!");
+                        Thread.currentThread().sleep(2000);
+                        jStatus.setText("Verifique os dados de Login!");
+                        Thread.currentThread().sleep(2000);
+                        jStatus.setText("Digite seu Login de Usuario e Senha!");
+                    }
+                } catch (SQLException ex) {
+                    try {
+                        jStatus.setText("Erro ao conectar com o banco de dados!");
+                        Thread.currentThread().sleep(3000);
+                        jStatus.setText("Entre em contato com o suporte tecnico!");
+                        Thread.currentThread().sleep(3000);
+                        jStatus.setText("Digite seu Login de Usuario e Senha!");
+                    } catch (InterruptedException ex1) {
+
+                    }
+                } catch (NullPointerException ex) {
+
+                } catch (InterruptedException ex) {
+
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "NÃO FOI POSSÍVEL LOCALIZAR ESTE USUÁRIO!" + "\n" + "VERIFIQUE OS DADOS DE LOGIN!", "Inove Systems - Informação", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (SQLException ex) {
-            
-        }
-        
+        }.start();
     }
-    
+
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         System.exit(0);
@@ -275,7 +331,9 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPasswordField jSenha;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JLabel jStatus;
     // End of variables declaration//GEN-END:variables
 
 }
