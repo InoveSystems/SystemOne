@@ -5,10 +5,14 @@ import ComRede.Conexao;
 import ComRede.Mensagem;
 import DAO.FuncionarioDAO;
 import java.awt.BorderLayout;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,6 +31,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Config extends javax.swing.JFrame {
 
+    private Mensagem message;
+    public Conexao service;
+    public String caixa = "20";
     private Socket socket;
     private String cod1;
     private boolean novo = true;
@@ -35,8 +42,10 @@ public class Config extends javax.swing.JFrame {
     public String IPCom = "127.0.0.1";
     public String diretorioUsuario = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
     public File IPConfig = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "IPConfig.txt");
+    public File arquivo = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "CaixaConfig.txt");
 
     public Config() {
+
         initComponents();
         //setAlwaysOnTop(true);
         login.setVisible(false);
@@ -50,6 +59,91 @@ public class Config extends javax.swing.JFrame {
         jPanes.setIconAt(0, tab1Icon);
         jPanes.setIconAt(1, tab2Icon);
         jPanes.setIconAt(2, tab3Icon);
+
+        new Thread() {
+            @Override
+            public void run() {
+                FileReader fr;
+                try {
+                    if (!IPConfig.exists()) {
+                        try {
+                            IPConfig.createNewFile();
+                            FileWriter fw = new FileWriter(IPConfig, false);
+                            BufferedWriter bw = new BufferedWriter(fw);
+                            bw.write(IPCom);
+                            bw.newLine();
+                            bw.close();
+                            fw.close();
+                        } catch (IOException ex) {
+                            statuslabel.setText("Erro ao criar IPConfig!");
+                        }
+                    } else {
+                        fr = new FileReader(IPConfig);
+                        BufferedReader br = new BufferedReader(fr);
+                        while (br.ready()) {
+                            String linha = br.readLine();
+                            IPCom = linha;
+                        }
+                        br.close();
+                        fr.close();
+                    }
+                } catch (FileNotFoundException ex) {
+                    statuslabel.setText("Erro! IPConfig não encontrado!");
+                } catch (IOException ex) {
+
+                }
+
+            }
+        }.
+                start();
+
+        new Thread() {
+            @Override
+            public void run() {
+                FileReader fr;
+                try {
+                    if (!arquivo.exists()) {
+                        try {
+                            arquivo.createNewFile();
+                            FileWriter fw = new FileWriter(arquivo, false);
+                            BufferedWriter bw = new BufferedWriter(fw);
+                            bw.write(caixa);
+                            bw.newLine();
+                            bw.close();
+                            fw.close();
+                        } catch (IOException ex) {
+                            statuslabel.setText("Erro ao criar CaixaConfig!");
+                        }
+                    } else {
+                        fr = new FileReader(arquivo);
+                        BufferedReader br = new BufferedReader(fr);
+                        while (br.ready()) {
+                            String linha = br.readLine();
+                            caixa = linha;
+                        }
+                        br.close();
+                        fr.close();
+                    }
+                } catch (FileNotFoundException ex) {
+                    statuslabel.setText("Arquivo de config. não encontrado!");
+                } catch (IOException ex) {
+                    statuslabel.setText("Erro ao ler Configurações!");
+                }
+                new Thread() {
+                    @Override
+                    public void run() {
+                        // jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), " Caixa " + caixa, javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14))); // NOI18N
+                        //ConectarServidor();
+                        jIPconexao.setText(IPCom);
+                        jCaixa.setText(caixa);
+
+                    }
+                }.start();
+
+            }
+        }.
+                start();
+
     }
 
     public Config(Boolean Config) {
@@ -66,6 +160,211 @@ public class Config extends javax.swing.JFrame {
         jPanes.setIconAt(0, tab1Icon);
         jPanes.setIconAt(1, tab2Icon);
         jPanes.setIconAt(2, tab3Icon);
+        new Thread() {
+            @Override
+            public void run() {
+                FileReader fr;
+                try {
+                    if (!IPConfig.exists()) {
+                        try {
+                            IPConfig.createNewFile();
+                            FileWriter fw = new FileWriter(IPConfig, false);
+                            BufferedWriter bw = new BufferedWriter(fw);
+                            bw.write(IPCom);
+                            bw.newLine();
+                            bw.close();
+                            fw.close();
+                        } catch (IOException ex) {
+                            statuslabel.setText("Erro ao criar IPConfig!");
+                        }
+                    } else {
+                        fr = new FileReader(IPConfig);
+                        BufferedReader br = new BufferedReader(fr);
+                        while (br.ready()) {
+                            String linha = br.readLine();
+                            IPCom = linha;
+                        }
+                        br.close();
+                        fr.close();
+                    }
+                } catch (FileNotFoundException ex) {
+                    statuslabel.setText("Erro! IPConfig não encontrado!");
+                } catch (IOException ex) {
+
+                }
+
+            }
+        }.
+                start();
+
+        new Thread() {
+            @Override
+            public void run() {
+                FileReader fr;
+                try {
+                    if (!arquivo.exists()) {
+                        try {
+                            arquivo.createNewFile();
+                            FileWriter fw = new FileWriter(arquivo, false);
+                            BufferedWriter bw = new BufferedWriter(fw);
+                            bw.write(caixa);
+                            bw.newLine();
+                            bw.close();
+                            fw.close();
+                        } catch (IOException ex) {
+                            statuslabel.setText("Erro ao criar CaixaConfig!");
+                        }
+                    } else {
+                        fr = new FileReader(arquivo);
+                        BufferedReader br = new BufferedReader(fr);
+                        while (br.ready()) {
+                            String linha = br.readLine();
+                            caixa = linha;
+                        }
+                        br.close();
+                        fr.close();
+                    }
+                } catch (FileNotFoundException ex) {
+                    statuslabel.setText("Arquivo de config. não encontrado!");
+                } catch (IOException ex) {
+                    statuslabel.setText("Erro ao ler Configurações!");
+                }
+                new Thread() {
+                    @Override
+                    public void run() {
+                        // jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), " Caixa " + caixa, javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14))); // NOI18N
+                        // ConectarServidor();
+                        jIPconexao.setText(IPCom);
+                        jCaixa.setText(caixa);
+
+                    }
+                }.start();
+
+            }
+        }.
+                start();
+    }
+
+    public boolean ConectarServidor() {
+        if (!caixa.isEmpty()) {
+            message = new Mensagem();
+            this.message.setAction(Mensagem.Action.CONNECT);
+            this.message.setName(caixa+"33");
+            this.service = new Conexao();
+            this.socket = this.service.connect(IPCom);
+            new Thread(new Config.ListenerSocket(this.socket)).start();
+            this.service.send(message);
+        }
+        return true;
+    }
+
+    private void connected(Mensagem message) {
+        if (message.getText().equals("NO")) {
+            statuslabel.setText("Erro Grave! Contate o Suporte!");
+            try {
+                Thread.currentThread().sleep(3000);
+                statuslabel.setText("O sistema sera fechado!");
+                Thread.currentThread().sleep(3000);
+                this.message.setAction(Mensagem.Action.DISCONNECT);
+                this.service.send(this.message);
+                System.exit(0);
+            } catch (InterruptedException ex) {
+                statuslabel.setText("Erro ao fechar o sistema!");
+            }
+            return;
+        }
+        this.message = message;
+        statuslabel.setText("Conexão realizada com sucesso!");
+         disconnected();
+
+    }
+
+    public void disconnected() {
+        try {
+            socket.close();
+        } catch (IOException ex) {
+            statuslabel.setText("Erro ao sair! Tente mais tarde.");
+
+        } catch (NullPointerException ex) {
+
+        }
+    }
+
+    private class ListenerSocket implements Runnable {
+
+        private ObjectInputStream input;
+
+        public ListenerSocket(Socket socket) {
+            try {
+                this.input = new ObjectInputStream(socket.getInputStream());
+            } catch (NullPointerException ex) {
+                try {
+                    statuslabel.setText("Erro ao conectar ao servidor!");
+                    Thread.currentThread().sleep(3000);
+                    statuslabel.setText("Verifique a aplicação servidor!");
+                    Thread.currentThread().sleep(3000);
+                    statuslabel.setText("Verifique as configurações!");
+                    Thread.currentThread().sleep(3000);
+                    statuslabel.setText("Tente Novamente!");
+                    Thread.currentThread().sleep(3000);
+//                    new Thread() {
+//                        @Override
+//                        public void run() {
+//                            statuslabel.setText("Tentando conectar novamente ...");
+//                            ConectarServidor();
+//                        }
+//                    }.start();
+                } catch (InterruptedException ex1) {
+                    statuslabel.setText("Erro ao conectar ao servidor!");
+
+                }
+            } catch (IOException ex) {
+                statuslabel.setText("Erro ao conectar ao servidor!");
+
+            }
+        }
+
+        @Override
+        public void run() {
+            Mensagem message = null;
+            try {
+                while ((message = (Mensagem) input.readObject()) != null) {
+                    Mensagem.Action action = message.getAction();
+                    if (action.equals(action.CONNECT)) {
+                        connected(message);
+                    } else if (action.equals(action.DISCONNECT)) {
+                        disconnected();
+                        socket.close();
+                    } else if (action.equals(action.SEND_ONE)) {
+                        // receive(message);
+                    } else if (action.equals(action.USERS_ONLINE)) {
+                        //refreshOnlines(message);
+                    }
+
+                }
+            } catch (NullPointerException ex) {
+                
+            } catch (IOException ex) {
+//                try {
+////                    statuslabel.setText("Erro ao conectar ao servidor!");
+////                    Thread.currentThread().sleep(2000);
+////                    statuslabel.setText("Verifique a aplicação servidor!");
+////                    Thread.currentThread().sleep(2000);
+////                    statuslabel.setText("Verifique as configurações!");
+////                    Thread.currentThread().sleep(2000);
+////                    statuslabel.setText("Tente Novamente!");
+////                    Thread.currentThread().sleep(2000);
+//                } catch (InterruptedException ex1) {
+//                    statuslabel.setText("Erro ao conectar ao servidor!");
+//
+//                }
+                return;
+//                
+            } catch (ClassNotFoundException ex) {
+                statuslabel.setText("Erro ao conectar ao servidor!");
+
+            }
+        }
     }
 
     /**
@@ -132,15 +431,14 @@ public class Config extends javax.swing.JFrame {
         jIPconexao = new javax.swing.JTextField();
         jLabel36 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jTextField3 = new javax.swing.JTextField();
+        jCaixa = new javax.swing.JTextField();
         jLabel35 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         statuslabel = new javax.swing.JTextField();
-        jLabel39 = new javax.swing.JLabel();
-        jButton18 = new javax.swing.JButton();
-        jButton20 = new javax.swing.JButton();
-        jButton21 = new javax.swing.JButton();
-        jPanel13 = new javax.swing.JPanel();
+        ButtonEditar = new javax.swing.JButton();
+        ButtonSalvar = new javax.swing.JButton();
+        ButtonCancelar = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Inove Systems - Configurações");
@@ -763,6 +1061,7 @@ public class Config extends javax.swing.JFrame {
         jIPconexao.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jIPconexao.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jIPconexao.setText("192.168.2.1");
+        jIPconexao.setEnabled(false);
         jIPconexao.setMaximumSize(new java.awt.Dimension(1000, 10000));
         jIPconexao.setPreferredSize(new java.awt.Dimension(500, 25));
         jIPconexao.addActionListener(new java.awt.event.ActionListener() {
@@ -782,32 +1081,33 @@ public class Config extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel36)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jIPconexao, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jIPconexao, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(5, 5, 5)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(1, 1, 1)
-                        .addComponent(jLabel36, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
-                    .addComponent(jIPconexao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(jLabel36, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jIPconexao, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jTextField3.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField3.setText("01");
-        jTextField3.setMaximumSize(new java.awt.Dimension(1000, 10000));
-        jTextField3.setPreferredSize(new java.awt.Dimension(500, 25));
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        jCaixa.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jCaixa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jCaixa.setText("01");
+        jCaixa.setEnabled(false);
+        jCaixa.setMaximumSize(new java.awt.Dimension(1000, 10000));
+        jCaixa.setPreferredSize(new java.awt.Dimension(500, 25));
+        jCaixa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                jCaixaActionPerformed(evt);
             }
         });
 
@@ -822,28 +1122,31 @@ public class Config extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel35)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(5, 5, 5)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(1, 1, 1)
-                        .addComponent(jLabel35, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
-                    .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(jLabel35, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5))
         );
 
         jPanel12.setBackground(new java.awt.Color(255, 255, 255));
         jPanel12.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        statuslabel.setBackground(new java.awt.Color(249, 249, 249));
+        statuslabel.setEditable(false);
+        statuslabel.setBackground(new java.awt.Color(255, 255, 255));
         statuslabel.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         statuslabel.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        statuslabel.setText("Conexão efetuada com Sucesso!");
+        statuslabel.setText("Verificar ...");
+        statuslabel.setDisabledTextColor(new java.awt.Color(51, 51, 51));
+        statuslabel.setFocusable(false);
         statuslabel.setMaximumSize(new java.awt.Dimension(1000, 10000));
         statuslabel.setPreferredSize(new java.awt.Dimension(500, 25));
         statuslabel.addActionListener(new java.awt.event.ActionListener() {
@@ -852,74 +1155,57 @@ public class Config extends javax.swing.JFrame {
             }
         });
 
-        jLabel39.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel39.setText("Status de Conexão");
-
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(statuslabel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel39, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE))
-                .addContainerGap())
+            .addComponent(statuslabel, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addComponent(jLabel39)
-                .addGap(10, 10, 10)
-                .addComponent(statuslabel, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(statuslabel, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))
         );
 
-        jButton18.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/editar24x24.png"))); // NOI18N
-        jButton18.setText("Editar Configuração");
-        jButton18.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jButton18.addActionListener(new java.awt.event.ActionListener() {
+        ButtonEditar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        ButtonEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/editar24x24.png"))); // NOI18N
+        ButtonEditar.setText("Editar Configuração");
+        ButtonEditar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        ButtonEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton18ActionPerformed(evt);
+                ButtonEditarActionPerformed(evt);
             }
         });
 
-        jButton20.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/save24x24.png"))); // NOI18N
-        jButton20.setText("Salvar Configuração");
-        jButton20.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jButton20.addActionListener(new java.awt.event.ActionListener() {
+        ButtonSalvar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        ButtonSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/save24x24.png"))); // NOI18N
+        ButtonSalvar.setText("Salvar Configuração");
+        ButtonSalvar.setEnabled(false);
+        ButtonSalvar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        ButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton20ActionPerformed(evt);
+                ButtonSalvarActionPerformed(evt);
             }
         });
 
-        jButton21.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cancel24x24.png"))); // NOI18N
-        jButton21.setText("Cancelar Configuração");
-        jButton21.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jButton21.addActionListener(new java.awt.event.ActionListener() {
+        ButtonCancelar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        ButtonCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cancel24x24.png"))); // NOI18N
+        ButtonCancelar.setText("Cancelar Configuração");
+        ButtonCancelar.setEnabled(false);
+        ButtonCancelar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        ButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton21ActionPerformed(evt);
+                ButtonCancelarActionPerformed(evt);
             }
         });
 
-        jPanel13.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel13.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
-        jPanel13.setLayout(jPanel13Layout);
-        jPanel13Layout.setHorizontalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel13Layout.setVerticalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        jButton2.setText("verificar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -927,38 +1213,42 @@ public class Config extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(3, 3, 3)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(3, 3, 3)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButton21, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton20, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton18, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(ButtonCancelar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ButtonSalvar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ButtonEditar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(5, 5, 5))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(3, 3, 3)
+                .addGap(5, 5, 5)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(3, 3, 3)
-                        .addComponent(jButton20, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(3, 3, 3)
-                        .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(3, 3, 3)
-                        .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(3, 3, 3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(ButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
+                        .addComponent(ButtonSalvar)
+                        .addGap(5, 5, 5)
+                        .addComponent(ButtonCancelar)))
+                .addGap(5, 5, 5)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -966,16 +1256,16 @@ public class Config extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(310, Short.MAX_VALUE)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(310, 310, 310)
+                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(188, 188, 188))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(157, 157, 157)
+                .addGap(171, 171, 171)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(168, Short.MAX_VALUE))
+                .addContainerGap(210, Short.MAX_VALUE))
         );
 
         jPanes.addTab("", jPanel4);
@@ -1266,9 +1556,9 @@ public class Config extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jNomeActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void jCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCaixaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_jCaixaActionPerformed
 
     private void jIPconexaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jIPconexaoActionPerformed
         // TODO add your handling code here:
@@ -1278,13 +1568,73 @@ public class Config extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_statuslabelActionPerformed
 
-    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
+    private void ButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEditarActionPerformed
         //Cliente cliente = new Cliente();
-        //disconnected();
+ statuslabel.setText("Verificar ...");
+        ButtonEditar.setEnabled(false);
+        ButtonSalvar.setEnabled(true);
+        ButtonCancelar.setEnabled(true);
+        jCaixa.setEnabled(true);
+        jIPconexao.setEnabled(true);
 
-    }//GEN-LAST:event_jButton18ActionPerformed
+    }//GEN-LAST:event_ButtonEditarActionPerformed
 
-    private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
+    private void ButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonSalvarActionPerformed
+
+        String caixaProb;
+        int respostas = 0;
+        caixaProb = jCaixa.getText();
+        try {
+            if ((!caixaProb.equals(null)) && (!caixaProb.equals(""))) {
+                respostas = JOptionPane.showConfirmDialog(null, "CERTIFIQUE-SE QUE ESTE CAIXA NÃO EXISTE NA REDE! \n" + "O SEU CAIXA É O NÚMERO " + caixaProb + " ?");
+                if (respostas == JOptionPane.YES_OPTION) {
+                    caixa = caixaProb;
+                    JOptionPane.showMessageDialog(null, "CAIXA " + caixa + " CRIADO COM SUCESSO!", "3D Soluções Tecnológicas - Informação", 1);
+                } else {
+
+                }
+            } else {
+                do {
+                    caixaProb = JOptionPane.showInputDialog(null, "ERRO GRAVE! CAIXA INVALIDO! \nQUAL O NÚMERO DE SEU CAIXA ?", "3D Soluções Tecnológicas - Configuração", 3);
+                } while ((caixaProb.equals(null)) || (caixaProb.equals("")));
+                respostas = JOptionPane.showConfirmDialog(null, "CERTIFIQUE-SE QUE ESTE CAIXA NÃO EXISTE NA REDE! \n" + "O SEU CAIXA É O NÚMERO " + caixaProb + " ?");
+                if (respostas == JOptionPane.YES_OPTION) {
+                    caixa = caixaProb;
+                    JOptionPane.showMessageDialog(null, "CAIXA " + caixa + " CRIADO COM SUCESSO!", "3D Soluções Tecnológicas - Informação", 1);
+                }
+            }
+        } catch (NullPointerException ex) {
+
+        }
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    if (!arquivo.exists()) {
+                        try {
+                            arquivo.createNewFile();
+                        } catch (IOException ex) {
+                            statuslabel.setText("Erro ao criar CaixaConfig!");
+                        }
+                    }
+                    FileWriter fw;
+                    try {
+                        fw = new FileWriter(arquivo, false);
+                        BufferedWriter bw = new BufferedWriter(fw);
+                        bw.write(caixa);
+                        bw.newLine();
+                        bw.close();
+                        fw.close();
+
+                    } catch (IOException ex) {
+                        statuslabel.setText("Erro ao ler CaixaConfig!");
+                    }
+
+                } catch (NullPointerException ex) {
+
+                }
+            }
+        }.start();
 
         String ipconexao;
         int resposta = 0;
@@ -1296,7 +1646,7 @@ public class Config extends javax.swing.JFrame {
                 if (resposta == JOptionPane.YES_OPTION) {
                     IPCom = ipconexao;
                     JOptionPane.showMessageDialog(null, "IP " + IPCom + " CONFIGURADO COM SUCESSO!", "3D Soluções Tecnológicas - Informação", 1);
-
+                    disconnected();
                 } else {
 
                 }
@@ -1308,7 +1658,7 @@ public class Config extends javax.swing.JFrame {
                 if (resposta == JOptionPane.YES_OPTION) {
                     IPCom = ipconexao;
                     JOptionPane.showMessageDialog(null, "IP " + IPCom + " CONFIGURADO COM SUCESSO!", "3D Soluções Tecnológicas - Informação", 1);
-
+                    disconnected();
                 }
             }
         } catch (NullPointerException ex) {
@@ -1346,18 +1696,29 @@ public class Config extends javax.swing.JFrame {
                 }
             }
         }.start();
+        ConectarServidor();
+        ButtonEditar.setEnabled(true);
+        ButtonSalvar.setEnabled(false);
+        ButtonCancelar.setEnabled(false);
+        jCaixa.setEnabled(false);
+        jIPconexao.setEnabled(false);
 
-    }//GEN-LAST:event_jButton20ActionPerformed
+    }//GEN-LAST:event_ButtonSalvarActionPerformed
 
-    private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton21ActionPerformed
+    private void ButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCancelarActionPerformed
+        ButtonEditar.setEnabled(true);
+        ButtonSalvar.setEnabled(false);
+        ButtonCancelar.setEnabled(false);
+        jCaixa.setEnabled(false);
+        jIPconexao.setEnabled(false);
+    }//GEN-LAST:event_ButtonCancelarActionPerformed
 
     private void jComplementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComplementoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComplementoActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+//       
         if (!config) {
             new Thread() {
                 @Override
@@ -1445,8 +1806,8 @@ public class Config extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        disconnected();
         if (config) {
-            //JOptionPane.showMessageDialog(null, "O SISTEMA FOI FINALIZADO PARA SALVAR AS CONFIGURAÇÕES!" + "\n" + "REINICIE O SISTEMA!", "Inove Systems - Informação", JOptionPane.INFORMATION_MESSAGE);
             login.setVisible(true);
             login.setEnabled(true);
             setVisible(false);
@@ -1455,6 +1816,23 @@ public class Config extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_formWindowClosed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        disconnected();
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    statuslabel.setText("Começando os Testes ...");
+                    Thread.currentThread().sleep(3000);
+                } catch (InterruptedException ex) {
+                   
+                }
+                ConectarServidor();
+            }
+        }.start();
+       
+    }//GEN-LAST:event_jButton2ActionPerformed
     public void LimparTela() {
         jBairro.setText(null);
         jCPF.setText(null);
@@ -1637,6 +2015,9 @@ public class Config extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ButtonCancelar;
+    private javax.swing.JButton ButtonEditar;
+    private javax.swing.JButton ButtonSalvar;
     private javax.swing.JButton buttonCalcelar;
     private javax.swing.JButton buttonEditar;
     private javax.swing.JButton buttonExcluir;
@@ -1644,10 +2025,9 @@ public class Config extends javax.swing.JFrame {
     private javax.swing.JButton buttonSalvar;
     private javax.swing.JTextField jBairro;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton20;
-    private javax.swing.JButton jButton21;
+    private javax.swing.JButton jButton2;
     private javax.swing.JTextField jCPF;
+    private javax.swing.JTextField jCaixa;
     private javax.swing.JTextField jCidade;
     private javax.swing.JTextField jCod;
     private javax.swing.JComboBox jComboEstado;
@@ -1673,7 +2053,6 @@ public class Config extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
-    private javax.swing.JLabel jLabel39;
     private javax.swing.JTextField jLogradouro;
     private javax.swing.JTextField jNome;
     private javax.swing.JTextField jNumero;
@@ -1681,7 +2060,6 @@ public class Config extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
     public javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     public javax.swing.JPanel jPanel4;
@@ -1699,7 +2077,6 @@ public class Config extends javax.swing.JFrame {
     private javax.swing.JTextField jTelCo;
     private javax.swing.JTextField jTelMo;
     private javax.swing.JTextField jTelRe;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField statuslabel;
     // End of variables declaration//GEN-END:variables
 }

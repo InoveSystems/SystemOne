@@ -31,7 +31,6 @@ import javax.swing.filechooser.FileSystemView;
  */
 public class Cliente extends javax.swing.JFrame {
 
-    private Config config = new Config();
     private Socket socket;
     private Mensagem message;
     public Conexao service;
@@ -153,7 +152,6 @@ public class Cliente extends javax.swing.JFrame {
                             fw.close();
                         } catch (IOException ex) {
                             statuslabel.setText("Erro ao criar IPConfig!");
-                            //JOptionPane.showMessageDialog(null, " erro ao criar arquivo", "3D Soluções Tecnológicas - Informação", 1);
                         }
                     } else {
                         fr = new FileReader(IPConfig);
@@ -166,7 +164,6 @@ public class Cliente extends javax.swing.JFrame {
                         fr.close();
                     }
                 } catch (FileNotFoundException ex) {
-                    //JOptionPane.showMessageDialog(null, " erro arquivo nao encontrado ", "3D Soluções Tecnológicas - Informação", 1);
                     statuslabel.setText("Erro! IPConfig não encontrado!");
                 } catch (IOException ex) {
 
@@ -230,6 +227,7 @@ public class Cliente extends javax.swing.JFrame {
             try {
                 this.input = new ObjectInputStream(socket.getInputStream());
             } catch (NullPointerException ex) {
+
                 try {
                     statuslabel.setText("Erro ao conectar ao servidor!");
                     Thread.currentThread().sleep(3000);
@@ -247,9 +245,11 @@ public class Cliente extends javax.swing.JFrame {
                 } catch (InterruptedException ex1) {
                     statuslabel.setText("Erro ao conectar ao servidor!");
                 }
+
             } catch (IOException ex) {
                 statuslabel.setText("Erro ao conectar ao servidor!");
             }
+
         }
 
         @Override
@@ -272,6 +272,7 @@ public class Cliente extends javax.swing.JFrame {
                 }
             } catch (NullPointerException ex) {
             } catch (IOException ex) {
+
                 statuslabel.setText("Erro ao conectar ao servidor!");
                 try {
                     Thread.currentThread().sleep(5000);
@@ -288,6 +289,7 @@ public class Cliente extends javax.swing.JFrame {
                     statuslabel.setText("Erro ao conectar ao servidor!");
                 }
                 return;
+
 //                
             } catch (ClassNotFoundException ex) {
                 statuslabel.setText("Erro ao conectar ao servidor!");
@@ -319,6 +321,8 @@ public class Cliente extends javax.swing.JFrame {
             socket.close();
         } catch (IOException ex) {
             statuslabel.setText("Erro ao sair! Tente mais tarde.");
+
+        } catch (NullPointerException ex) {
 
         }
     }
@@ -436,7 +440,6 @@ public class Cliente extends javax.swing.JFrame {
                     text = "no";
                     if (!text.isEmpty()) {
                         message.setName(message.getName());
-                        // message.setText(text);
                         message.setIdFinalizar(message.getIdFinalizar());
                         message.setStatus("no");
                         message.setAction(Mensagem.Action.REIMPRIMIR);
@@ -449,8 +452,6 @@ public class Cliente extends javax.swing.JFrame {
                     text = "no";
                     if (!text.isEmpty()) {
                         message.setName(message.getName());
-                        // message.setText(text);
-                        // message.setIdFinalizar(message.getIdFinalizar());
                         message.setStatus("no");
                         message.setAction(Mensagem.Action.REIMPRIMIR);
                         service.send(message);
@@ -499,13 +500,11 @@ public class Cliente extends javax.swing.JFrame {
                     admin = rs.getBoolean("administrador");
                 } while (rs.next());
                 if (admin) {
+                    Config config = new Config();
                     config.setVisible(true);
                     config.jPanes.setSelectedIndex(0);
                     config.setLocationRelativeTo(null);
 //                    setVisible(false);
-//                    Cliente cliente = new Cliente(cod, nome);
-//                    cliente.setVisible(true);
-
                 } else {
                     JOptionPane.showMessageDialog(null, "VOCÊ NAO POSSUI PERMISSÃO DE ACESSO!", "Inove Systems - Informação", JOptionPane.ERROR_MESSAGE);
 
@@ -736,7 +735,7 @@ public class Cliente extends javax.swing.JFrame {
         jatendente.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
         jatendente.setForeground(new java.awt.Color(51, 51, 51));
         jatendente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jatendente.setText("Atendente: CLAUDIOMAR");
+        jatendente.setText("Atendente: Paulo");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -1131,66 +1130,6 @@ public class Cliente extends javax.swing.JFrame {
         FuncionarioBean funcionario = new FuncionarioBean();
         funcionario.setCodigo(codigo);
         Pesquisar(funcionario);
-//        String ipconexao;
-//        int resposta = 0;
-//        ipconexao = JOptionPane.showInputDialog(null, "QUAL O IP DO SERVIDOR?", "3D Soluções Tecnológicas - Configuração", 3);
-//        try {
-//            if ((!ipconexao.equals(null)) && (!ipconexao.equals(""))) {
-//                resposta = JOptionPane.showConfirmDialog(null, "CERTIFIQUE-SE QUE ESTE IP EXISTA NA REDE! \n" + "ESTE É O IP DO SERVIDOR " + ipconexao + " ?");
-//                if (resposta == JOptionPane.YES_OPTION) {
-//                    IPCom = ipconexao;
-//                    JOptionPane.showMessageDialog(null, "IP " + IPCom + " CONFIGURADO COM SUCESSO!", "3D Soluções Tecnológicas - Informação", 1);
-//                    disconnected();
-//
-//                } else {
-//
-//                }
-//            } else {
-//                do {
-//                    ipconexao = JOptionPane.showInputDialog(null, "ERRO GRAVE! IP INVALIDO! \nQUAL O IP DO SERVIDOR ?", "3D Soluções Tecnológicas - Configuração", 3);
-//                } while ((ipconexao.equals(null)) || (ipconexao.equals("")));
-//                resposta = JOptionPane.showConfirmDialog(null, "CERTIFIQUE-SE QUE ESTE IP EXISTA NA REDE! \n" + "ESTE É O IP DO SERVIDOR " + ipconexao + " ?");
-//                if (resposta == JOptionPane.YES_OPTION) {
-//                    IPCom = ipconexao;
-//                    JOptionPane.showMessageDialog(null, "IP " + IPCom + " CONFIGURADO COM SUCESSO!", "3D Soluções Tecnológicas - Informação", 1);
-//                    disconnected();
-//                }
-//            }
-//        } catch (NullPointerException ex) {
-//        }
-//
-//        new Thread() {
-//            @Override
-//            public void run() {
-//                try {
-//                    if (!IPConfig.exists()) {
-//                        try {
-//                            IPConfig.createNewFile();
-//
-//                        } catch (IOException ex) {
-//                            JOptionPane.showMessageDialog(null, " Erro ao criar IPConfig! ", "3D Soluções Tecnológicas - Informação", 1);
-//
-//                        }
-//                    }
-//                    FileWriter fw;
-//                    try {
-//                        fw = new FileWriter(IPConfig, false);
-//                        BufferedWriter bw = new BufferedWriter(fw);
-//                        bw.write(IPCom);
-//                        bw.newLine();
-//                        bw.close();
-//                        fw.close();
-//
-//                    } catch (IOException ex) {
-//                        JOptionPane.showMessageDialog(null, " Erro ao ler IPConfig! ", "3D Soluções Tecnológicas - Informação", 1);
-//                        statuslabel.setText("Erro ao ler IPConfig!");
-//                    }
-//                } catch (NullPointerException ex) {
-//                    statuslabel.setText("Erro ao ler IPConfig!");
-//                }
-//            }
-//        }.start();
-
     }//GEN-LAST:event_jLabel14MouseClicked
 
 
