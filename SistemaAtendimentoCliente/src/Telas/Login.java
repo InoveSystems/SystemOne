@@ -31,11 +31,11 @@ public class Login extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JSeparator();
         jPanel2 = new javax.swing.JPanel();
         jSenha = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        jConfirmar = new javax.swing.JButton();
         jLogin = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        jSair = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jStatus = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
@@ -60,11 +60,11 @@ public class Login extends javax.swing.JFrame {
         jSenha.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jSenha.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
-        jButton1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton1.setText("Confirmar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jConfirmar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jConfirmar.setText("Confirmar");
+        jConfirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jConfirmarActionPerformed(evt);
             }
         });
 
@@ -79,12 +79,12 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("..:: Acesso ao Sistema ::..");
 
-        jButton2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/exit.png"))); // NOI18N
-        jButton2.setText("Sair");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jSair.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/exit.png"))); // NOI18N
+        jSair.setText("Sair");
+        jSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jSairActionPerformed(evt);
             }
         });
 
@@ -108,9 +108,9 @@ public class Login extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jConfirmar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(3, 3, 3)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jSair, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSenha, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLogin, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -138,8 +138,8 @@ public class Login extends javax.swing.JFrame {
                         .addComponent(jSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jSair)
+                            .addComponent(jConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(5, 5, 5)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
@@ -168,8 +168,8 @@ public class Login extends javax.swing.JFrame {
 
     }//GEN-LAST:event_formWindowOpened
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+    private void jConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jConfirmarActionPerformed
+        jConfirmar.setEnabled(false);
         new Thread() {
             @Override
             public void run() {
@@ -181,6 +181,7 @@ public class Login extends javax.swing.JFrame {
                         jStatus.setText("Verifique os dados de Login!");
                         Thread.currentThread().sleep(2000);
                         jStatus.setText("Digite seu Login de Usuario e Senha!");
+                        jConfirmar.setEnabled(true);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -199,6 +200,7 @@ public class Login extends javax.swing.JFrame {
                             FuncionarioBean funcionario = new FuncionarioBean();
                             funcionario.setCodigo(Integer.parseInt(jLogin.getText()));
                             Pesquisar(funcionario);
+                            //jConfirmar.setEnabled(true);
                         }
                     } catch (NumberFormatException ex) {
                         try {
@@ -207,6 +209,7 @@ public class Login extends javax.swing.JFrame {
                             jStatus.setText("Verifique os dados de Login!");
                             Thread.currentThread().sleep(2000);
                             jStatus.setText("Digite seu Login de Usuario e Senha!");
+                            jConfirmar.setEnabled(true);
                         } catch (InterruptedException ex1) {
                             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex1);
                         }
@@ -217,7 +220,7 @@ public class Login extends javax.swing.JFrame {
             }
         }.start();
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jConfirmarActionPerformed
     public void Pesquisar(FuncionarioBean Funcionario) {
         new Thread() {
             @Override
@@ -275,9 +278,9 @@ public class Login extends javax.swing.JFrame {
     }
 
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSairActionPerformed
         System.exit(0);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jSairActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
 
@@ -323,12 +326,12 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jConfirmar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField jLogin;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton jSair;
     private javax.swing.JPasswordField jSenha;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
