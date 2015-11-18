@@ -20,6 +20,7 @@ public class Mensagem implements Serializable {
     private String tipo;
     private int numero;
     private int idFinalizar;
+    private int codfunc;
 
     public enum Action {
 
@@ -30,6 +31,14 @@ public class Mensagem implements Serializable {
         return setOnlines;
     }
 
+    public int getCodfunc() {
+        return codfunc;
+    }
+
+    public void setCodfunc(int codfunc) {
+        this.codfunc = codfunc;
+    }
+
     public void setSetOnlines(Set<String> setOnlines) {
         this.setOnlines = setOnlines;
     }
@@ -38,23 +47,20 @@ public class Mensagem implements Serializable {
         return action;
     }
 
+    public void setAction(Action action) {
+        this.action = action;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
     public int getIdFinalizar() {
         return idFinalizar;
     }
 
     public void setIdFinalizar(int idFinalizar) {
         this.idFinalizar = idFinalizar;
-    }
-
-    public void setAction(Action action) {
-        this.action = action;
-    }
-
-    public Mensagem() {
-    }
-
-    public String getTipo() {
-        return tipo;
     }
 
     public void setTipo(String tipo) {
@@ -69,12 +75,7 @@ public class Mensagem implements Serializable {
         this.numero = numero;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public Mensagem() {
     }
 
     public String getName() {
@@ -83,6 +84,14 @@ public class Mensagem implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getText() {

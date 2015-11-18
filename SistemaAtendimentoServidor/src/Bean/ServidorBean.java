@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 public class ServidorBean {
 
     private int Codigo;
+    private int Cod_Func;
     private String Tipo;
     private int NumeroFicha;
     private Timestamp DataHoraImp;
@@ -32,6 +33,14 @@ public class ServidorBean {
         this.Tipo = Tipo;
         this.NumeroFicha = NumeroFicha;
         this.AtendimentoIniciado = AtendimentoIniciado;
+    }
+
+    public int getCod_Func() {
+        return Cod_Func;
+    }
+
+    public void setCod_Func(int Cod_Func) {
+        this.Cod_Func = Cod_Func;
     }
 
     public Boolean getAtendimentoIniciado() {

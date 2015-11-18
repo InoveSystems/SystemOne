@@ -13,7 +13,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
 /**
  *
  * @author EngComp
@@ -45,7 +44,7 @@ public class ServidorDAO {
     }
 
     public void update(ServidorBean server) throws SQLException {
-        String sql = "UPDATE fichas SET caixa=?,data_hora_inicio=?, tempo_espera=?,estouro_justificativa=?,atendimentoiniciado=?, atendimentofinalizado=? WHERE cod=?";
+        String sql = "UPDATE fichas SET caixa=?,data_hora_inicio=?, tempo_espera=?,estouro_justificativa=?,atendimentoiniciado=?, atendimentofinalizado=?,cod_func=? WHERE cod=?";
         PreparedStatement pst = this.conexao.prepareStatement(sql);
         pst.setString(1, server.getIdcaixa());
         pst.setTimestamp(2, server.getDataHoraIni());
@@ -53,7 +52,8 @@ public class ServidorDAO {
         pst.setString(4, server.getEstouroAtendimento());
         pst.setBoolean(5, server.getAtendimentoIniciado());
         pst.setBoolean(6, server.getAtendimentoFinalizado());
-        pst.setInt(7, server.getCodigo());
+        pst.setInt(8, server.getCodigo());
+        pst.setInt(7, server.getCod_Func());
         pst.executeUpdate();
         pst.close();
     }

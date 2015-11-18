@@ -69,6 +69,7 @@ public class Server {
     String tes;
     String tipo = null;
     int numero = 0;
+    int cod_func;
     boolean finalizou = false;
     boolean finalizou1 = false;
     java.util.Date date_impressao;
@@ -148,11 +149,14 @@ public class Server {
 
                 }
             } catch (IOException ex) {
-                Mensagem cm = new Mensagem();
-                cm.setName(message.getName());
-                disconnect(cm, output);
-                sendOnlines();
-
+                try {
+                    Mensagem cm = new Mensagem();
+                    cm.setName(message.getName());
+                    disconnect(cm, output);
+                    sendOnlines();
+                } catch (NullPointerException e) {
+                    System.out.println("verifica o nulo excption");
+                }
             } catch (ClassNotFoundException ex) {
 
             }
@@ -170,6 +174,7 @@ public class Server {
             }
         }
         message.setName(message.getName());
+        message.setCodfunc(message.getCodfunc());
         message.setAtual(message.getAtual());
         message.setUltima(message.getUltima());
         message.setPenultima(message.getPenultima());
@@ -179,6 +184,7 @@ public class Server {
 
     private void chamar(Mensagem message) {
         int idAtendimento = 0;
+
         if (bloquear_atendimento.equals("no")) {
             if (message.getText().equals("convencional")) {
                 if (filaprioritaria.estaVazia()) {
@@ -188,13 +194,14 @@ public class Server {
                             //Pesquisa se tem ficha em aberto para aquele caixa
                             ServidorBean PesquisarInicio = new ServidorBean();
                             ServidorDAO ini = new ServidorDAO();
-                            PesquisarInicio.setIdcaixa(message.getName());
+                            PesquisarInicio.setIdcaixa(message.getName()); // pega numero do caixa e salva para efetuar a pesquisa se tiver ficha finaliza
                             PesquisarInicio.setAtendimentoIniciado(true);
                             PesquisarInicio.setAtendimentoFinalizado(false);
                             ResultSet rsi;
                             rsi = ini.retrivefichaAberta(PesquisarInicio);
                             while (rsi.next()) {
                                 idAtendimento = rsi.getInt("cod");
+                                cod_func = rsi.getInt("cod_func");
                                 tipo = rsi.getString("tipo");
                                 numero = rsi.getInt("numero");
                                 date_impressao = rsi.getTimestamp("data_hora_impre");
@@ -208,6 +215,7 @@ public class Server {
                                 try {
                                     System.out.println("CAIXA: " + message.getName());
                                     System.out.println("chamando: " + filacomum.primeiro());
+                                    System.out.println("Atendente: " + message.getCodfunc());
                                     ServidorBean Pesquisar = new ServidorBean();
                                     ServidorDAO c = new ServidorDAO();
                                     Pesquisar.setTipo(filacomum.primeiro().substring(0, 1));
@@ -220,6 +228,7 @@ public class Server {
                                     ServidorBean Atualizar = new ServidorBean();
                                     Atualizar.setCodigo(idAtendimento);
                                     Atualizar.setIdcaixa(message.getName());
+                                    Atualizar.setCod_Func(message.getCodfunc());
                                     try {
                                         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");//formata a data e hora atual                                    
                                         java.util.Date minhaData;//cria a minha data e hora atual                                   
@@ -315,6 +324,7 @@ public class Server {
                             rsi = ini.retrivefichaAberta(PesquisarInicio);
                             while (rsi.next()) {
                                 idAtendimento = rsi.getInt("cod");
+                                cod_func = rsi.getInt("cod_func");
                                 tipo = rsi.getString("tipo");
                                 numero = rsi.getInt("numero");
                                 date_impressao = rsi.getTimestamp("data_hora_impre");
@@ -329,6 +339,7 @@ public class Server {
                                 try {
                                     System.out.println("CAIXA: " + message.getName());
                                     System.out.println("chamando: " + filaprioritaria.primeiro());
+                                    System.out.println("Atendente: " + message.getCodfunc());
                                     ServidorBean Pesquisar = new ServidorBean();
                                     ServidorDAO c = new ServidorDAO();
                                     Pesquisar.setTipo(filaprioritaria.primeiro().substring(0, 1));
@@ -341,6 +352,7 @@ public class Server {
                                     ServidorBean Atualizar = new ServidorBean();
                                     Atualizar.setCodigo(idAtendimento);
                                     Atualizar.setIdcaixa(message.getName());
+                                    Atualizar.setCod_Func(message.getCodfunc());
                                     try {
                                         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");//formata a data e hora atual                                    
                                         java.util.Date minhaData;//cria a minha data e hora atual                                   
@@ -428,6 +440,7 @@ public class Server {
                             rsi = ini.retrivefichaAberta(PesquisarInicio);
                             while (rsi.next()) {
                                 idAtendimento = rsi.getInt("cod");
+                                cod_func = rsi.getInt("cod_func");
                                 tipo = rsi.getString("tipo");
                                 numero = rsi.getInt("numero");
                                 date_impressao = rsi.getTimestamp("data_hora_impre");
@@ -441,6 +454,7 @@ public class Server {
                                 try {
                                     System.out.println("CAIXA: " + message.getName());
                                     System.out.println("chamando: " + filapopular.primeiro());
+                                    System.out.println("Atendente: " + message.getCodfunc());
                                     ServidorBean Pesquisar = new ServidorBean();
                                     ServidorDAO c = new ServidorDAO();
                                     Pesquisar.setTipo(filapopular.primeiro().substring(0, 1));
@@ -453,6 +467,7 @@ public class Server {
                                     ServidorBean Atualizar = new ServidorBean();
                                     Atualizar.setCodigo(idAtendimento);
                                     Atualizar.setIdcaixa(message.getName());
+                                    Atualizar.setCod_Func(message.getCodfunc());
                                     try {
                                         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");//formata a data e hora atual                                    
                                         java.util.Date minhaData;//cria a minha data e hora atual                                   
@@ -554,6 +569,7 @@ public class Server {
                 ServidorBean AtualizarFinalizar = new ServidorBean();
                 AtualizarFinalizar.setCodigo(message.getIdFinalizar());
                 AtualizarFinalizar.setIdcaixa(message.getName());
+                AtualizarFinalizar.setCod_Func(message.getCodfunc());
                 try {
                     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                     java.util.Date minhaData1;
@@ -597,6 +613,7 @@ public class Server {
                 ServidorBean AtualizarFinalizar = new ServidorBean();
                 AtualizarFinalizar.setCodigo(message.getIdFinalizar());
                 AtualizarFinalizar.setIdcaixa(message.getName());
+                AtualizarFinalizar.setCod_Func(message.getCodfunc());
                 try {
                     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                     java.util.Date minhaData1;
@@ -640,6 +657,7 @@ public class Server {
                 ServidorBean AtualizarFinalizar = new ServidorBean();
                 AtualizarFinalizar.setCodigo(message.getIdFinalizar());
                 AtualizarFinalizar.setIdcaixa(message.getName());
+                AtualizarFinalizar.setCod_Func(message.getCodfunc());
                 try {
                     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
                     java.util.Date minhaData1;
