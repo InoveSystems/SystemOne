@@ -43,6 +43,7 @@ public class Config extends javax.swing.JFrame {
     public String diretorioUsuario = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
     public File IPConfig = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "IPConfig.txt");
     public File arquivo = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "CaixaConfig.txt");
+    public boolean salvarclick = false;
 
     public Config() {
 
@@ -249,7 +250,7 @@ public class Config extends javax.swing.JFrame {
         if (!caixa.isEmpty()) {
             message = new Mensagem();
             this.message.setAction(Mensagem.Action.CONNECT);
-            this.message.setName(caixa+""+caixa);
+            this.message.setName(caixa + "" + caixa);
             this.service = new Conexao();
             this.socket = this.service.connect(IPCom);
             new Thread(new Config.ListenerSocket(this.socket)).start();
@@ -275,7 +276,7 @@ public class Config extends javax.swing.JFrame {
         }
         this.message = message;
         statuslabel.setText("Conexão realizada com sucesso!");
-         disconnected();
+        disconnected();
 
     }
 
@@ -343,21 +344,8 @@ public class Config extends javax.swing.JFrame {
 
                 }
             } catch (NullPointerException ex) {
-                
+
             } catch (IOException ex) {
-//                try {
-////                    statuslabel.setText("Erro ao conectar ao servidor!");
-////                    Thread.currentThread().sleep(2000);
-////                    statuslabel.setText("Verifique a aplicação servidor!");
-////                    Thread.currentThread().sleep(2000);
-////                    statuslabel.setText("Verifique as configurações!");
-////                    Thread.currentThread().sleep(2000);
-////                    statuslabel.setText("Tente Novamente!");
-////                    Thread.currentThread().sleep(2000);
-//                } catch (InterruptedException ex1) {
-//                    statuslabel.setText("Erro ao conectar ao servidor!");
-//
-//                }
                 return;
 //                
             } catch (ClassNotFoundException ex) {
@@ -1570,7 +1558,7 @@ public class Config extends javax.swing.JFrame {
 
     private void ButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEditarActionPerformed
         //Cliente cliente = new Cliente();
- statuslabel.setText("Verificar ...");
+        statuslabel.setText("Verificar ...");
         ButtonEditar.setEnabled(false);
         ButtonSalvar.setEnabled(true);
         ButtonCancelar.setEnabled(true);
@@ -1580,128 +1568,95 @@ public class Config extends javax.swing.JFrame {
     }//GEN-LAST:event_ButtonEditarActionPerformed
 
     private void ButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonSalvarActionPerformed
-
-        String caixaProb;
-        int respostas = 0;
-        caixaProb = jCaixa.getText();
-        try {
-            if ((!caixaProb.equals(null)) && (!caixaProb.equals(""))) {
-                respostas = JOptionPane.showConfirmDialog(null, "CERTIFIQUE-SE QUE ESTE CAIXA NÃO EXISTE NA REDE! \n" + "O SEU CAIXA É O NÚMERO " + caixaProb + " ?");
-                if (respostas == JOptionPane.YES_OPTION) {
-                    caixa = caixaProb;
-                    JOptionPane.showMessageDialog(null, "CAIXA " + caixa + " CRIADO COM SUCESSO!", "3D Soluções Tecnológicas - Informação", 1);
-                } else {
-
-                }
-            } else {
-                do {
-                    caixaProb = JOptionPane.showInputDialog(null, "ERRO GRAVE! CAIXA INVALIDO! \nQUAL O NÚMERO DE SEU CAIXA ?", "3D Soluções Tecnológicas - Configuração", 3);
-                } while ((caixaProb.equals(null)) || (caixaProb.equals("")));
-                respostas = JOptionPane.showConfirmDialog(null, "CERTIFIQUE-SE QUE ESTE CAIXA NÃO EXISTE NA REDE! \n" + "O SEU CAIXA É O NÚMERO " + caixaProb + " ?");
-                if (respostas == JOptionPane.YES_OPTION) {
-                    caixa = caixaProb;
-                    JOptionPane.showMessageDialog(null, "CAIXA " + caixa + " CRIADO COM SUCESSO!", "3D Soluções Tecnológicas - Informação", 1);
-                }
-            }
-        } catch (NullPointerException ex) {
-
-        }
+        salvarclick = true;
         new Thread() {
             @Override
             public void run() {
-                try {
-                    if (!arquivo.exists()) {
+                caixa = jCaixa.getText();
+                new Thread() {
+                    @Override
+                    public void run() {
                         try {
-                            arquivo.createNewFile();
-                        } catch (IOException ex) {
-                            statuslabel.setText("Erro ao criar CaixaConfig!");
-                        }
-                    }
-                    FileWriter fw;
-                    try {
-                        fw = new FileWriter(arquivo, false);
-                        BufferedWriter bw = new BufferedWriter(fw);
-                        bw.write(caixa);
-                        bw.newLine();
-                        bw.close();
-                        fw.close();
+                            if (!arquivo.exists()) {
+                                try {
+                                    arquivo.createNewFile();
+                                } catch (IOException ex) {
+                                    statuslabel.setText("Erro ao criar CaixaConfig!");
+                                }
+                            }
+                            FileWriter fw;
+                            try {
+                                fw = new FileWriter(arquivo, false);
+                                BufferedWriter bw = new BufferedWriter(fw);
+                                bw.write(caixa);
+                                bw.newLine();
+                                bw.close();
+                                fw.close();
 
-                    } catch (IOException ex) {
-                        statuslabel.setText("Erro ao ler CaixaConfig!");
-                    }
+                            } catch (IOException ex) {
+                                statuslabel.setText("Erro ao ler CaixaConfig!");
+                            }
 
-                } catch (NullPointerException ex) {
-
-                }
-            }
-        }.start();
-
-        String ipconexao;
-        int resposta = 0;
-        ipconexao = jIPconexao.getText();
-//        ipconexao = JOptionPane.showInputDialog(null, "QUAL O IP DO SERVIDOR?", "3D Soluções Tecnológicas - Configuração", 3);
-        try {
-            if ((!ipconexao.equals(null)) && (!ipconexao.equals(""))) {
-                resposta = JOptionPane.showConfirmDialog(null, "CERTIFIQUE-SE QUE ESTE IP EXISTA NA REDE! \n" + "ESTE É O IP DO SERVIDOR " + ipconexao + " ?");
-                if (resposta == JOptionPane.YES_OPTION) {
-                    IPCom = ipconexao;
-                    JOptionPane.showMessageDialog(null, "IP " + IPCom + " CONFIGURADO COM SUCESSO!", "3D Soluções Tecnológicas - Informação", 1);
-                    disconnected();
-                } else {
-
-                }
-            } else {
-                do {
-                    ipconexao = JOptionPane.showInputDialog(null, "ERRO GRAVE! IP INVALIDO! \nQUAL O IP DO SERVIDOR ?", "3D Soluções Tecnológicas - Configuração", 3);
-                } while ((ipconexao.equals(null)) || (ipconexao.equals("")));
-                resposta = JOptionPane.showConfirmDialog(null, "CERTIFIQUE-SE QUE ESTE IP EXISTA NA REDE! \n" + "ESTE É O IP DO SERVIDOR " + ipconexao + " ?");
-                if (resposta == JOptionPane.YES_OPTION) {
-                    IPCom = ipconexao;
-                    JOptionPane.showMessageDialog(null, "IP " + IPCom + " CONFIGURADO COM SUCESSO!", "3D Soluções Tecnológicas - Informação", 1);
-                    disconnected();
-                }
-            }
-        } catch (NullPointerException ex) {
-
-        }
-//
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    if (!IPConfig.exists()) {
-                        try {
-                            IPConfig.createNewFile();
-
-                        } catch (IOException ex) {
-                            JOptionPane.showMessageDialog(null, " Erro ao criar IPConfig! ", "3D Soluções Tecnológicas - Informação", 1);
+                        } catch (NullPointerException ex) {
 
                         }
                     }
-                    FileWriter fw;
-                    try {
-                        fw = new FileWriter(IPConfig, false);
-                        BufferedWriter bw = new BufferedWriter(fw);
-                        bw.write(IPCom);
-                        bw.newLine();
-                        bw.close();
-                        fw.close();
+                }.start();
+                IPCom = jIPconexao.getText();
+                new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            if (!IPConfig.exists()) {
+                                try {
+                                    IPConfig.createNewFile();
 
-                    } catch (IOException ex) {
-                        JOptionPane.showMessageDialog(null, " Erro ao ler IPConfig! ", "3D Soluções Tecnológicas - Informação", 1);
-                        statuslabel.setText("Erro ao ler IPConfig!");
+                                } catch (IOException ex) {
+                                    JOptionPane.showMessageDialog(null, " Erro ao criar IPConfig! ", "3D Soluções Tecnológicas - Informação", 1);
+
+                                }
+                            }
+                            FileWriter fw;
+                            try {
+                                fw = new FileWriter(IPConfig, false);
+                                BufferedWriter bw = new BufferedWriter(fw);
+                                bw.write(IPCom);
+                                bw.newLine();
+                                bw.close();
+                                fw.close();
+
+                            } catch (IOException ex) {
+                                JOptionPane.showMessageDialog(null, " Erro ao ler IPConfig! ", "3D Soluções Tecnológicas - Informação", 1);
+                                statuslabel.setText("Erro ao ler IPConfig!");
+                            }
+                        } catch (NullPointerException ex) {
+                            statuslabel.setText("Erro ao ler IPConfig!");
+                        }
                     }
-                } catch (NullPointerException ex) {
-                    statuslabel.setText("Erro ao ler IPConfig!");
-                }
+                }.start();
+                ButtonEditar.setEnabled(true);
+                ButtonSalvar.setEnabled(false);
+                ButtonCancelar.setEnabled(false);
+                jCaixa.setEnabled(false);
+                jIPconexao.setEnabled(false);
+                disconnected();
+                new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            statuslabel.setText("Começando os Testes ...");
+                            Thread.currentThread().sleep(3000);
+                        } catch (InterruptedException ex) {
+
+                        }
+                        ConectarServidor();
+
+                    }
+                }.start();
+
             }
         }.start();
-        ConectarServidor();
-        ButtonEditar.setEnabled(true);
-        ButtonSalvar.setEnabled(false);
-        ButtonCancelar.setEnabled(false);
-        jCaixa.setEnabled(false);
-        jIPconexao.setEnabled(false);
+
 
     }//GEN-LAST:event_ButtonSalvarActionPerformed
 
@@ -1814,6 +1769,10 @@ public class Config extends javax.swing.JFrame {
             setEnabled(false);
             config = false;
         }
+        if (salvarclick) {
+            JOptionPane.showMessageDialog(null, "É necessario REINICIAR o sistema para SALVAR MODIFICAÇÕES! ", "Inove Systems - Informação", JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
+        }
 
     }//GEN-LAST:event_formWindowClosed
 
@@ -1826,12 +1785,12 @@ public class Config extends javax.swing.JFrame {
                     statuslabel.setText("Começando os Testes ...");
                     Thread.currentThread().sleep(3000);
                 } catch (InterruptedException ex) {
-                   
+
                 }
                 ConectarServidor();
             }
         }.start();
-       
+
     }//GEN-LAST:event_jButton2ActionPerformed
     public void LimparTela() {
         jBairro.setText(null);
