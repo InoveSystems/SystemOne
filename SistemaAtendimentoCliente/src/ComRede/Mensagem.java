@@ -20,7 +20,7 @@ public class Mensagem implements Serializable {
     private String tipo;
     private int numero;
     private int idFinalizar;
-   // private String NomeFuncionario;
+    private int codfunc;
 
     public enum Action {
 
@@ -29,6 +29,14 @@ public class Mensagem implements Serializable {
 
     public Set<String> getSetOnlines() {
         return setOnlines;
+    }
+
+    public int getCodfunc() {
+        return codfunc;
+    }
+
+    public void setCodfunc(int codfunc) {
+        this.codfunc = codfunc;
     }
 
     public void setSetOnlines(Set<String> setOnlines) {
@@ -133,13 +141,5 @@ public class Mensagem implements Serializable {
     public void setAntepenultima(String antepenultima) {
         this.antepenultima = antepenultima;
     }
-
-//    public String getNomeFuncionario() {
-//        return NomeFuncionario;
-//    }
-//
-//    public void setNomeFuncionario(String NomeFuncionario) {
-//        this.NomeFuncionario = NomeFuncionario;
-//    }
 
 }

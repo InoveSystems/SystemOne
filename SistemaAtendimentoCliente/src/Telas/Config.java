@@ -249,7 +249,7 @@ public class Config extends javax.swing.JFrame {
         if (!caixa.isEmpty()) {
             message = new Mensagem();
             this.message.setAction(Mensagem.Action.CONNECT);
-            this.message.setName(caixa+"33");
+            this.message.setName(caixa+""+caixa);
             this.service = new Conexao();
             this.socket = this.service.connect(IPCom);
             new Thread(new Config.ListenerSocket(this.socket)).start();

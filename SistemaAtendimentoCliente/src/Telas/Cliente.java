@@ -358,6 +358,7 @@ public class Cliente extends javax.swing.JFrame {
                     text = "yes";
                     if (!text.isEmpty()) {
                         message.setName(message.getName());
+                        message.setCodfunc(message.getCodfunc());
                         message.setText(text);
                         message.setIdFinalizar(message.getIdFinalizar());
                         message.setStatus("yes");
@@ -371,6 +372,7 @@ public class Cliente extends javax.swing.JFrame {
                     text = "no";
                     if (!text.isEmpty()) {
                         message.setName(message.getName());
+                        message.setCodfunc(message.getCodfunc());
                         message.setText(text);
                         message.setIdFinalizar(message.getIdFinalizar());
                         message.setStatus("no");
@@ -383,6 +385,7 @@ public class Cliente extends javax.swing.JFrame {
                     text = "no";
                     if (!text.isEmpty()) {
                         message.setName(message.getName());
+                        message.setCodfunc(message.getCodfunc());
                         message.setText(text);
                         message.setIdFinalizar(message.getIdFinalizar());
                         message.setStatus("no");
@@ -395,6 +398,7 @@ public class Cliente extends javax.swing.JFrame {
                     text = "no";
                     if (!text.isEmpty()) {
                         message.setName(message.getName());
+                        message.setCodfunc(message.getCodfunc());
                         message.setText(text);
                         message.setIdFinalizar(message.getIdFinalizar());
                         message.setStatus("no");
@@ -414,6 +418,7 @@ public class Cliente extends javax.swing.JFrame {
                     text = "yes";
                     if (!text.isEmpty()) {
                         message.setName(message.getName());
+                        message.setCodfunc(message.getCodfunc());
                         // message.setText(text);
                         message.setIdFinalizar(message.getIdFinalizar());
                         message.setStatus("yes");
@@ -427,6 +432,7 @@ public class Cliente extends javax.swing.JFrame {
                     text = "no";
                     if (!text.isEmpty()) {
                         message.setName(message.getName());
+                        message.setCodfunc(message.getCodfunc());
                         // message.setText(text);
                         message.setIdFinalizar(message.getIdFinalizar());
                         message.setStatus("no");
@@ -440,6 +446,7 @@ public class Cliente extends javax.swing.JFrame {
                     text = "no";
                     if (!text.isEmpty()) {
                         message.setName(message.getName());
+                        message.setCodfunc(message.getCodfunc());
                         message.setIdFinalizar(message.getIdFinalizar());
                         message.setStatus("no");
                         message.setAction(Mensagem.Action.REIMPRIMIR);
@@ -452,6 +459,7 @@ public class Cliente extends javax.swing.JFrame {
                     text = "no";
                     if (!text.isEmpty()) {
                         message.setName(message.getName());
+                        message.setCodfunc(message.getCodfunc());
                         message.setStatus("no");
                         message.setAction(Mensagem.Action.REIMPRIMIR);
                         service.send(message);
@@ -475,6 +483,7 @@ public class Cliente extends javax.swing.JFrame {
             message = new Mensagem();
             this.message.setAction(Mensagem.Action.CONNECT);
             this.message.setName(caixa);
+            this.message.setCodfunc(codigo);
             this.service = new Conexao();
             this.socket = this.service.connect(IPCom);
             new Thread(new Cliente.ListenerSocket(this.socket)).start();
@@ -973,63 +982,132 @@ public class Cliente extends javax.swing.JFrame {
 
     private void jbConvencionalPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConvencionalPrintActionPerformed
 
+//futuro codigo
         String text = "C";
         String name = this.message.getName();
+        int cod_func = this.message.getCodfunc();
         if (!text.isEmpty()) {
             this.message = new Mensagem();
+            this.message.setCodfunc(cod_func);
             this.message.setName(name);
             this.message.setText(text);
             this.message.setAction(Mensagem.Action.PRINT);
             this.service.send(this.message);
         }
+
+//        String text = "C";
+//        String name = this.message.getName();
+//        if (!text.isEmpty()) {
+//            this.message = new Mensagem();
+//            this.message.setName(name);
+//            this.message.setText(text);
+//            this.message.setAction(Mensagem.Action.PRINT);
+//            this.service.send(this.message);
+//        }
     }//GEN-LAST:event_jbConvencionalPrintActionPerformed
 
     private void jbConvencionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConvencionalActionPerformed
+
+//futuro codigo
         String text = "convencional";
         String name = this.message.getName();
+        int cod_func = this.message.getCodfunc();
         if (!text.isEmpty()) {
             this.message = new Mensagem();
+            this.message.setCodfunc(cod_func);
             this.message.setName(name);
             this.message.setText(text);
             this.message.setAction(Mensagem.Action.CALL);
             this.service.send(this.message);
         }
+
+//        String text = "convencional";
+//        String name = this.message.getName();
+//        if (!text.isEmpty()) {
+//            this.message = new Mensagem();
+//            this.message.setName(name);
+//            this.message.setText(text);
+//            this.message.setAction(Mensagem.Action.CALL);
+//            this.service.send(this.message);
+//        }
     }//GEN-LAST:event_jbConvencionalActionPerformed
 
     private void jbPopularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPopularActionPerformed
+
+//futuro codigo     
         String text = "popular";
         String name = this.message.getName();
+        int cod_func = this.message.getCodfunc();
         if (!text.isEmpty()) {
             this.message = new Mensagem();
+            this.message.setCodfunc(cod_func);
             this.message.setName(name);
             this.message.setText(text);
             this.message.setAction(Mensagem.Action.CALL);
             this.service.send(this.message);
         }
+
+//        String text = "popular";
+//        String name = this.message.getName();
+//        if (!text.isEmpty()) {
+//            this.message = new Mensagem();
+//            this.message.setName(name);
+//            this.message.setText(text);
+//            this.message.setAction(Mensagem.Action.CALL);
+//            this.service.send(this.message);
+//        }
     }//GEN-LAST:event_jbPopularActionPerformed
 
     private void jbPrioritariaPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPrioritariaPrintActionPerformed
+
+//futuro codigo        
         String text = "P";
         String name = this.message.getName();
+        int cod_func = this.message.getCodfunc();
         if (!text.isEmpty()) {
             this.message = new Mensagem();
+            this.message.setCodfunc(cod_func);
             this.message.setName(name);
             this.message.setText(text);
             this.message.setAction(Mensagem.Action.PRINT);
             this.service.send(this.message);
         }
+
+//        String text = "P";
+//        String name = this.message.getName();
+//        if (!text.isEmpty()) {
+//            this.message = new Mensagem();
+//            this.message.setName(name);
+//            this.message.setText(text);
+//            this.message.setAction(Mensagem.Action.PRINT);
+//            this.service.send(this.message);
+//        }
     }//GEN-LAST:event_jbPrioritariaPrintActionPerformed
 
     private void jbPopularPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPopularPrintActionPerformed
+
+//futuro codigo         
         String text = "F";
         String name = this.message.getName();
+        int cod_func = this.message.getCodfunc();
         if (!text.isEmpty()) {
             this.message = new Mensagem();
+            this.message.setCodfunc(cod_func);
             this.message.setName(name);
             this.message.setText(text);
             this.message.setAction(Mensagem.Action.PRINT);
             this.service.send(this.message);
         }
+
+//         String text = "F";
+//        String name = this.message.getName();
+//        if (!text.isEmpty()) {
+//            this.message = new Mensagem();
+//            this.message.setName(name);
+//            this.message.setText(text);
+//            this.message.setAction(Mensagem.Action.PRINT);
+//            this.service.send(this.message);
+//        }
     }//GEN-LAST:event_jbPopularPrintActionPerformed
 
     private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
@@ -1045,7 +1123,7 @@ public class Cliente extends javax.swing.JFrame {
         this.message.setPenultima(penultimalabel.getText());
         this.message.setAntepenultima(antepenultimalabel.getText());
         this.message.setName(caixa);
-        String name = this.message.getName();
+        this.message.setCodfunc(codigo);
         this.message.setAction(Mensagem.Action.DISCONNECT);
         this.service.send(this.message);
         int resposta = 0;
@@ -1107,6 +1185,7 @@ public class Cliente extends javax.swing.JFrame {
             public void run() {
                 message.setAction(Mensagem.Action.CONNECT);
                 message.setName(caixa);
+                message.setCodfunc(codigo);
                 service = new Conexao();
                 socket = service.connect(IPCom);
                 new Thread(
