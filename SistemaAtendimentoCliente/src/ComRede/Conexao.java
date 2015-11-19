@@ -39,7 +39,6 @@ public class Conexao {
     public void send(Mensagem message) {
         try {
             output.writeObject(message);
-
         } catch (NullPointerException ex) {
             //Socket esta fechado. Fazer alguma coisa nessa excessão.  
         } catch (SocketException ex) {

@@ -982,7 +982,6 @@ public class Cliente extends javax.swing.JFrame {
 
     private void jbConvencionalPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConvencionalPrintActionPerformed
 
-//futuro codigo
         String text = "C";
         String name = this.message.getName();
         int cod_func = this.message.getCodfunc();
@@ -995,20 +994,10 @@ public class Cliente extends javax.swing.JFrame {
             this.service.send(this.message);
         }
 
-//        String text = "C";
-//        String name = this.message.getName();
-//        if (!text.isEmpty()) {
-//            this.message = new Mensagem();
-//            this.message.setName(name);
-//            this.message.setText(text);
-//            this.message.setAction(Mensagem.Action.PRINT);
-//            this.service.send(this.message);
-//        }
     }//GEN-LAST:event_jbConvencionalPrintActionPerformed
 
     private void jbConvencionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConvencionalActionPerformed
 
-//futuro codigo
         String text = "convencional";
         String name = this.message.getName();
         int cod_func = this.message.getCodfunc();
@@ -1020,21 +1009,10 @@ public class Cliente extends javax.swing.JFrame {
             this.message.setAction(Mensagem.Action.CALL);
             this.service.send(this.message);
         }
-
-//        String text = "convencional";
-//        String name = this.message.getName();
-//        if (!text.isEmpty()) {
-//            this.message = new Mensagem();
-//            this.message.setName(name);
-//            this.message.setText(text);
-//            this.message.setAction(Mensagem.Action.CALL);
-//            this.service.send(this.message);
-//        }
     }//GEN-LAST:event_jbConvencionalActionPerformed
 
     private void jbPopularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPopularActionPerformed
 
-//futuro codigo     
         String text = "popular";
         String name = this.message.getName();
         int cod_func = this.message.getCodfunc();
@@ -1046,21 +1024,10 @@ public class Cliente extends javax.swing.JFrame {
             this.message.setAction(Mensagem.Action.CALL);
             this.service.send(this.message);
         }
-
-//        String text = "popular";
-//        String name = this.message.getName();
-//        if (!text.isEmpty()) {
-//            this.message = new Mensagem();
-//            this.message.setName(name);
-//            this.message.setText(text);
-//            this.message.setAction(Mensagem.Action.CALL);
-//            this.service.send(this.message);
-//        }
     }//GEN-LAST:event_jbPopularActionPerformed
 
     private void jbPrioritariaPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPrioritariaPrintActionPerformed
 
-//futuro codigo        
         String text = "P";
         String name = this.message.getName();
         int cod_func = this.message.getCodfunc();
@@ -1072,21 +1039,10 @@ public class Cliente extends javax.swing.JFrame {
             this.message.setAction(Mensagem.Action.PRINT);
             this.service.send(this.message);
         }
-
-//        String text = "P";
-//        String name = this.message.getName();
-//        if (!text.isEmpty()) {
-//            this.message = new Mensagem();
-//            this.message.setName(name);
-//            this.message.setText(text);
-//            this.message.setAction(Mensagem.Action.PRINT);
-//            this.service.send(this.message);
-//        }
     }//GEN-LAST:event_jbPrioritariaPrintActionPerformed
 
     private void jbPopularPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPopularPrintActionPerformed
 
-//futuro codigo         
         String text = "F";
         String name = this.message.getName();
         int cod_func = this.message.getCodfunc();
@@ -1098,16 +1054,6 @@ public class Cliente extends javax.swing.JFrame {
             this.message.setAction(Mensagem.Action.PRINT);
             this.service.send(this.message);
         }
-
-//         String text = "F";
-//        String name = this.message.getName();
-//        if (!text.isEmpty()) {
-//            this.message = new Mensagem();
-//            this.message.setName(name);
-//            this.message.setText(text);
-//            this.message.setAction(Mensagem.Action.PRINT);
-//            this.service.send(this.message);
-//        }
     }//GEN-LAST:event_jbPopularPrintActionPerformed
 
     private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
@@ -1127,24 +1073,24 @@ public class Cliente extends javax.swing.JFrame {
         this.message.setAction(Mensagem.Action.DISCONNECT);
         this.service.send(this.message);
         int resposta = 0;
-        caixaProb = JOptionPane.showInputDialog(null, "QUAL O NÚMERO DE SEU CAIXA ?", "3D Soluções Tecnológicas - Configuração", 3);
+        caixaProb = JOptionPane.showInputDialog(null, "QUAL O NÚMERO DE SEU CAIXA ?", "Inove Systems - Configuração", 3);
         try {
             if ((!caixaProb.equals(null)) && (!caixaProb.equals(""))) {
                 resposta = JOptionPane.showConfirmDialog(null, "CERTIFIQUE-SE QUE ESTE CAIXA NÃO EXISTE NA REDE! \n" + "O SEU CAIXA É O NÚMERO " + caixaProb + " ?");
                 if (resposta == JOptionPane.YES_OPTION) {
                     caixa = caixaProb;
-                    JOptionPane.showMessageDialog(null, "CAIXA " + caixa + " CRIADO COM SUCESSO!", "3D Soluções Tecnológicas - Informação", 1);
+                    JOptionPane.showMessageDialog(null, "CAIXA " + caixa + " CRIADO COM SUCESSO!", "Inove Systems - Informação", 1);
                 } else {
 
                 }
             } else {
                 do {
-                    caixaProb = JOptionPane.showInputDialog(null, "ERRO GRAVE! CAIXA INVALIDO! \nQUAL O NÚMERO DE SEU CAIXA ?", "3D Soluções Tecnológicas - Configuração", 3);
+                    caixaProb = JOptionPane.showInputDialog(null, "ERRO GRAVE! CAIXA INVALIDO! \nQUAL O NÚMERO DE SEU CAIXA ?", "Inove Systems - Configuração", 3);
                 } while ((caixaProb.equals(null)) || (caixaProb.equals("")));
                 resposta = JOptionPane.showConfirmDialog(null, "CERTIFIQUE-SE QUE ESTE CAIXA NÃO EXISTE NA REDE! \n" + "O SEU CAIXA É O NÚMERO " + caixaProb + " ?");
                 if (resposta == JOptionPane.YES_OPTION) {
                     caixa = caixaProb;
-                    JOptionPane.showMessageDialog(null, "CAIXA " + caixa + " CRIADO COM SUCESSO!", "3D Soluções Tecnológicas - Informação", 1);
+                    JOptionPane.showMessageDialog(null, "CAIXA " + caixa + " CRIADO COM SUCESSO!", "Inove Systems - Informação", 1);
                 }
             }
         } catch (NullPointerException ex) {
@@ -1214,10 +1160,6 @@ public class Cliente extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 
-//        login.setAlwaysOnTop(true);
-//        login.setVisible(true);
-//        login.setLocationRelativeTo(null);
-        //setEnabled(false);        
     }//GEN-LAST:event_formWindowOpened
 
     public static void main(String args[]) {

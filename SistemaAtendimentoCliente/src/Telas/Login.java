@@ -43,7 +43,7 @@ public class Login extends javax.swing.JFrame {
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("3D - Soluções Tecnológicas - Login");
+        setTitle("Inove Systems - Login");
         setUndecorated(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -170,6 +170,8 @@ public class Login extends javax.swing.JFrame {
 
     private void jConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jConfirmarActionPerformed
         jConfirmar.setEnabled(false);
+        jLogin.setEnabled(false);
+        jSenha.setEnabled(false);
         new Thread() {
             @Override
             public void run() {
@@ -182,6 +184,8 @@ public class Login extends javax.swing.JFrame {
                         Thread.currentThread().sleep(2000);
                         jStatus.setText("Digite seu Login de Usuario e Senha!");
                         jConfirmar.setEnabled(true);
+                        jLogin.setEnabled(true);
+                        jSenha.setEnabled(true);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -210,6 +214,8 @@ public class Login extends javax.swing.JFrame {
                             Thread.currentThread().sleep(2000);
                             jStatus.setText("Digite seu Login de Usuario e Senha!");
                             jConfirmar.setEnabled(true);
+                            jLogin.setEnabled(true);
+                            jSenha.setEnabled(true);
                         } catch (InterruptedException ex1) {
                             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex1);
                         }
