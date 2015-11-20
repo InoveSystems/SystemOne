@@ -434,7 +434,6 @@ public class PainelPrincipal extends javax.swing.JFrame {
         TextExemplo = new javax.swing.JLabel();
         TempValue = new javax.swing.JLabel();
         DateValue = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jEditorPane1 = new javax.swing.JEditorPane();
@@ -499,10 +498,6 @@ public class PainelPrincipal extends javax.swing.JFrame {
         DateValue.setText("00/00/0000");
         getContentPane().add(DateValue);
         DateValue.setBounds(40, 830, 530, 90);
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/banner.gif"))); // NOI18N
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(280, 450, 320, 180);
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Principal.png"))); // NOI18N
@@ -631,7 +626,6 @@ public class PainelPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel idlabel;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel penultimalabel;
     private javax.swing.JLabel ultimalabel;
