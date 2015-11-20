@@ -190,9 +190,9 @@ public class Login extends javax.swing.JFrame {
                             cliente.setVisible(true);
                         } else {
                             jStatus.setText("SENHA INCORRETA!");
-                            Thread.currentThread().sleep(2000);
+                            Thread.currentThread().sleep(1000);
                             jStatus.setText("Verifique sua Senha!");
-                            Thread.currentThread().sleep(2000);
+                            Thread.currentThread().sleep(1000);
                             jStatus.setText("Digite seu Login de Usuario e Senha!");
                             jConfirmar.setEnabled(true);
                             jLogin.setEnabled(true);
@@ -200,10 +200,10 @@ public class Login extends javax.swing.JFrame {
                             jSenha.grabFocus();
                         }
                     } else {
-                        jStatus.setText("NÃO FOI POSSÍVEL LOCALIZAR ESTE USUÁRIO!");
-                        Thread.currentThread().sleep(2000);
+                        jStatus.setText("Usuário não Localizado!");
+                        Thread.currentThread().sleep(1000);
                         jStatus.setText("Verifique os dados de Login!");
-                        Thread.currentThread().sleep(2000);
+                        Thread.currentThread().sleep(1000);
                         jStatus.setText("Digite seu Login de Usuario e Senha!");
                         jConfirmar.setEnabled(true);
                         jLogin.setEnabled(true);
@@ -212,9 +212,9 @@ public class Login extends javax.swing.JFrame {
                 } catch (SQLException ex) {
                     try {
                         jStatus.setText("Erro ao conectar com o banco de dados!");
-                        Thread.currentThread().sleep(3000);
+                        Thread.currentThread().sleep(1000);
                         jStatus.setText("Entre em contato com o suporte tecnico!");
-                        Thread.currentThread().sleep(3000);
+                        Thread.currentThread().sleep(1000);
                         jStatus.setText("Digite seu Login de Usuario e Senha!");
                         jConfirmar.setEnabled(true);
                         jLogin.setEnabled(true);
@@ -251,9 +251,9 @@ public class Login extends javax.swing.JFrame {
                 if ((jLogin.getText().trim().equals("")) || (jSenha.getText().trim().equals(""))) {
                     try {
                         jStatus.setText("Digite um USUÁRIO/SENHA válido!");
-                        Thread.currentThread().sleep(2000);
+                        Thread.currentThread().sleep(1000);
                         jStatus.setText("Verifique os dados de Login!");
-                        Thread.currentThread().sleep(2000);
+                        Thread.currentThread().sleep(1000);
                         jStatus.setText("Digite seu Login de Usuario e Senha!");
                         jConfirmar.setEnabled(true);
                         jLogin.setEnabled(true);
@@ -272,7 +272,7 @@ public class Login extends javax.swing.JFrame {
                             setVisible(false);
                         } else {
                             jStatus.setText("Aguarde! Conectando ao sistema ...");
-                            Thread.currentThread().sleep(2000);
+                            Thread.currentThread().sleep(1000);
                             FuncionarioBean funcionario = new FuncionarioBean();
                             funcionario.setCodigo(Integer.parseInt(jLogin.getText()));
                             Pesquisar(funcionario);
@@ -281,9 +281,9 @@ public class Login extends javax.swing.JFrame {
                     } catch (NumberFormatException ex) {
                         try {
                             jStatus.setText("USUÁRIO INVÁLIDO!");
-                            Thread.currentThread().sleep(2000);
+                            Thread.currentThread().sleep(1000);
                             jStatus.setText("Verifique os dados de Login!");
-                            Thread.currentThread().sleep(2000);
+                            Thread.currentThread().sleep(1000);
                             jStatus.setText("Digite seu Login de Usuario e Senha!");
                             jConfirmar.setEnabled(true);
                             jLogin.setEnabled(true);
