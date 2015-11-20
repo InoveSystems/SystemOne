@@ -411,7 +411,6 @@ public class Cliente extends javax.swing.JFrame {
 
         if (message.getStatus().equals("erro_impressao")) {
             if (message.getName().equals(caixa)) {
-//                if (!((message.getText().equals("convencional"))||((message.getText().equals("popular"))))) {
                 int resposta = JOptionPane.showConfirmDialog(null, " ERRO DE IMPRESSÃO! VERIFIQUE O PAINEL DE IMPRESSÃO! \n" + " TUDO PRONTO? \n" + " DESEJA REIMPRIMIR A FICHA DE ATENDIMENTO?");
 
                 if (resposta == JOptionPane.YES_OPTION) {
@@ -419,7 +418,6 @@ public class Cliente extends javax.swing.JFrame {
                     if (!text.isEmpty()) {
                         message.setName(message.getName());
                         message.setCodfunc(message.getCodfunc());
-                        // message.setText(text);
                         message.setIdFinalizar(message.getIdFinalizar());
                         message.setStatus("yes");
                         message.setAction(Mensagem.Action.REIMPRIMIR);
@@ -433,7 +431,6 @@ public class Cliente extends javax.swing.JFrame {
                     if (!text.isEmpty()) {
                         message.setName(message.getName());
                         message.setCodfunc(message.getCodfunc());
-                        // message.setText(text);
                         message.setIdFinalizar(message.getIdFinalizar());
                         message.setStatus("no");
                         message.setAction(Mensagem.Action.REIMPRIMIR);
@@ -1062,83 +1059,6 @@ public class Cliente extends javax.swing.JFrame {
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
 
-        String caixaProb;
-        this.message = new Mensagem();
-        this.message.setAtual(atuallabel.getText());
-        this.message.setUltima(ultimalabel.getText());
-        this.message.setPenultima(penultimalabel.getText());
-        this.message.setAntepenultima(antepenultimalabel.getText());
-        this.message.setName(caixa);
-        this.message.setCodfunc(codigo);
-        this.message.setAction(Mensagem.Action.DISCONNECT);
-        this.service.send(this.message);
-        int resposta = 0;
-        caixaProb = JOptionPane.showInputDialog(null, "QUAL O NÚMERO DE SEU CAIXA ?", "Inove Systems - Configuração", 3);
-        try {
-            if ((!caixaProb.equals(null)) && (!caixaProb.equals(""))) {
-                resposta = JOptionPane.showConfirmDialog(null, "CERTIFIQUE-SE QUE ESTE CAIXA NÃO EXISTE NA REDE! \n" + "O SEU CAIXA É O NÚMERO " + caixaProb + " ?");
-                if (resposta == JOptionPane.YES_OPTION) {
-                    caixa = caixaProb;
-                    JOptionPane.showMessageDialog(null, "CAIXA " + caixa + " CRIADO COM SUCESSO!", "Inove Systems - Informação", 1);
-                } else {
-
-                }
-            } else {
-                do {
-                    caixaProb = JOptionPane.showInputDialog(null, "ERRO GRAVE! CAIXA INVALIDO! \nQUAL O NÚMERO DE SEU CAIXA ?", "Inove Systems - Configuração", 3);
-                } while ((caixaProb.equals(null)) || (caixaProb.equals("")));
-                resposta = JOptionPane.showConfirmDialog(null, "CERTIFIQUE-SE QUE ESTE CAIXA NÃO EXISTE NA REDE! \n" + "O SEU CAIXA É O NÚMERO " + caixaProb + " ?");
-                if (resposta == JOptionPane.YES_OPTION) {
-                    caixa = caixaProb;
-                    JOptionPane.showMessageDialog(null, "CAIXA " + caixa + " CRIADO COM SUCESSO!", "Inove Systems - Informação", 1);
-                }
-            }
-        } catch (NullPointerException ex) {
-
-        }
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    if (!arquivo.exists()) {
-                        try {
-                            arquivo.createNewFile();
-                        } catch (IOException ex) {
-                            statuslabel.setText("Erro ao criar CaixaConfig!");
-                        }
-                    }
-                    FileWriter fw;
-                    try {
-                        fw = new FileWriter(arquivo, false);
-                        BufferedWriter bw = new BufferedWriter(fw);
-                        bw.write(caixa);
-                        bw.newLine();
-                        bw.close();
-                        fw.close();
-
-                    } catch (IOException ex) {
-                        statuslabel.setText("Erro ao ler CaixaConfig!");
-                    }
-
-                } catch (NullPointerException ex) {
-
-                }
-            }
-        }.start();
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Atendente " + caixa, javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14))); // NOI18N
-        new Thread() {
-            @Override
-            public void run() {
-                message.setAction(Mensagem.Action.CONNECT);
-                message.setName(caixa);
-                message.setCodfunc(codigo);
-                service = new Conexao();
-                socket = service.connect(IPCom);
-                new Thread(
-                        new Cliente.ListenerSocket(socket)).start();
-                service.send(message);
-            }
-        }.start();
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void jLabel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MouseClicked
