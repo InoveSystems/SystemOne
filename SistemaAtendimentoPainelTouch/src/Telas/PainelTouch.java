@@ -49,6 +49,7 @@ public class PainelTouch extends javax.swing.JFrame {
     boolean block_P = false;
     boolean block_C = false;
     boolean block_F = false;
+    public int codigo;
 
     public PainelTouch() {
 
@@ -336,18 +337,36 @@ public class PainelTouch extends javax.swing.JFrame {
     }
 
     public boolean ConectarServidor() {
-//        String name = "20";
-        if (!caixa.isEmpty()) {
+////        String name = "20";
+//        if (!caixa.isEmpty()) {
+//            message = new Mensagem();
+//            this.message.setAction(Mensagem.Action.CONNECT);
+//            this.message.setName(caixa);
+//            this.service = new Conexao();
+//            this.socket = this.service.connect(IPCom);
+//            new Thread(new PainelTouch.ListenerSocket(this.socket)).start();
+//            this.service.send(message);
+//
+//        }
+//        return true;
+//        
+        
+        
+         if (!caixa.isEmpty()) {
             message = new Mensagem();
             this.message.setAction(Mensagem.Action.CONNECT);
             this.message.setName(caixa);
+            this.message.setCodfunc(codigo);
             this.service = new Conexao();
             this.socket = this.service.connect(IPCom);
             new Thread(new PainelTouch.ListenerSocket(this.socket)).start();
             this.service.send(message);
-
         }
         return true;
+        
+        
+        
+        
     }
 
     class Fila {
@@ -431,7 +450,7 @@ public class PainelTouch extends javax.swing.JFrame {
                         }.start();
                         TextExemplo.setText("                            ..:: INOVE SYSTEMS ::..");
                         Thread.currentThread().sleep(5000);
-                        TextExemplo.setText("                  TELEFONE: (53) 32481203 - Pinheiro Machado-RS");
+                        TextExemplo.setText("       TELEFONE: (53) 32481203 - Pinheiro Machado-RS");
                         Thread.currentThread().sleep(5000);
                         TextExemplo.setText("                            www.inovesystems.com.br");
                         Thread.currentThread().sleep(5000);
