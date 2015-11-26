@@ -38,7 +38,7 @@ public class GeradorDeGraficosBarras {
 
     }
 
-    public javax.swing.ImageIcon plotagem(GeradorDeGraficosBarras ger) throws IOException {
+    public void plotagem(GeradorDeGraficosBarras ger) throws IOException {
         this.ds = ger.ds;
         this.titulox = ger.titulox;
         this.tituloy = ger.tituloy;
@@ -46,11 +46,11 @@ public class GeradorDeGraficosBarras {
         this.tituloplotagem = ger.tituloplotagem;
         this.tamanhografix = ger.tamanhografix;
         this.tamanhografiy = ger.tamanhografiy;
-        this.grafi = new FileOutputStream(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "grafico.png");
+        this.grafi = new FileOutputStream(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + tituloplotagem +".png");
         JFreeChart grafico = ChartFactory.createStackedBarChart3D(this.titulografico, this.titulox, this.tituloy, this.ds, PlotOrientation.VERTICAL, true, true, false);
         ChartUtilities.writeChartAsPNG(this.grafi, grafico, this.tamanhografix, this.tamanhografiy);
         this.grafi.close();
-        return new javax.swing.ImageIcon((diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "grafico.png"));
+        //return new javax.swing.ImageIcon((diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + tituloplotagem +".png"));
         //  graficolabel.setIcon(new javax.swing.ImageIcon((diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "grafico.png")));
     }
 
