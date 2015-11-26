@@ -1165,11 +1165,11 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel40" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jDateChooser1" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="jDateInicio" min="-2" pref="200" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel41" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jDateChooser2" min="-2" pref="186" max="-2" attributes="0"/>
+                          <Component id="jDateFim" min="-2" pref="186" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jComboPeriodo" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -1184,9 +1184,9 @@
                               <Group type="103" alignment="0" groupAlignment="0" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Component id="jLabel40" min="-2" pref="31" max="-2" attributes="0"/>
-                                      <Component id="jDateChooser1" min="-2" pref="36" max="-2" attributes="0"/>
+                                      <Component id="jDateInicio" min="-2" pref="36" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="jDateChooser2" alignment="1" min="-2" pref="36" max="-2" attributes="0"/>
+                                  <Component id="jDateFim" alignment="1" min="-2" pref="36" max="-2" attributes="0"/>
                                   <Component id="jComboPeriodo" alignment="1" min="-2" pref="36" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -1200,7 +1200,7 @@
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser1">
+                <Component class="com.toedter.calendar.JDateChooser" name="jDateInicio">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial" size="14" style="0"/>
@@ -1223,7 +1223,7 @@
                     <Property name="text" type="java.lang.String" value="/"/>
                   </Properties>
                 </Component>
-                <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser2">
+                <Component class="com.toedter.calendar.JDateChooser" name="jDateFim">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial" size="14" style="0"/>
@@ -1272,8 +1272,8 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                          <Component id="graficolabel" min="-2" pref="706" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="graficolabel" min="-2" pref="817" max="-2" attributes="0"/>
+                          <EmptySpace pref="94" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1289,6 +1289,9 @@
               </Layout>
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="graficolabel">
+                  <Properties>
+                    <Property name="horizontalAlignment" type="int" value="0"/>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>
@@ -1310,7 +1313,7 @@
                               <Component id="buttonEditar2" max="32767" attributes="0"/>
                               <Component id="buttonEditar1" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="185" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1336,7 +1339,6 @@
                       <Image iconType="3" name="/Imagens/add2.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Novo Relat&#xf3;rio"/>
-                    <Property name="enabled" type="boolean" value="false"/>
                     <Property name="horizontalAlignment" type="int" value="2"/>
                   </Properties>
                   <Events>

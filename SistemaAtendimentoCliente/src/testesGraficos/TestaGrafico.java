@@ -30,7 +30,7 @@ public class TestaGrafico {
         ds.addValue(42.5, "minimo", "dia 6");
 
         // cria o gráfico
-        JFreeChart grafico = ChartFactory.createLineChart("Atendimentos Sanar", "Dia","Quantidade", ds, PlotOrientation.VERTICAL, true, true, false);
+        JFreeChart grafico = ChartFactory.createLineChart("Atendimentos Sanar", "Dia","Quantidade", ds, PlotOrientation.HORIZONTAL, true, true, false);
         // OutputStream arquivo = new FileOutputStream("grafico.png");        
         ChartUtilities.writeChartAsPNG(fis, grafico, 550, 400);
         fis.close();

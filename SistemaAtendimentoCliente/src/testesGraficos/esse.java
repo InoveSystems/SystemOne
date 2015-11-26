@@ -5,7 +5,8 @@
  */
 package testesGraficos;
 
-import Graficos.GeradorDeGraficos;
+import Graficos.GeradorDeGraficosBarras;
+import Graficos.GeradorDeGraficosLinha;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -105,7 +106,7 @@ public class esse extends javax.swing.JFrame {
         ds.addValue(35.7, "maximo", "dia 5");
         ds.addValue(42.5, "minimo", "dia 6");
         try {
-            GeradorDeGraficos gerar= new GeradorDeGraficos();
+            GeradorDeGraficosBarras gerar= new GeradorDeGraficosBarras();
             gerar.setDs(ds);
             gerar.setTitulox("titulox");
             gerar.setTituloy("tituloy");

@@ -4,7 +4,9 @@ import Bean.FuncionarioBean;
 import ComRede.Conexao;
 import ComRede.Mensagem;
 import DAO.FuncionarioDAO;
-import Graficos.GeradorDeGraficos;
+import DAO.GraficoDAO;
+import Graficos.GeradorDeGraficosBarras;
+import Graficos.GeradorDeGraficosLinha;
 import java.awt.BorderLayout;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -17,6 +19,9 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -47,6 +52,7 @@ public class Config extends javax.swing.JFrame {
     public File IPConfig = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "IPConfig.txt");
     public File arquivo = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "CaixaConfig.txt");
     public boolean salvarclick = false;
+    public java.util.Date data_media;
 
     public Config() {
 
@@ -63,6 +69,8 @@ public class Config extends javax.swing.JFrame {
         jPanes.setIconAt(0, tab1Icon);
         jPanes.setIconAt(1, tab2Icon);
         jPanes.setIconAt(2, tab3Icon);
+        jDateInicio.setDate(getDate());
+        jDateFim.setDate(getDate());
 
         new Thread() {
             @Override
@@ -164,6 +172,8 @@ public class Config extends javax.swing.JFrame {
         jPanes.setIconAt(0, tab1Icon);
         jPanes.setIconAt(1, tab2Icon);
         jPanes.setIconAt(2, tab3Icon);
+        jDateInicio.setDate(getDate());
+        jDateFim.setDate(getDate());
         new Thread() {
             @Override
             public void run() {
@@ -247,6 +257,11 @@ public class Config extends javax.swing.JFrame {
             }
         }.
                 start();
+    }
+
+    private Date getDate() {
+        Date date = new Date();
+        return date;
     }
 
     public boolean ConectarServidor() {
@@ -421,10 +436,10 @@ public class Config extends javax.swing.JFrame {
         jLabel38 = new javax.swing.JLabel();
         jComboFiltro = new javax.swing.JComboBox();
         jPanel3 = new javax.swing.JPanel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jDateInicio = new com.toedter.calendar.JDateChooser();
         jLabel40 = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        jDateFim = new com.toedter.calendar.JDateChooser();
         jComboPeriodo = new javax.swing.JComboBox();
         jPanel9 = new javax.swing.JPanel();
         graficolabel = new javax.swing.JLabel();
@@ -1081,7 +1096,7 @@ public class Config extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jDateChooser1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jDateInicio.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel40.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel40.setText("Período:");
@@ -1089,7 +1104,7 @@ public class Config extends javax.swing.JFrame {
         jLabel41.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel41.setText("/");
 
-        jDateChooser2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jDateFim.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jComboPeriodo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jComboPeriodo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Horario", "Manhã", "Tarde", "Noite", "Dia", "Mês", "Ano" }));
@@ -1109,11 +1124,11 @@ public class Config extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel40)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jDateInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel41)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jDateFim, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboPeriodo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -1126,8 +1141,8 @@ public class Config extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jDateChooser2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jDateInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jDateFim, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jComboPeriodo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(1, 1, 1)
@@ -1138,14 +1153,16 @@ public class Config extends javax.swing.JFrame {
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
         jPanel9.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        graficolabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(5, 5, 5)
-                .addComponent(graficolabel, javax.swing.GroupLayout.PREFERRED_SIZE, 706, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(graficolabel, javax.swing.GroupLayout.PREFERRED_SIZE, 817, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(94, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1160,7 +1177,6 @@ public class Config extends javax.swing.JFrame {
         buttonEditar1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         buttonEditar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/add2.png"))); // NOI18N
         buttonEditar1.setText("Novo Relatório");
-        buttonEditar1.setEnabled(false);
         buttonEditar1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         buttonEditar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1188,7 +1204,7 @@ public class Config extends javax.swing.JFrame {
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(buttonEditar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(buttonEditar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(185, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1888,7 +1904,7 @@ public class Config extends javax.swing.JFrame {
 //        ds.addValue(35.7, "maximo", "dia 5");
 //        ds.addValue(42.5, "minimo", "dia 6");
 //        try {
-//            GeradorDeGraficos gerar= new GeradorDeGraficos();
+//            GeradorDeGraficosLinha gerar= new GeradorDeGraficosLinha();
 //            gerar.setDs(ds);
 //            gerar.setTitulox("titulox");
 //            gerar.setTituloy("tituloy");
@@ -1903,10 +1919,8 @@ public class Config extends javax.swing.JFrame {
 //        }
 //        
         graficolabel.setIcon(new javax.swing.ImageIcon((diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "grafico.png")));
-        
-        
-        
-        
+
+
     }//GEN-LAST:event_formWindowOpened
 
     private void jConSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jConSenhaActionPerformed
@@ -2027,7 +2041,60 @@ public class Config extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboPeriodoActionPerformed
 
     private void buttonEditar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditar1ActionPerformed
-        // TODO add your handling code here:
+        //testando pesquisa pra por no grafico
+        new Thread() {
+            @Override
+            public void run() {
+                String data = "dd/MM/yyyy";
+                String hora = "HH";
+                String minuto = "mm";
+                String segundo = "ss";
+                String data1, hora1, minuto1, segundo1;
+                SimpleDateFormat horaFormat = new SimpleDateFormat(hora);
+                SimpleDateFormat minutoFormat = new SimpleDateFormat(minuto);
+                SimpleDateFormat segundoFormat = new SimpleDateFormat(segundo);
+                SimpleDateFormat formata1 = new SimpleDateFormat(data);
+                DefaultCategoryDataset ds = new DefaultCategoryDataset();
+                try {
+                    GraficoDAO grafic = new GraficoDAO();
+                    ResultSet rs;
+                    //System.out.println(formata1.format(jDateInicio.getDate()) + " " + formata1.format(jDateFim.getDate()));
+                    rs = grafic.retriveAtendenteTempo(jDateInicio.getDate(), jDateFim.getDate());
+                    if (rs.next()) {
+                        do {
+                            String funcionario = rs.getString("nome");
+                            data_media = rs.getTimestamp("media");
+                            hora1 = horaFormat.format(data_media);
+                            minuto1 = minutoFormat.format(data_media);
+                            segundo1 = segundoFormat.format(data_media);
+//                    System.out.println(funcionario + hora1 + " / " + minuto1 + " / " + segundo1);                   
+                            double horasD = Integer.parseInt(hora1);
+                            double minutosD = Integer.parseInt(minuto1);
+                            double segundosD = Integer.parseInt(segundo1);
+                            double minutosTrabalhado = (horasD * 60) + minutosD + (segundosD / 60);
+                            System.out.println(minutosTrabalhado);
+                            ds.addValue(minutosTrabalhado, funcionario, funcionario);
+                        } while (rs.next());
+                    }
+
+                    GeradorDeGraficosBarras gerar = new GeradorDeGraficosBarras();
+                    gerar.setDs(ds);
+                    gerar.setTitulox("Funcionários");
+                    gerar.setTituloy("Tempo Atendimento (minutos)");
+                    gerar.setTitulografico("..:: Tempo de atendimento por Atendente ::..");
+                    gerar.setTituloplotagem("plotagemtitulo");
+                    gerar.setTamanhografix(720);
+                    gerar.setTamanhografiy(405);
+                    graficolabel.setIcon(gerar.plotagem(gerar));
+                } catch (SQLException ex) {
+                    System.out.println("erro");
+                } catch (IOException ex) {
+                    Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }.start();
+
     }//GEN-LAST:event_buttonEditar1ActionPerformed
 
     private void buttonEditar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditar2ActionPerformed
@@ -2240,8 +2307,8 @@ public class Config extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboTipo;
     private javax.swing.JTextField jComplemento;
     private javax.swing.JTextField jConSenha;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
+    private com.toedter.calendar.JDateChooser jDateFim;
+    private com.toedter.calendar.JDateChooser jDateInicio;
     private javax.swing.JTextField jEmail;
     private javax.swing.JTextField jIPconexao;
     private javax.swing.JLabel jLabel20;
