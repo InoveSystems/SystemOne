@@ -1042,9 +1042,9 @@
                               <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                               <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jPanel13" max="32767" attributes="0"/>
+                          <Component id="jPanel13" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                       <Component id="jPanel9" max="32767" attributes="0"/>
                       <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
                   </Group>
@@ -1272,7 +1272,12 @@
                               <Component id="buttonEditar2" max="32767" attributes="0"/>
                               <Component id="buttonEditar1" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="buttonEditar3" max="32767" attributes="0"/>
+                              <Component id="buttonEditar4" alignment="1" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1280,10 +1285,16 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                          <Component id="buttonEditar1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                          <Component id="buttonEditar2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="buttonEditar3" max="32767" attributes="0"/>
+                              <Component id="buttonEditar1" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="buttonEditar4" max="32767" attributes="0"/>
+                              <Component id="buttonEditar2" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1310,14 +1321,41 @@
                       <Font name="Arial" size="14" style="0"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Imagens/add2.png"/>
+                      <Image iconType="3" name="/Imagens/editar24x24.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Gerar Relat&#xf3;rio"/>
-                    <Property name="enabled" type="boolean" value="false"/>
                     <Property name="horizontalAlignment" type="int" value="2"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonEditar2ActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JButton" name="buttonEditar3">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Arial" size="14" style="0"/>
+                    </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/Imagens/print.png"/>
+                    </Property>
+                    <Property name="enabled" type="boolean" value="false"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonEditar3ActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JButton" name="buttonEditar4">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Arial" size="14" style="0"/>
+                    </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/Imagens/print.png"/>
+                    </Property>
+                    <Property name="enabled" type="boolean" value="false"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonEditar4ActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>
@@ -1361,9 +1399,9 @@
                           <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                           <Component id="graficolabel" min="-2" pref="307" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                          <Component id="jStatusLabel" pref="38" max="32767" attributes="0"/>
+                          <Component id="jStatusLabel" pref="39" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
-                          <Component id="jProgressBar1" pref="38" max="32767" attributes="0"/>
+                          <Component id="jProgressBar1" pref="39" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                       </Group>
                   </Group>

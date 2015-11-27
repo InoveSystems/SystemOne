@@ -42,6 +42,7 @@ public class Cliente extends javax.swing.JFrame {
     public File arquivo = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "CaixaConfig.txt");
     public int codigo;
     public String nome;
+    private Config config = new Config();
 
     public Cliente(int codi, String nome) {
         codigo = codi;
@@ -506,7 +507,7 @@ public class Cliente extends javax.swing.JFrame {
                     admin = rs.getBoolean("administrador");
                 } while (rs.next());
                 if (admin) {
-                    Config config = new Config();
+                    
                     config.setVisible(true);
                     config.jPanes.setSelectedIndex(0);
                     config.setLocationRelativeTo(null);

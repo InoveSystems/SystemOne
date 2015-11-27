@@ -50,6 +50,7 @@ public class GeradorDeGraficosBarras {
         JFreeChart grafico = ChartFactory.createStackedBarChart3D(this.titulografico, this.titulox, this.tituloy, this.ds, PlotOrientation.VERTICAL, true, true, false);
         ChartUtilities.writeChartAsPNG(this.grafi, grafico, this.tamanhografix, this.tamanhografiy);
         this.grafi.close();
+        
         //return new javax.swing.ImageIcon((diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + tituloplotagem +".png"));
         //  graficolabel.setIcon(new javax.swing.ImageIcon((diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "grafico.png")));
     }

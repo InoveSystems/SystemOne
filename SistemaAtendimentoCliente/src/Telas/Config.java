@@ -24,14 +24,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 import org.jfree.data.category.DefaultCategoryDataset;
-
 
 /**
  *
@@ -53,6 +54,7 @@ public class Config extends javax.swing.JFrame {
     public File arquivo = new File(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "CaixaConfig.txt");
     public boolean salvarclick = false;
     public java.util.Date data_media;
+    protected javax.swing.ImageIcon imagemGrafic = new javax.swing.ImageIcon();
 
     public Config() {
 
@@ -445,6 +447,8 @@ public class Config extends javax.swing.JFrame {
         jPanel13 = new javax.swing.JPanel();
         buttonEditar1 = new javax.swing.JButton();
         buttonEditar2 = new javax.swing.JButton();
+        buttonEditar3 = new javax.swing.JButton();
+        buttonEditar4 = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         graficolabel = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
@@ -1166,13 +1170,30 @@ public class Config extends javax.swing.JFrame {
         });
 
         buttonEditar2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        buttonEditar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/add2.png"))); // NOI18N
+        buttonEditar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/editar24x24.png"))); // NOI18N
         buttonEditar2.setText("Gerar Relatório");
-        buttonEditar2.setEnabled(false);
         buttonEditar2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         buttonEditar2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonEditar2ActionPerformed(evt);
+            }
+        });
+
+        buttonEditar3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        buttonEditar3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/print.png"))); // NOI18N
+        buttonEditar3.setEnabled(false);
+        buttonEditar3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonEditar3ActionPerformed(evt);
+            }
+        });
+
+        buttonEditar4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        buttonEditar4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/print.png"))); // NOI18N
+        buttonEditar4.setEnabled(false);
+        buttonEditar4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonEditar4ActionPerformed(evt);
             }
         });
 
@@ -1185,16 +1206,24 @@ public class Config extends javax.swing.JFrame {
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(buttonEditar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(buttonEditar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(buttonEditar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonEditar4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addGap(3, 3, 3)
-                .addComponent(buttonEditar1)
-                .addGap(2, 2, 2)
-                .addComponent(buttonEditar2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(buttonEditar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonEditar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(3, 3, 3)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(buttonEditar4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonEditar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(13, 13, 13))
         );
 
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
@@ -1232,9 +1261,9 @@ public class Config extends javax.swing.JFrame {
                 .addGap(8, 8, 8)
                 .addComponent(graficolabel, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
-                .addComponent(jStatusLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                .addComponent(jStatusLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
                 .addGap(5, 5, 5))
         );
 
@@ -1263,8 +1292,8 @@ public class Config extends javax.swing.JFrame {
                         .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(1, 1, 1)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(5, 5, 5)
+                    .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(3, 3, 3)
                 .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(2, 2, 2))
         );
@@ -2069,13 +2098,10 @@ public class Config extends javax.swing.JFrame {
             public void run() {
                 jProgressBar1.setVisible(true);
                 jProgressBar1.setEnabled(true);
-                System.out.println("Aguarde Gerando Gráfico...");
-                 graficolabel.setIcon(new javax.swing.ImageIcon((diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "gif.gif")));
-
-               // graficolabel.setIcon(null);    
+                System.out.println("Aguarde Gerando Gráfico...");                
+                graficolabel.setIcon(new javax.swing.ImageIcon(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "gif.gif"));               
                 //graficolabel.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
                 jStatusLabel.setText(" Aguarde, gerando gráfico ...");
-
             }
 
         }.start();
@@ -2127,6 +2153,7 @@ public class Config extends javax.swing.JFrame {
                 } catch (IOException ex) {
                     Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
                 }
+
             }
 
         }.start();
@@ -2137,11 +2164,14 @@ public class Config extends javax.swing.JFrame {
                 try {
                     Thread.currentThread().sleep(5000);
                     jStatusLabel.setText("");
-//                    graficolabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
                     jProgressBar1.setVisible(false);
-                    graficolabel.setIcon(new javax.swing.ImageIcon((diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "plotagemtitulo" + ".png")));
-
+                    graficolabel.setIcon(new javax.swing.ImageIcon(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "plotagemtitulo" + ".png")); 
+//                    imagemGrafic = new javax.swing.ImageIcon((diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "plotagemtitulo" + ".png"));
+//                    graficolabel.setIcon(imagemGrafic);
+                    // graficolabel.setIcon(new javax.swing.ImageIcon((diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "plotagemtitulo" + ".png")));
                 } catch (InterruptedException ex) {
+                    Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Throwable ex) {
                     Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -2149,8 +2179,17 @@ public class Config extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonEditar1ActionPerformed
 
     private void buttonEditar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditar2ActionPerformed
-        // TODO add your handling code here:
+        imagemGrafic = new javax.swing.ImageIcon((diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "plotagemtitulo" + ".png"));
+        graficolabel.setIcon(imagemGrafic);
     }//GEN-LAST:event_buttonEditar2ActionPerformed
+
+    private void buttonEditar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditar3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonEditar3ActionPerformed
+
+    private void buttonEditar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditar4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonEditar4ActionPerformed
     public void LimparTela() {
         jBairro.setText(null);
         jCPF.setText(null);
@@ -2340,6 +2379,8 @@ public class Config extends javax.swing.JFrame {
     private javax.swing.JButton buttonEditar;
     private javax.swing.JButton buttonEditar1;
     private javax.swing.JButton buttonEditar2;
+    private javax.swing.JButton buttonEditar3;
+    private javax.swing.JButton buttonEditar4;
     private javax.swing.JButton buttonExcluir;
     private javax.swing.JButton buttonNovo;
     private javax.swing.JButton buttonSalvar;
