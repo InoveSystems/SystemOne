@@ -16,6 +16,8 @@ public class Login extends javax.swing.JFrame {
 
     public Login() {
         initComponents();
+        jLogin.setSelectionStart(0);
+        jLogin.setSelectionEnd(7);
 
     }
 

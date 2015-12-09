@@ -92,5 +92,23 @@ public class GraficoDAO {
         rs = stm.executeQuery(sql);
         return rs;
     }
+    
+    public ResultSet retriveCaixaTempo(java.util.Date inicio, java.util.Date fim) throws SQLException {
+        Statement stm = this.conexao.createStatement();
+        ResultSet rs;
+        String sql = "SELECT fichas.caixa as caixa, AVG(fichas.tempo_atendimento::time) as media FROM fichas WHERE ((fichas.tempo_atendimento::date) >='"+inicio+"' AND (fichas.tempo_atendimento::date) <='" +fim+ "') AND caixa<>''group by fichas.caixa";
+        rs = stm.executeQuery(sql);
+        return rs;
+    }
+    
+    public ResultSet retriveTipoTempo(java.util.Date inicio, java.util.Date fim) throws SQLException {
+        Statement stm = this.conexao.createStatement();
+        ResultSet rs;
+        String sql = "SELECT fichas.tipo as tipo, AVG(fichas.tempo_atendimento::time) as media FROM fichas WHERE (fichas.tempo_atendimento::date) >='"+inicio+"' AND (fichas.tempo_atendimento::date) <='" +fim+ "' group by fichas.tipo";
+        rs = stm.executeQuery(sql);
+        return rs;
+    }
+    
+    
 
 }

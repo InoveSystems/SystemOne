@@ -267,6 +267,13 @@ public class Config extends javax.swing.JFrame {
         return date;
     }
 
+    private String getDateFormat() {
+        DateFormat dateFormat = new SimpleDateFormat("dd_MM_yyyy_HH_mm_ss");
+        Date date = new Date();
+        return dateFormat.format(date);
+
+    }
+
     public boolean ConectarServidor() {
         if (!caixa.isEmpty()) {
             message = new Mensagem();
@@ -329,13 +336,6 @@ public class Config extends javax.swing.JFrame {
                     Thread.currentThread().sleep(3000);
                     statuslabel.setText("Tente Novamente!");
                     Thread.currentThread().sleep(3000);
-//                    new Thread() {
-//                        @Override
-//                        public void run() {
-//                            statuslabel.setText("Tentando conectar novamente ...");
-//                            ConectarServidor();
-//                        }
-//                    }.start();
                 } catch (InterruptedException ex1) {
                     statuslabel.setText("Erro ao conectar ao servidor!");
 
@@ -445,10 +445,10 @@ public class Config extends javax.swing.JFrame {
         jDateFim = new com.toedter.calendar.JDateChooser();
         jComboPeriodo = new javax.swing.JComboBox();
         jPanel13 = new javax.swing.JPanel();
-        buttonEditar1 = new javax.swing.JButton();
-        buttonEditar2 = new javax.swing.JButton();
-        buttonEditar3 = new javax.swing.JButton();
-        buttonEditar4 = new javax.swing.JButton();
+        jNovoGrafico = new javax.swing.JButton();
+        jGerar = new javax.swing.JButton();
+        jPrint = new javax.swing.JButton();
+        jcancelar = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         graficolabel = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
@@ -1006,7 +1006,7 @@ public class Config extends javax.swing.JFrame {
                         .addComponent(buttonEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(3, 3, 3)
                         .addComponent(buttonExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(2, 2, 2)
+                        .addGap(3, 3, 3)
                         .addComponent(buttonSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(3, 3, 3)
                         .addComponent(buttonCalcelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -1052,8 +1052,9 @@ public class Config extends javax.swing.JFrame {
         jPanel8.setPreferredSize(new java.awt.Dimension(850, 526));
 
         jComboTipo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jComboTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tempo de Atendimento", "Tempo de Espera ", "Quantidade de Atendimentos" }));
+        jComboTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tempo de Atendimento", "Tempo de Espera", "Quantidade de Atendimentos" }));
         jComboTipo.setToolTipText("");
+        jComboTipo.setEnabled(false);
         jComboTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboTipoActionPerformed(evt);
@@ -1069,6 +1070,7 @@ public class Config extends javax.swing.JFrame {
         jComboFiltro.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jComboFiltro.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Atendente", "Caixa", "Tipo de Ficha" }));
         jComboFiltro.setToolTipText("");
+        jComboFiltro.setEnabled(false);
         jComboFiltro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboFiltroActionPerformed(evt);
@@ -1087,7 +1089,7 @@ public class Config extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboFiltro, 0, 151, Short.MAX_VALUE)
+                .addComponent(jComboFiltro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
@@ -1104,6 +1106,7 @@ public class Config extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jDateInicio.setEnabled(false);
         jDateInicio.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jLabel40.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
@@ -1112,12 +1115,14 @@ public class Config extends javax.swing.JFrame {
         jLabel41.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel41.setText("/");
 
+        jDateFim.setEnabled(false);
         jDateFim.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jComboPeriodo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jComboPeriodo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Horario", "Manhã", "Tarde", "Noite", "Dia", "Mês", "Ano" }));
         jComboPeriodo.setSelectedIndex(1);
         jComboPeriodo.setToolTipText("");
+        jComboPeriodo.setEnabled(false);
         jComboPeriodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboPeriodoActionPerformed(evt);
@@ -1138,7 +1143,7 @@ public class Config extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jDateFim, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboPeriodo, 0, 105, Short.MAX_VALUE)
+                .addComponent(jComboPeriodo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -1159,41 +1164,42 @@ public class Config extends javax.swing.JFrame {
 
         jPanel13.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        buttonEditar1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        buttonEditar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/add2.png"))); // NOI18N
-        buttonEditar1.setText("Novo Relatório");
-        buttonEditar1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        buttonEditar1.addActionListener(new java.awt.event.ActionListener() {
+        jNovoGrafico.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jNovoGrafico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/add2.png"))); // NOI18N
+        jNovoGrafico.setText("Novo Relatório");
+        jNovoGrafico.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jNovoGrafico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonEditar1ActionPerformed(evt);
+                jNovoGraficoActionPerformed(evt);
             }
         });
 
-        buttonEditar2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        buttonEditar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/editar24x24.png"))); // NOI18N
-        buttonEditar2.setText("Gerar Relatório");
-        buttonEditar2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        buttonEditar2.addActionListener(new java.awt.event.ActionListener() {
+        jGerar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jGerar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/editar24x24.png"))); // NOI18N
+        jGerar.setText("Gerar Relatório");
+        jGerar.setEnabled(false);
+        jGerar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jGerar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonEditar2ActionPerformed(evt);
+                jGerarActionPerformed(evt);
             }
         });
 
-        buttonEditar3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        buttonEditar3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/print.png"))); // NOI18N
-        buttonEditar3.setEnabled(false);
-        buttonEditar3.addActionListener(new java.awt.event.ActionListener() {
+        jPrint.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/print.png"))); // NOI18N
+        jPrint.setEnabled(false);
+        jPrint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonEditar3ActionPerformed(evt);
+                jPrintActionPerformed(evt);
             }
         });
 
-        buttonEditar4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        buttonEditar4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/print.png"))); // NOI18N
-        buttonEditar4.setEnabled(false);
-        buttonEditar4.addActionListener(new java.awt.event.ActionListener() {
+        jcancelar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jcancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/cancel32x32.png"))); // NOI18N
+        jcancelar.setEnabled(false);
+        jcancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonEditar4ActionPerformed(evt);
+                jcancelarActionPerformed(evt);
             }
         });
 
@@ -1204,12 +1210,12 @@ public class Config extends javax.swing.JFrame {
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addGap(3, 3, 3)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(buttonEditar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buttonEditar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jGerar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jNovoGrafico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(buttonEditar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buttonEditar4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPrint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jcancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel13Layout.setVerticalGroup(
@@ -1217,12 +1223,12 @@ public class Config extends javax.swing.JFrame {
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addGap(3, 3, 3)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(buttonEditar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buttonEditar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPrint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jNovoGrafico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(3, 3, 3)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(buttonEditar4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buttonEditar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jcancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jGerar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(13, 13, 13))
         );
 
@@ -1273,15 +1279,15 @@ public class Config extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(3, 3, 3)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 597, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 607, Short.MAX_VALUE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(3, 3, 3)
                         .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addGap(67, 67, 67))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1947,28 +1953,7 @@ public class Config extends javax.swing.JFrame {
             jPanes.setEnabledAt(0, false);
             jPanes.setEnabledAt(1, false);
         }
-//        DefaultCategoryDataset ds = new DefaultCategoryDataset();
-//        ds.addValue(40.5, "maximo", "dia 1");
-//        ds.addValue(38.2, "minimo", "dia 2");
-//        ds.addValue(37.3, "minimo", "dia 3");
-//        ds.addValue(31.5, "maximo", "dia 4");
-//        ds.addValue(35.7, "maximo", "dia 5");
-//        ds.addValue(42.5, "minimo", "dia 6");
-//        try {
-//            GeradorDeGraficosLinha gerar= new GeradorDeGraficosLinha();
-//            gerar.setDs(ds);
-//            gerar.setTitulox("titulox");
-//            gerar.setTituloy("tituloy");
-//            gerar.setTitulografico("titulografico");
-//            gerar.setTituloplotagem("plotagemtitulo");
-//            gerar.setTamanhografix(719);
-//            gerar.setTamanhografiy(405);
-//            
-//            graficolabel.setIcon(gerar.plotagem(gerar));
-//        } catch (IOException ex) {
-//            Logger.getLogger(esse.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        
+
         graficolabel.setIcon(new javax.swing.ImageIcon((diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "gif.gif")));
 
 
@@ -1983,6 +1968,23 @@ public class Config extends javax.swing.JFrame {
     }//GEN-LAST:event_jSenhaActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        jCod.setEnabled(false);
+        jSenha.setEnabled(false);
+        jConSenha.setEnabled(false);
+        jNome.setEnabled(false);
+        jCPF.setEnabled(false);
+        jEmail.setEnabled(false);
+        jTelCo.setEnabled(false);
+        jTelMo.setEnabled(false);
+        jTelRe.setEnabled(false);
+        jCidade.setEnabled(false);
+        jComboEstado.setEnabled(false);
+        jNumero.setEnabled(false);
+        jBairro.setEnabled(false);
+        jComplemento.setEnabled(false);
+        jLogradouro.setEnabled(false);
+        jRadioAdministrador.setEnabled(false);
+        buttonSalvar.setEnabled(false);
         buttonNovo.setEnabled(false);
         buttonExcluir.setEnabled(true);
         buttonCalcelar.setEnabled(true);
@@ -2040,7 +2042,7 @@ public class Config extends javax.swing.JFrame {
                 atualizarTabela();
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
+           
         }
 
 
@@ -2091,105 +2093,269 @@ public class Config extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboPeriodoActionPerformed
 
-    private void buttonEditar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditar1ActionPerformed
-        //testando pesquisa pra por no grafico  
-        new Thread() {
-            @Override
-            public void run() {
-                jProgressBar1.setVisible(true);
-                jProgressBar1.setEnabled(true);
-                System.out.println("Aguarde Gerando Gráfico...");                
-                graficolabel.setIcon(new javax.swing.ImageIcon(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "gif.gif"));               
-                //graficolabel.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-                jStatusLabel.setText(" Aguarde, gerando gráfico ...");
-            }
+    private void jNovoGraficoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jNovoGraficoActionPerformed
+        jcancelar.setEnabled(true);
+        jDateInicio.setEnabled(true);
+        jDateFim.setEnabled(true);
+        jComboTipo.setEnabled(true);
+        jComboFiltro.setEnabled(true);
+        jComboPeriodo.setEnabled(true);
+        jNovoGrafico.setEnabled(false);
+        jGerar.setEnabled(true);
+    }//GEN-LAST:event_jNovoGraficoActionPerformed
 
-        }.start();
-        new Thread() {
-            @Override
-            public void run() {
-                String data = "dd/MM/yyyy";
-                String hora = "HH";
-                String minuto = "mm";
-                String segundo = "ss";
-                String data1, hora1, minuto1, segundo1;
-                SimpleDateFormat horaFormat = new SimpleDateFormat(hora);
-                SimpleDateFormat minutoFormat = new SimpleDateFormat(minuto);
-                SimpleDateFormat segundoFormat = new SimpleDateFormat(segundo);
-                SimpleDateFormat formata1 = new SimpleDateFormat(data);
-                DefaultCategoryDataset ds = new DefaultCategoryDataset();
-                try {
-                    GraficoDAO grafic = new GraficoDAO();
-                    ResultSet rs;
-                    rs = grafic.retriveAtendenteTempo(jDateInicio.getDate(), jDateFim.getDate());
-                    if (rs.next()) {
-                        do {
-                            String funcionario = rs.getString("nome");
-                            data_media = rs.getTimestamp("media");
-                            hora1 = horaFormat.format(data_media);
-                            minuto1 = minutoFormat.format(data_media);
-                            segundo1 = segundoFormat.format(data_media);
-                            double horasD = Integer.parseInt(hora1);
-                            double minutosD = Integer.parseInt(minuto1);
-                            double segundosD = Integer.parseInt(segundo1);
-                            double minutosTrabalhado = (horasD * 60) + minutosD + (segundosD / 60);
-                            System.out.println(minutosTrabalhado);
-                            ds.addValue(minutosTrabalhado, minutosTrabalhado + " (min)", funcionario);
-                        } while (rs.next());
+    private void jGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jGerarActionPerformed
+        //testando pesquisa pra por no grafico  
+
+        jProgressBar1.setValue(0);
+        if ((jComboTipo.getSelectedItem().equals("Tempo de Atendimento")) && (jComboFiltro.getSelectedItem().equals("Atendente"))) {
+            new Thread() {
+                @Override
+                public void run() {
+                    jPrint.setEnabled(false);
+                    jProgressBar1.setVisible(true);
+                    jProgressBar1.setEnabled(true);
+                    System.out.println("Aguarde Gerando Gráfico...");
+                    graficolabel.setIcon(new javax.swing.ImageIcon(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "gif.gif"));
+                    //graficolabel.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+                    jStatusLabel.setText(" Aguarde, gerando gráfico ...");
+                    jProgressBar1.setValue(10);
+                }
+
+            }.
+                    start();
+            new Thread() {
+                @Override
+                public void run() {
+                    String data = "dd/MM/yyyy";
+                    String hora = "HH";
+                    String minuto = "mm";
+                    String segundo = "ss";
+                    String data1, hora1, minuto1, segundo1;
+                    SimpleDateFormat horaFormat = new SimpleDateFormat(hora);
+                    SimpleDateFormat minutoFormat = new SimpleDateFormat(minuto);
+                    SimpleDateFormat segundoFormat = new SimpleDateFormat(segundo);
+                    SimpleDateFormat formata1 = new SimpleDateFormat(data);
+                    DefaultCategoryDataset ds = new DefaultCategoryDataset();
+                    jProgressBar1.setValue(20);
+                    try {
+                        GraficoDAO grafic = new GraficoDAO();
+                        ResultSet rs;
+                        rs = grafic.retriveAtendenteTempo(jDateInicio.getDate(), jDateFim.getDate());
+                        if (rs.next()) {
+                            do {
+                                String funcionario = rs.getString("nome");
+                                data_media = rs.getTimestamp("media");
+                                hora1 = horaFormat.format(data_media);
+                                minuto1 = minutoFormat.format(data_media);
+                                segundo1 = segundoFormat.format(data_media);
+                                double horasD = Integer.parseInt(hora1);
+                                double minutosD = Integer.parseInt(minuto1);
+                                double segundosD = Integer.parseInt(segundo1);
+                                double minutosTrabalhado = (horasD * 60) + minutosD + (segundosD / 60);
+                                minutosTrabalhado = arredondar(minutosTrabalhado, 2, 1);
+                                ds.addValue(minutosTrabalhado, minutosTrabalhado + " (min)", funcionario);
+                                jProgressBar1.setValue(50);
+                            } while (rs.next());
+                        }
+
+                        GeradorDeGraficosBarras gerar = new GeradorDeGraficosBarras();
+                        gerar.setDs(ds);
+                        gerar.setTitulox("Funcionários");
+                        gerar.setTituloy("Tempo Atendimento (minutos)");
+                        gerar.setTitulografico("Tempo de atendimento por Atendente");
+                        gerar.setTituloplotagem(getDateFormat());
+                        gerar.setTamanhografix(700);
+                        gerar.setTamanhografiy(305);
+                        jProgressBar1.setValue(80);
+                        gerar.plotagem(gerar);
+                        jProgressBar1.setValue(100);
+                        graficolabel.setIcon(gerar.plotagem(gerar));
+                        jStatusLabel.setText("");
+                        jProgressBar1.setVisible(false);
+
+                    } catch (SQLException ex) {
+                        System.out.println("erro");
+                    } catch (IOException ex) {
+                        System.out.println("erro");
+                    }
+                    jPrint.setEnabled(true);
+                }
+
+            }.start();
+        } else {
+            if ((jComboTipo.getSelectedItem().equals("Tempo de Atendimento")) && (jComboFiltro.getSelectedItem().equals("Caixa"))) {
+                new Thread() {
+                    @Override
+                    public void run() {
+                        jPrint.setEnabled(false);
+                        jProgressBar1.setVisible(true);
+                        jProgressBar1.setEnabled(true);
+                        System.out.println("Aguarde Gerando Gráfico...");
+                        graficolabel.setIcon(new javax.swing.ImageIcon(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "gif.gif"));
+                        //graficolabel.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+                        jStatusLabel.setText(" Aguarde, gerando gráfico ...");
+                        jProgressBar1.setValue(10);
                     }
 
-                    GeradorDeGraficosBarras gerar = new GeradorDeGraficosBarras();
-                    gerar.setDs(ds);
-                    gerar.setTitulox("Funcionários");
-                    gerar.setTituloy("Tempo Atendimento (minutos)");
-                    gerar.setTitulografico("Tempo de atendimento por Atendente");
-                    gerar.setTituloplotagem("plotagemtitulo");
-                    gerar.setTamanhografix(700);
-                    gerar.setTamanhografiy(305);
-                    gerar.plotagem(gerar);
-//                    graficolabel.setIcon(gerar.plotagem(gerar));
-                } catch (SQLException ex) {
-                    System.out.println("erro");
-                } catch (IOException ex) {
-                    Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
+                }.
+                        start();
+                new Thread() {
+                    @Override
+                    public void run() {
+                        String data = "dd/MM/yyyy";
+                        String hora = "HH";
+                        String minuto = "mm";
+                        String segundo = "ss";
+                        String data1, hora1, minuto1, segundo1;
+                        SimpleDateFormat horaFormat = new SimpleDateFormat(hora);
+                        SimpleDateFormat minutoFormat = new SimpleDateFormat(minuto);
+                        SimpleDateFormat segundoFormat = new SimpleDateFormat(segundo);
+                        SimpleDateFormat formata1 = new SimpleDateFormat(data);
+                        DefaultCategoryDataset ds = new DefaultCategoryDataset();
+                        jProgressBar1.setValue(20);
+                        try {
+                            GraficoDAO grafic = new GraficoDAO();
+                            ResultSet rs;
+                            rs = grafic.retriveCaixaTempo(jDateInicio.getDate(), jDateFim.getDate());
+                            if (rs.next()) {
+                                do {
+                                    String caixa = rs.getString("caixa");
+                                    data_media = rs.getTimestamp("media");
+                                    hora1 = horaFormat.format(data_media);
+                                    minuto1 = minutoFormat.format(data_media);
+                                    segundo1 = segundoFormat.format(data_media);
+                                    double horasD = Integer.parseInt(hora1);
+                                    double minutosD = Integer.parseInt(minuto1);
+                                    double segundosD = Integer.parseInt(segundo1);
+                                    double minutosTrabalhado = (horasD * 60) + minutosD + (segundosD / 60);
+                                    minutosTrabalhado = arredondar(minutosTrabalhado, 2, 1);
+                                    ds.addValue(minutosTrabalhado, minutosTrabalhado + " (min)", caixa);
+                                    jProgressBar1.setValue(50);
+                                } while (rs.next());
+                            }
+
+                            GeradorDeGraficosBarras gerar = new GeradorDeGraficosBarras();
+                            gerar.setDs(ds);
+                            gerar.setTitulox("Caixas");
+                            gerar.setTituloy("Tempo Atendimento (minutos)");
+                            gerar.setTitulografico("Tempo de atendimento por Caixa");
+                            gerar.setTituloplotagem(getDateFormat());
+                            gerar.setTamanhografix(700);
+                            gerar.setTamanhografiy(305);
+                            jProgressBar1.setValue(80);
+                            gerar.plotagem(gerar);
+                            jProgressBar1.setValue(100);
+                            graficolabel.setIcon(gerar.plotagem(gerar));
+                            jStatusLabel.setText("");
+                            jProgressBar1.setVisible(false);
+
+                        } catch (SQLException ex) {
+                           // System.out.println("erro000000");
+                        } catch (IOException ex) {
+                           // System.out.println("erro12");
+                        }
+                        jPrint.setEnabled(true);
+                    }
+
+                }.start();
+            } else {
+                if ((jComboTipo.getSelectedItem().equals("Tempo de Atendimento")) && (jComboFiltro.getSelectedItem().equals("Tipo de Ficha"))) {
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            jPrint.setEnabled(false);
+                            jProgressBar1.setVisible(true);
+                            jProgressBar1.setEnabled(true);
+                            System.out.println("Aguarde Gerando Gráfico...");
+                            graficolabel.setIcon(new javax.swing.ImageIcon(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "gif.gif"));
+                            //graficolabel.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+                            jStatusLabel.setText(" Aguarde, gerando gráfico ...");
+                            jProgressBar1.setValue(10);
+                        }
+
+                    }.
+                            start();
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            String data = "dd/MM/yyyy";
+                            String hora = "HH";
+                            String minuto = "mm";
+                            String segundo = "ss";
+                            String data1, hora1, minuto1, segundo1;
+                            SimpleDateFormat horaFormat = new SimpleDateFormat(hora);
+                            SimpleDateFormat minutoFormat = new SimpleDateFormat(minuto);
+                            SimpleDateFormat segundoFormat = new SimpleDateFormat(segundo);
+                            SimpleDateFormat formata1 = new SimpleDateFormat(data);
+                            DefaultCategoryDataset ds = new DefaultCategoryDataset();
+                            jProgressBar1.setValue(20);
+                            try {
+                                GraficoDAO grafic = new GraficoDAO();
+                                ResultSet rs;
+                                rs = grafic.retriveTipoTempo(jDateInicio.getDate(), jDateFim.getDate());
+                                if (rs.next()) {
+                                    do {
+                                        String funcionario = rs.getString("tipo");
+                                        data_media = rs.getTimestamp("media");
+                                        hora1 = horaFormat.format(data_media);
+                                        minuto1 = minutoFormat.format(data_media);
+                                        segundo1 = segundoFormat.format(data_media);
+                                        double horasD = Integer.parseInt(hora1);
+                                        double minutosD = Integer.parseInt(minuto1);
+                                        double segundosD = Integer.parseInt(segundo1);
+                                        double minutosTrabalhado = (horasD * 60) + minutosD + (segundosD / 60);
+                                        minutosTrabalhado = arredondar(minutosTrabalhado, 2, 1);
+                                        ds.addValue(minutosTrabalhado, minutosTrabalhado + " (min)", funcionario);
+                                        jProgressBar1.setValue(50);
+                                    } while (rs.next());
+                                }
+
+                                GeradorDeGraficosBarras gerar = new GeradorDeGraficosBarras();
+                                gerar.setDs(ds);
+                                gerar.setTitulox("Tipo de Ficha");
+                                gerar.setTituloy("Tempo Atendimento (minutos)");
+                                gerar.setTitulografico("Tempo de atendimento por Tipo de Ficha");
+                                gerar.setTituloplotagem(getDateFormat());
+                                gerar.setTamanhografix(700);
+                                gerar.setTamanhografiy(305);
+                                jProgressBar1.setValue(80);
+                                gerar.plotagem(gerar);
+                                jProgressBar1.setValue(100);
+                                graficolabel.setIcon(gerar.plotagem(gerar));
+                                jStatusLabel.setText("");
+                                jProgressBar1.setVisible(false);
+
+                            } catch (SQLException ex) {
+                               // System.out.println("erro");
+                            } catch (IOException ex) {
+                               // System.out.println("erro");
+                            }
+                            jPrint.setEnabled(true);
+                        }
+
+                    }.start();
                 }
-
             }
+        }
+    }//GEN-LAST:event_jGerarActionPerformed
 
-        }.start();
-
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    Thread.currentThread().sleep(5000);
-                    jStatusLabel.setText("");
-                    jProgressBar1.setVisible(false);
-                    graficolabel.setIcon(new javax.swing.ImageIcon(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "plotagemtitulo" + ".png")); 
-//                    imagemGrafic = new javax.swing.ImageIcon((diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "plotagemtitulo" + ".png"));
-//                    graficolabel.setIcon(imagemGrafic);
-                    // graficolabel.setIcon(new javax.swing.ImageIcon((diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "plotagemtitulo" + ".png")));
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (Throwable ex) {
-                    Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }.start();
-    }//GEN-LAST:event_buttonEditar1ActionPerformed
-
-    private void buttonEditar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditar2ActionPerformed
-        imagemGrafic = new javax.swing.ImageIcon((diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "plotagemtitulo" + ".png"));
-        graficolabel.setIcon(imagemGrafic);
-    }//GEN-LAST:event_buttonEditar2ActionPerformed
-
-    private void buttonEditar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditar3ActionPerformed
+    private void jPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPrintActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_buttonEditar3ActionPerformed
+    }//GEN-LAST:event_jPrintActionPerformed
 
-    private void buttonEditar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditar4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_buttonEditar4ActionPerformed
+    private void jcancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcancelarActionPerformed
+        graficolabel.setIcon(new javax.swing.ImageIcon(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "gif.gif"));
+        jPrint.setEnabled(false);
+        jcancelar.setEnabled(false);
+        jDateInicio.setEnabled(false);
+        jDateFim.setEnabled(false);
+        jComboTipo.setEnabled(false);
+        jComboFiltro.setEnabled(false);
+        jComboPeriodo.setEnabled(false);
+        jNovoGrafico.setEnabled(true);
+        jGerar.setEnabled(false);
+    }//GEN-LAST:event_jcancelarActionPerformed
     public void LimparTela() {
         jBairro.setText(null);
         jCPF.setText(null);
@@ -2331,6 +2497,18 @@ public class Config extends javax.swing.JFrame {
         }
     }
 
+    double arredondar(double valor, int casas, int ceilOrFloor) {
+        double arredondado = valor;
+        arredondado *= (Math.pow(10, casas));
+        if (ceilOrFloor == 0) {
+            arredondado = Math.ceil(arredondado);
+        } else {
+            arredondado = Math.floor(arredondado);
+        }
+        arredondado /= (Math.pow(10, casas));
+        return arredondado;
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -2377,14 +2555,10 @@ public class Config extends javax.swing.JFrame {
     private javax.swing.JButton ButtonSalvar;
     private javax.swing.JButton buttonCalcelar;
     private javax.swing.JButton buttonEditar;
-    private javax.swing.JButton buttonEditar1;
-    private javax.swing.JButton buttonEditar2;
-    private javax.swing.JButton buttonEditar3;
-    private javax.swing.JButton buttonEditar4;
     private javax.swing.JButton buttonExcluir;
     private javax.swing.JButton buttonNovo;
     private javax.swing.JButton buttonSalvar;
-    private javax.swing.JLabel graficolabel;
+    public javax.swing.JLabel graficolabel;
     private javax.swing.JTextField jBairro;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -2393,15 +2567,16 @@ public class Config extends javax.swing.JFrame {
     private javax.swing.JTextField jCidade;
     private javax.swing.JTextField jCod;
     private javax.swing.JComboBox jComboEstado;
-    private javax.swing.JComboBox jComboFiltro;
-    private javax.swing.JComboBox jComboPeriodo;
+    public javax.swing.JComboBox jComboFiltro;
+    public javax.swing.JComboBox jComboPeriodo;
     private javax.swing.JComboBox jComboPesquisar;
-    private javax.swing.JComboBox jComboTipo;
+    public javax.swing.JComboBox jComboTipo;
     private javax.swing.JTextField jComplemento;
     private javax.swing.JTextField jConSenha;
-    private com.toedter.calendar.JDateChooser jDateFim;
-    private com.toedter.calendar.JDateChooser jDateInicio;
+    public com.toedter.calendar.JDateChooser jDateFim;
+    public com.toedter.calendar.JDateChooser jDateInicio;
     private javax.swing.JTextField jEmail;
+    public javax.swing.JButton jGerar;
     private javax.swing.JTextField jIPconexao;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
@@ -2426,6 +2601,7 @@ public class Config extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel41;
     private javax.swing.JTextField jLogradouro;
     private javax.swing.JTextField jNome;
+    public javax.swing.JButton jNovoGrafico;
     private javax.swing.JTextField jNumero;
     public javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -2441,6 +2617,7 @@ public class Config extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     public javax.swing.JTabbedPane jPanes;
     private javax.swing.JTextField jPesquisar;
+    public javax.swing.JButton jPrint;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JRadioButton jRadioAdministrador;
     private javax.swing.JScrollPane jScrollPane1;
@@ -2453,6 +2630,7 @@ public class Config extends javax.swing.JFrame {
     private javax.swing.JTextField jTelCo;
     private javax.swing.JTextField jTelMo;
     private javax.swing.JTextField jTelRe;
+    public javax.swing.JButton jcancelar;
     private javax.swing.JTextField statuslabel;
     // End of variables declaration//GEN-END:variables
 }

@@ -507,10 +507,20 @@ public class Cliente extends javax.swing.JFrame {
                     admin = rs.getBoolean("administrador");
                 } while (rs.next());
                 if (admin) {
-                    
+                    config.jPrint.setEnabled(false);
+                    config.jDateInicio.setEnabled(false);
+                    config.jDateFim.setEnabled(false);
+                    config.jComboTipo.setEnabled(false);
+                    config.jComboFiltro.setEnabled(false);
+                    config.jComboPeriodo.setEnabled(false);
+                    config.jNovoGrafico.setEnabled(true);
+                    config.jGerar.setEnabled(false);
+                    config.jcancelar.setEnabled(false);
                     config.setVisible(true);
                     config.jPanes.setSelectedIndex(0);
                     config.setLocationRelativeTo(null);
+                    config.graficolabel.setIcon(new javax.swing.ImageIcon(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "gif.gif"));
+
 //                    setVisible(false);
                 } else {
                     JOptionPane.showMessageDialog(null, "VOCÊ NAO POSSUI PERMISSÃO DE ACESSO!", "Inove Systems - Informação", JOptionPane.ERROR_MESSAGE);
@@ -1073,9 +1083,11 @@ public class Cliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel16MouseClicked
 
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
+
         FuncionarioBean funcionario = new FuncionarioBean();
         funcionario.setCodigo(codigo);
         Pesquisar(funcionario);
+
     }//GEN-LAST:event_jLabel14MouseClicked
 
 
