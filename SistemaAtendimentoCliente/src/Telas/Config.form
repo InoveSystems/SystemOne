@@ -1251,17 +1251,13 @@
                       <Font name="Arial" size="14" style="0"/>
                     </Property>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="7">
+                      <StringArray count="4">
                         <StringItem index="0" value="Horario"/>
                         <StringItem index="1" value="Manh&#xe3;"/>
                         <StringItem index="2" value="Tarde"/>
                         <StringItem index="3" value="Noite"/>
-                        <StringItem index="4" value="Dia"/>
-                        <StringItem index="5" value="M&#xea;s"/>
-                        <StringItem index="6" value="Ano"/>
                       </StringArray>
                     </Property>
-                    <Property name="selectedIndex" type="int" value="1"/>
                     <Property name="toolTipText" type="java.lang.String" value=""/>
                     <Property name="enabled" type="boolean" value="false"/>
                   </Properties>

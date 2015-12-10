@@ -88,23 +88,72 @@ public class GraficoDAO {
     public ResultSet retriveAtendenteTempo(java.util.Date inicio, java.util.Date fim) throws SQLException {
         Statement stm = this.conexao.createStatement();
         ResultSet rs;
-        String sql = "SELECT funcionarios.nome as nome, AVG(fichas.tempo_atendimento::time) as media FROM fichas INNER JOIN funcionarios ON fichas.cod_func = funcionarios.cod  WHERE (fichas.tempo_atendimento::date) >='"+inicio+"' AND (fichas.tempo_atendimento::date) <='" +fim+ "'group by funcionarios.nome";
+        String sql = "SELECT funcionarios.nome as nome, AVG(fichas.tempo_atendimento::time) as media FROM fichas INNER JOIN funcionarios ON fichas.cod_func = funcionarios.cod  WHERE (fichas.tempo_atendimento::date) >='" + inicio + "' AND (fichas.tempo_atendimento::date) <='" + fim + "'group by funcionarios.nome";
         rs = stm.executeQuery(sql);
         return rs;
     }
-    
+
     public ResultSet retriveCaixaTempo(java.util.Date inicio, java.util.Date fim) throws SQLException {
         Statement stm = this.conexao.createStatement();
         ResultSet rs;
-        String sql = "SELECT fichas.caixa as caixa, AVG(fichas.tempo_atendimento::time) as media FROM fichas WHERE ((fichas.tempo_atendimento::date) >='"+inicio+"' AND (fichas.tempo_atendimento::date) <='" +fim+ "') AND caixa<>''group by fichas.caixa";
+        String sql = "SELECT fichas.caixa as caixa, AVG(fichas.tempo_atendimento::time) as media FROM fichas WHERE ((fichas.tempo_atendimento::date) >='" + inicio + "' AND (fichas.tempo_atendimento::date) <='" + fim + "') AND caixa<>''group by fichas.caixa";
+        rs = stm.executeQuery(sql);
+        return rs;
+    }
+
+    public ResultSet retriveTipoTempo(java.util.Date inicio, java.util.Date fim) throws SQLException {
+        Statement stm = this.conexao.createStatement();
+        ResultSet rs;
+        String sql = "SELECT fichas.tipo as tipo, AVG(fichas.tempo_atendimento::time) as media FROM fichas WHERE (fichas.tempo_atendimento::date) >='" + inicio + "' AND (fichas.tempo_atendimento::date) <='" + fim + "' group by fichas.tipo";
+        rs = stm.executeQuery(sql);
+        return rs;
+    }
+
+    public ResultSet retriveAtendenteTempoEspera(java.util.Date inicio, java.util.Date fim) throws SQLException {
+        Statement stm = this.conexao.createStatement();
+        ResultSet rs;
+        String sql = "SELECT funcionarios.nome as nome, AVG(fichas.tempo_espera::time) as media FROM fichas INNER JOIN funcionarios ON fichas.cod_func = funcionarios.cod  WHERE (fichas.tempo_espera::date) >='" + inicio + "' AND (fichas.tempo_espera::date) <='" + fim + "'group by funcionarios.nome";
+        rs = stm.executeQuery(sql);
+        return rs;
+    }
+
+    public ResultSet retriveCaixaTempoEspera(java.util.Date inicio, java.util.Date fim) throws SQLException {
+        Statement stm = this.conexao.createStatement();
+        ResultSet rs;
+        String sql = "SELECT fichas.caixa as caixa, AVG(fichas.tempo_tempo_espera::time) as media FROM fichas WHERE ((fichas.tempo_espera::date) >='" + inicio + "' AND (fichas.tempo_espera::date) <='" + fim + "') AND caixa<>''group by fichas.caixa";
+        rs = stm.executeQuery(sql);
+        return rs;
+    }
+
+    public ResultSet retriveTipoTempoEspera(java.util.Date inicio, java.util.Date fim) throws SQLException {
+        Statement stm = this.conexao.createStatement();
+        ResultSet rs;
+        String sql = "SELECT fichas.tipo as tipo, AVG(fichas.tempo_espera::time) as media FROM fichas WHERE (fichas.tempo_espera::date) >='" + inicio + "' AND (fichas.tempo_espera::date) <='" + fim + "' group by fichas.tipo";
         rs = stm.executeQuery(sql);
         return rs;
     }
     
-    public ResultSet retriveTipoTempo(java.util.Date inicio, java.util.Date fim) throws SQLException {
+    public ResultSet retriveTipoQuantidade(java.util.Date inicio, java.util.Date fim) throws SQLException {
         Statement stm = this.conexao.createStatement();
         ResultSet rs;
-        String sql = "SELECT fichas.tipo as tipo, AVG(fichas.tempo_atendimento::time) as media FROM fichas WHERE (fichas.tempo_atendimento::date) >='"+inicio+"' AND (fichas.tempo_atendimento::date) <='" +fim+ "' group by fichas.tipo";
+        String sql = "SELECT fichas.tipo as tipo, AVG(fichas.tempo_espera::time) as media FROM fichas WHERE (fichas.tempo_espera::date) >='" + inicio + "' AND (fichas.tempo_espera::date) <='" + fim + "' group by fichas.tipo";
+        rs = stm.executeQuery(sql);
+        return rs;
+    }
+    
+    public ResultSet retriveCaixaQuantidade(java.util.Date inicio, java.util.Date fim) throws SQLException {
+        Statement stm = this.conexao.createStatement();
+        ResultSet rs;
+        String sql = "SELECT fichas.tipo as tipo, AVG(fichas.tempo_espera::time) as media FROM fichas WHERE (fichas.tempo_espera::date) >='" + inicio + "' AND (fichas.tempo_espera::date) <='" + fim + "' group by fichas.tipo";
+        rs = stm.executeQuery(sql);
+        return rs;
+    }
+    
+    
+     public ResultSet retriveAtendenteQuantidade(java.util.Date inicio, java.util.Date fim) throws SQLException {
+        Statement stm = this.conexao.createStatement();
+        ResultSet rs;
+        String sql = "SELECT fichas.tipo as tipo, AVG(fichas.tempo_espera::time) as media FROM fichas WHERE (fichas.tempo_espera::date) >='" + inicio + "' AND (fichas.tempo_espera::date) <='" + fim + "' group by fichas.tipo";
         rs = stm.executeQuery(sql);
         return rs;
     }

@@ -1119,8 +1119,7 @@ public class Config extends javax.swing.JFrame {
         jDateFim.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jComboPeriodo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jComboPeriodo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Horario", "Manhã", "Tarde", "Noite", "Dia", "Mês", "Ano" }));
-        jComboPeriodo.setSelectedIndex(1);
+        jComboPeriodo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Horario", "Manhã", "Tarde", "Noite" }));
         jComboPeriodo.setToolTipText("");
         jComboPeriodo.setEnabled(false);
         jComboPeriodo.addActionListener(new java.awt.event.ActionListener() {
@@ -2042,7 +2041,7 @@ public class Config extends javax.swing.JFrame {
                 atualizarTabela();
             }
         } catch (SQLException ex) {
-           
+
         }
 
 
@@ -2251,9 +2250,9 @@ public class Config extends javax.swing.JFrame {
                             jProgressBar1.setVisible(false);
 
                         } catch (SQLException ex) {
-                           // System.out.println("erro000000");
+                            // System.out.println("erro000000");
                         } catch (IOException ex) {
-                           // System.out.println("erro12");
+                            // System.out.println("erro12");
                         }
                         jPrint.setEnabled(true);
                     }
@@ -2327,14 +2326,245 @@ public class Config extends javax.swing.JFrame {
                                 jProgressBar1.setVisible(false);
 
                             } catch (SQLException ex) {
-                               // System.out.println("erro");
+                                // System.out.println("erro");
                             } catch (IOException ex) {
-                               // System.out.println("erro");
+                                // System.out.println("erro");
                             }
                             jPrint.setEnabled(true);
                         }
 
                     }.start();
+                } else {
+                    if ((jComboTipo.getSelectedItem().equals("Tempo de Espera")) && (jComboFiltro.getSelectedItem().equals("Atendente"))) {
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                jPrint.setEnabled(false);
+                                jProgressBar1.setVisible(true);
+                                jProgressBar1.setEnabled(true);
+                                System.out.println("Aguarde Gerando Gráfico...");
+                                graficolabel.setIcon(new javax.swing.ImageIcon(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "gif.gif"));
+                                //graficolabel.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+                                jStatusLabel.setText(" Aguarde, gerando gráfico ...");
+                                jProgressBar1.setValue(10);
+                            }
+
+                        }.
+                                start();
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                String data = "dd/MM/yyyy";
+                                String hora = "HH";
+                                String minuto = "mm";
+                                String segundo = "ss";
+                                String data1, hora1, minuto1, segundo1;
+                                SimpleDateFormat horaFormat = new SimpleDateFormat(hora);
+                                SimpleDateFormat minutoFormat = new SimpleDateFormat(minuto);
+                                SimpleDateFormat segundoFormat = new SimpleDateFormat(segundo);
+                                SimpleDateFormat formata1 = new SimpleDateFormat(data);
+                                DefaultCategoryDataset ds = new DefaultCategoryDataset();
+                                jProgressBar1.setValue(20);
+                                try {
+                                    GraficoDAO grafic = new GraficoDAO();
+                                    ResultSet rs;
+                                    rs = grafic.retriveAtendenteTempoEspera(jDateInicio.getDate(), jDateFim.getDate());
+                                    if (rs.next()) {
+                                        do {
+                                            String funcionario = rs.getString("nome");
+                                            data_media = rs.getTimestamp("media");
+                                            hora1 = horaFormat.format(data_media);
+                                            minuto1 = minutoFormat.format(data_media);
+                                            segundo1 = segundoFormat.format(data_media);
+                                            double horasD = Integer.parseInt(hora1);
+                                            double minutosD = Integer.parseInt(minuto1);
+                                            double segundosD = Integer.parseInt(segundo1);
+                                            double minutosTrabalhado = (horasD * 60) + minutosD + (segundosD / 60);
+                                            minutosTrabalhado = arredondar(minutosTrabalhado, 2, 1);
+                                            ds.addValue(minutosTrabalhado, minutosTrabalhado + " (min)", funcionario);
+                                            jProgressBar1.setValue(50);
+                                        } while (rs.next());
+                                    }
+
+                                    GeradorDeGraficosBarras gerar = new GeradorDeGraficosBarras();
+                                    gerar.setDs(ds);
+                                    gerar.setTitulox("Funcionários");
+                                    gerar.setTituloy("Tempo de Espera (minutos)");
+                                    gerar.setTitulografico("Tempo de Espera por Atendente");
+                                    gerar.setTituloplotagem(getDateFormat());
+                                    gerar.setTamanhografix(700);
+                                    gerar.setTamanhografiy(305);
+                                    jProgressBar1.setValue(80);
+                                    gerar.plotagem(gerar);
+                                    jProgressBar1.setValue(100);
+                                    graficolabel.setIcon(gerar.plotagem(gerar));
+                                    jStatusLabel.setText("");
+                                    jProgressBar1.setVisible(false);
+
+                                } catch (SQLException ex) {
+                                    System.out.println("erro");
+                                } catch (IOException ex) {
+                                    System.out.println("erro");
+                                }
+                                jPrint.setEnabled(true);
+                            }
+
+                        }.start();
+                    } else {
+                        if ((jComboTipo.getSelectedItem().equals("Tempo de Espera")) && (jComboFiltro.getSelectedItem().equals("Caixa"))) {
+                            new Thread() {
+                                @Override
+                                public void run() {
+                                    jPrint.setEnabled(false);
+                                    jProgressBar1.setVisible(true);
+                                    jProgressBar1.setEnabled(true);
+                                    System.out.println("Aguarde Gerando Gráfico...");
+                                    graficolabel.setIcon(new javax.swing.ImageIcon(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "gif.gif"));
+                                    //graficolabel.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+                                    jStatusLabel.setText(" Aguarde, gerando gráfico ...");
+                                    jProgressBar1.setValue(10);
+                                }
+
+                            }.
+                                    start();
+                            new Thread() {
+                                @Override
+                                public void run() {
+                                    String data = "dd/MM/yyyy";
+                                    String hora = "HH";
+                                    String minuto = "mm";
+                                    String segundo = "ss";
+                                    String data1, hora1, minuto1, segundo1;
+                                    SimpleDateFormat horaFormat = new SimpleDateFormat(hora);
+                                    SimpleDateFormat minutoFormat = new SimpleDateFormat(minuto);
+                                    SimpleDateFormat segundoFormat = new SimpleDateFormat(segundo);
+                                    SimpleDateFormat formata1 = new SimpleDateFormat(data);
+                                    DefaultCategoryDataset ds = new DefaultCategoryDataset();
+                                    jProgressBar1.setValue(20);
+                                    try {
+                                        GraficoDAO grafic = new GraficoDAO();
+                                        ResultSet rs;
+                                        rs = grafic.retriveCaixaTempo(jDateInicio.getDate(), jDateFim.getDate());
+                                        if (rs.next()) {
+                                            do {
+                                                String caixa = rs.getString("caixa");
+                                                data_media = rs.getTimestamp("media");
+                                                hora1 = horaFormat.format(data_media);
+                                                minuto1 = minutoFormat.format(data_media);
+                                                segundo1 = segundoFormat.format(data_media);
+                                                double horasD = Integer.parseInt(hora1);
+                                                double minutosD = Integer.parseInt(minuto1);
+                                                double segundosD = Integer.parseInt(segundo1);
+                                                double minutosTrabalhado = (horasD * 60) + minutosD + (segundosD / 60);
+                                                minutosTrabalhado = arredondar(minutosTrabalhado, 2, 1);
+                                                ds.addValue(minutosTrabalhado, minutosTrabalhado + " (min)", caixa);
+                                                jProgressBar1.setValue(50);
+                                            } while (rs.next());
+                                        }
+
+                                        GeradorDeGraficosBarras gerar = new GeradorDeGraficosBarras();
+                                        gerar.setDs(ds);
+                                        gerar.setTitulox("Caixas");
+                                        gerar.setTituloy("Tempo de Espera (minutos)");
+                                        gerar.setTitulografico("Tempo de Espera por Caixa");
+                                        gerar.setTituloplotagem(getDateFormat());
+                                        gerar.setTamanhografix(700);
+                                        gerar.setTamanhografiy(305);
+                                        jProgressBar1.setValue(80);
+                                        gerar.plotagem(gerar);
+                                        jProgressBar1.setValue(100);
+                                        graficolabel.setIcon(gerar.plotagem(gerar));
+                                        jStatusLabel.setText("");
+                                        jProgressBar1.setVisible(false);
+
+                                    } catch (SQLException ex) {
+                                        // System.out.println("erro000000");
+                                    } catch (IOException ex) {
+                                        // System.out.println("erro12");
+                                    }
+                                    jPrint.setEnabled(true);
+                                }
+
+                            }.start();
+                        } else {
+                            if ((jComboTipo.getSelectedItem().equals("Tempo de Espera")) && (jComboFiltro.getSelectedItem().equals("Tipo de Ficha"))) {
+                                new Thread() {
+                                    @Override
+                                    public void run() {
+                                        jPrint.setEnabled(false);
+                                        jProgressBar1.setVisible(true);
+                                        jProgressBar1.setEnabled(true);
+                                        System.out.println("Aguarde Gerando Gráfico...");
+                                        graficolabel.setIcon(new javax.swing.ImageIcon(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "gif.gif"));
+                                        //graficolabel.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+                                        jStatusLabel.setText(" Aguarde, gerando gráfico ...");
+                                        jProgressBar1.setValue(10);
+                                    }
+
+                                }.
+                                        start();
+                                new Thread() {
+                                    @Override
+                                    public void run() {
+                                        String data = "dd/MM/yyyy";
+                                        String hora = "HH";
+                                        String minuto = "mm";
+                                        String segundo = "ss";
+                                        String data1, hora1, minuto1, segundo1;
+                                        SimpleDateFormat horaFormat = new SimpleDateFormat(hora);
+                                        SimpleDateFormat minutoFormat = new SimpleDateFormat(minuto);
+                                        SimpleDateFormat segundoFormat = new SimpleDateFormat(segundo);
+                                        SimpleDateFormat formata1 = new SimpleDateFormat(data);
+                                        DefaultCategoryDataset ds = new DefaultCategoryDataset();
+                                        jProgressBar1.setValue(20);
+                                        try {
+                                            GraficoDAO grafic = new GraficoDAO();
+                                            ResultSet rs;
+                                            rs = grafic.retriveTipoTempoEspera(jDateInicio.getDate(), jDateFim.getDate());
+                                            if (rs.next()) {
+                                                do {
+                                                    String funcionario = rs.getString("tipo");
+                                                    data_media = rs.getTimestamp("media");
+                                                    hora1 = horaFormat.format(data_media);
+                                                    minuto1 = minutoFormat.format(data_media);
+                                                    segundo1 = segundoFormat.format(data_media);
+                                                    double horasD = Integer.parseInt(hora1);
+                                                    double minutosD = Integer.parseInt(minuto1);
+                                                    double segundosD = Integer.parseInt(segundo1);
+                                                    double minutosTrabalhado = (horasD * 60) + minutosD + (segundosD / 60);
+                                                    minutosTrabalhado = arredondar(minutosTrabalhado, 2, 1);
+                                                    ds.addValue(minutosTrabalhado, minutosTrabalhado + " (min)", funcionario);
+                                                    jProgressBar1.setValue(50);
+                                                } while (rs.next());
+                                            }
+
+                                            GeradorDeGraficosBarras gerar = new GeradorDeGraficosBarras();
+                                            gerar.setDs(ds);
+                                            gerar.setTitulox("Tipo de Ficha");
+                                            gerar.setTituloy("Tempo de Espera (minutos)");
+                                            gerar.setTitulografico("Tempo de Espera por Tipo de Ficha");
+                                            gerar.setTituloplotagem(getDateFormat());
+                                            gerar.setTamanhografix(700);
+                                            gerar.setTamanhografiy(305);
+                                            jProgressBar1.setValue(80);
+                                            gerar.plotagem(gerar);
+                                            jProgressBar1.setValue(100);
+                                            graficolabel.setIcon(gerar.plotagem(gerar));
+                                            jStatusLabel.setText("");
+                                            jProgressBar1.setVisible(false);
+
+                                        } catch (SQLException ex) {
+                                            // System.out.println("erro");
+                                        } catch (IOException ex) {
+                                            // System.out.println("erro");
+                                        }
+                                        jPrint.setEnabled(true);
+                                    }
+
+                                }.start();
+                            }
+                        }
+                    }
                 }
             }
         }
