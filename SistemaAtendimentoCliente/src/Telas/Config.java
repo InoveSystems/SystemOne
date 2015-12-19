@@ -60,6 +60,7 @@ public class Config extends javax.swing.JFrame {
 
         initComponents();
         jProgressBar1.setVisible(false);
+        jComboPeriodo.setVisible(false);
         //setAlwaysOnTop(true);
         login.setVisible(false);
         login.setEnabled(false);
@@ -2088,10 +2089,6 @@ public class Config extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboFiltroActionPerformed
 
-    private void jComboPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboPeriodoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboPeriodoActionPerformed
-
     private void jNovoGraficoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jNovoGraficoActionPerformed
         jcancelar.setEnabled(true);
         jDateInicio.setEnabled(true);
@@ -2562,6 +2559,199 @@ public class Config extends javax.swing.JFrame {
                                     }
 
                                 }.start();
+                            } else {
+                                if ((jComboTipo.getSelectedItem().equals("Quantidade de Atendimentos")) && (jComboFiltro.getSelectedItem().equals("Atendente"))) {
+                                    new Thread() {
+                                        @Override
+                                        public void run() {
+                                            jPrint.setEnabled(false);
+                                            jProgressBar1.setVisible(true);
+                                            jProgressBar1.setEnabled(true);
+                                            System.out.println("Aguarde Gerando Gráfico...");
+                                            graficolabel.setIcon(new javax.swing.ImageIcon(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "gif.gif"));
+                                            //graficolabel.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+                                            jStatusLabel.setText(" Aguarde, gerando gráfico ...");
+                                            jProgressBar1.setValue(10);
+                                        }
+
+                                    }.
+                                            start();
+                                    new Thread() {
+                                        @Override
+                                        public void run() {
+                                            int quantidade;
+                                            DefaultCategoryDataset ds = new DefaultCategoryDataset();
+                                            jProgressBar1.setValue(20);
+                                            try {
+                                                GraficoDAO grafic = new GraficoDAO();
+                                                ResultSet rs;
+                                                rs = grafic.retriveAtendenteQuantidade(jDateInicio.getDate(), jDateFim.getDate());
+                                                if (rs.next()) {
+                                                    do {
+                                                        String funcionario = rs.getString("nome");
+                                                        quantidade = rs.getInt("total");
+                                                        ds.addValue(quantidade, quantidade + " Atendimento(s)", funcionario);
+                                                        jProgressBar1.setValue(50);
+                                                    } while (rs.next());
+                                                }
+
+                                                GeradorDeGraficosBarras gerar = new GeradorDeGraficosBarras();
+                                                gerar.setDs(ds);
+                                                gerar.setTitulox("Funcionários");
+                                                gerar.setTituloy("Quantidade");
+                                                gerar.setTitulografico("Quantidadede Atendimentos por Atendente");
+                                                gerar.setTituloplotagem(getDateFormat());
+                                                gerar.setTamanhografix(700);
+                                                gerar.setTamanhografiy(305);
+                                                jProgressBar1.setValue(80);
+                                                gerar.plotagem(gerar);
+                                                jProgressBar1.setValue(100);
+                                                graficolabel.setIcon(gerar.plotagem(gerar));
+                                                jStatusLabel.setText("");
+                                                jProgressBar1.setVisible(false);
+
+                                            } catch (SQLException ex) {
+                                                System.out.println("erro");
+                                            } catch (IOException ex) {
+                                                System.out.println("erro");
+                                            }
+                                            jPrint.setEnabled(true);
+                                        }
+
+                                    }.start();
+                                } else {
+                                    if ((jComboTipo.getSelectedItem().equals("Quantidade de Atendimentos")) && (jComboFiltro.getSelectedItem().equals("Caixa"))) {
+                                        new Thread() {
+                                            @Override
+                                            public void run() {
+                                                jPrint.setEnabled(false);
+                                                jProgressBar1.setVisible(true);
+                                                jProgressBar1.setEnabled(true);
+                                                System.out.println("Aguarde Gerando Gráfico...");
+                                                graficolabel.setIcon(new javax.swing.ImageIcon(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "gif.gif"));
+                                                //graficolabel.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+                                                jStatusLabel.setText(" Aguarde, gerando gráfico ...");
+                                                jProgressBar1.setValue(10);
+                                            }
+
+                                        }.
+                                                start();
+                                        new Thread() {
+                                            @Override
+                                            public void run() {
+                                                int quantidade;                                                
+                                                DefaultCategoryDataset ds = new DefaultCategoryDataset();
+                                                jProgressBar1.setValue(20);
+                                                try {
+                                                    GraficoDAO grafic = new GraficoDAO();
+                                                    ResultSet rs;
+                                                    rs = grafic.retriveCaixaQuantidade(jDateInicio.getDate(), jDateFim.getDate());
+                                                    if (rs.next()) {
+                                                        do {
+                                                            String caixa = rs.getString("caixa");
+                                                            quantidade = rs.getInt("total");
+                                                            ds.addValue(quantidade, quantidade + " Atendimento(s)", caixa);
+                                                            jProgressBar1.setValue(50);
+                                                        } while (rs.next());
+                                                    }
+
+                                                    GeradorDeGraficosBarras gerar = new GeradorDeGraficosBarras();
+                                                    gerar.setDs(ds);
+                                                    gerar.setTitulox("Caixas");
+                                                    gerar.setTituloy("Quantidade");
+                                                    gerar.setTitulografico("Quantidade de Atendimentos por Caixa");
+                                                    gerar.setTituloplotagem(getDateFormat());
+                                                    gerar.setTamanhografix(700);
+                                                    gerar.setTamanhografiy(305);
+                                                    jProgressBar1.setValue(80);
+                                                    gerar.plotagem(gerar);
+                                                    jProgressBar1.setValue(100);
+                                                    graficolabel.setIcon(gerar.plotagem(gerar));
+                                                    jStatusLabel.setText("");
+                                                    jProgressBar1.setVisible(false);
+
+                                                } catch (SQLException ex) {
+                                                    System.out.println("erro000000");
+                                                } catch (IOException ex) {
+                                                    System.out.println("erro12");
+                                                }
+                                                jPrint.setEnabled(true);
+                                            }
+
+                                        }.start();
+                                    } else {
+                                        if ((jComboTipo.getSelectedItem().equals("Quantidade de Atendimentos")) && (jComboFiltro.getSelectedItem().equals("Tipo de Ficha"))) {
+                                            new Thread() {
+                                                @Override
+                                                public void run() {
+                                                    jPrint.setEnabled(false);
+                                                    jProgressBar1.setVisible(true);
+                                                    jProgressBar1.setEnabled(true);
+                                                    System.out.println("Aguarde Gerando Gráfico...");
+                                                    graficolabel.setIcon(new javax.swing.ImageIcon(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "gif.gif"));
+                                                    //graficolabel.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+                                                    jStatusLabel.setText(" Aguarde, gerando gráfico ...");
+                                                    jProgressBar1.setValue(10);
+                                                }
+
+                                            }.
+                                                    start();
+                                            new Thread() {
+                                                @Override
+                                                public void run() {
+                                                    int quantidade;
+                                                    String data = "dd/MM/yyyy";
+                                                    String hora = "HH";
+                                                    String minuto = "mm";
+                                                    String segundo = "ss";
+                                                    String data1, hora1, minuto1, segundo1;
+                                                    SimpleDateFormat horaFormat = new SimpleDateFormat(hora);
+                                                    SimpleDateFormat minutoFormat = new SimpleDateFormat(minuto);
+                                                    SimpleDateFormat segundoFormat = new SimpleDateFormat(segundo);
+                                                    SimpleDateFormat formata1 = new SimpleDateFormat(data);
+                                                    DefaultCategoryDataset ds = new DefaultCategoryDataset();
+                                                    jProgressBar1.setValue(20);
+                                                    try {
+                                                        GraficoDAO grafic = new GraficoDAO();
+                                                        ResultSet rs;
+                                                        rs = grafic.retriveTipoQuantidade(jDateInicio.getDate(), jDateFim.getDate());
+                                                        if (rs.next()) {
+                                                            do {
+                                                                String tipo = rs.getString("tipo");
+                                                                quantidade = rs.getInt("total");
+                                                                ds.addValue(quantidade, quantidade + " Atendimento(s)", tipo);
+                                                                jProgressBar1.setValue(50);
+//                                                               
+                                                            } while (rs.next());
+                                                        }
+
+                                                        GeradorDeGraficosBarras gerar = new GeradorDeGraficosBarras();
+                                                        gerar.setDs(ds);
+                                                        gerar.setTitulox("Tipo de Ficha");
+                                                        gerar.setTituloy("Quantidade");
+                                                        gerar.setTitulografico("Quantidade de Atendimentos por Tipo de Ficha");
+                                                        gerar.setTituloplotagem(getDateFormat());
+                                                        gerar.setTamanhografix(700);
+                                                        gerar.setTamanhografiy(305);
+                                                        jProgressBar1.setValue(80);
+                                                        gerar.plotagem(gerar);
+                                                        jProgressBar1.setValue(100);
+                                                        graficolabel.setIcon(gerar.plotagem(gerar));
+                                                        jStatusLabel.setText("");
+                                                        jProgressBar1.setVisible(false);
+
+                                                    } catch (SQLException ex) {
+                                                        System.out.println("erro");
+                                                    } catch (IOException ex) {
+                                                        System.out.println("erro");
+                                                    }
+                                                    jPrint.setEnabled(true);
+                                                }
+
+                                            }.start();
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -2586,6 +2776,10 @@ public class Config extends javax.swing.JFrame {
         jNovoGrafico.setEnabled(true);
         jGerar.setEnabled(false);
     }//GEN-LAST:event_jcancelarActionPerformed
+
+    private void jComboPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboPeriodoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboPeriodoActionPerformed
     public void LimparTela() {
         jBairro.setText(null);
         jCPF.setText(null);
@@ -2798,7 +2992,7 @@ public class Config extends javax.swing.JFrame {
     private javax.swing.JTextField jCod;
     private javax.swing.JComboBox jComboEstado;
     public javax.swing.JComboBox jComboFiltro;
-    public javax.swing.JComboBox jComboPeriodo;
+    private javax.swing.JComboBox jComboPeriodo;
     private javax.swing.JComboBox jComboPesquisar;
     public javax.swing.JComboBox jComboTipo;
     private javax.swing.JTextField jComplemento;

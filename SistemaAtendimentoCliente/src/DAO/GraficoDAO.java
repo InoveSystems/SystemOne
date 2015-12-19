@@ -70,21 +70,6 @@ public class GraficoDAO {
         this.conexao = ConnectionFactory.openConnection(IPCom);
     }
 
-//    public ResultSet retriveficha(GraficoBean server) throws SQLException {
-//        Statement stm = this.conexao.createStatement();
-//        ResultSet rs;
-//        String sql = "SELECT * FROM fichas WHERE tipo='" + server.getTipo() + "' AND numero='" + server.getNumeroFicha() + "'";
-//        rs = stm.executeQuery(sql);
-//        return rs;
-//    }
-//
-//    public ResultSet retrivefichaAberta(GraficoBean server) throws SQLException {
-//        Statement stm = this.conexao.createStatement();
-//        ResultSet rs;
-//        String sql = "SELECT * FROM fichas WHERE caixa='" + server.getIdcaixa() + "' AND atendimentoiniciado='" + server.getAtendimentoIniciado() + "' AND atendimentofinalizado='" + server.getAtendimentoFinalizado() + "'";
-//        rs = stm.executeQuery(sql);
-//        return rs;
-//    }
     public ResultSet retriveAtendenteTempo(java.util.Date inicio, java.util.Date fim) throws SQLException {
         Statement stm = this.conexao.createStatement();
         ResultSet rs;
@@ -132,32 +117,29 @@ public class GraficoDAO {
         rs = stm.executeQuery(sql);
         return rs;
     }
-    
+
     public ResultSet retriveTipoQuantidade(java.util.Date inicio, java.util.Date fim) throws SQLException {
         Statement stm = this.conexao.createStatement();
         ResultSet rs;
-        String sql = "SELECT fichas.tipo as tipo, AVG(fichas.tempo_espera::time) as media FROM fichas WHERE (fichas.tempo_espera::date) >='" + inicio + "' AND (fichas.tempo_espera::date) <='" + fim + "' group by fichas.tipo";
+        String sql = "SELECT fichas.tipo as tipo, COUNT(*) as total FROM fichas WHERE (fichas.atendimentofinalizado = true) AND fichas.tempo_espera::date >='" + inicio + "' AND fichas.tempo_espera::date <='" + fim + "'group by fichas.tipo";
         rs = stm.executeQuery(sql);
         return rs;
     }
-    
+
     public ResultSet retriveCaixaQuantidade(java.util.Date inicio, java.util.Date fim) throws SQLException {
         Statement stm = this.conexao.createStatement();
         ResultSet rs;
-        String sql = "SELECT fichas.tipo as tipo, AVG(fichas.tempo_espera::time) as media FROM fichas WHERE (fichas.tempo_espera::date) >='" + inicio + "' AND (fichas.tempo_espera::date) <='" + fim + "' group by fichas.tipo";
+        String sql = "SELECT fichas.caixa as caixa, COUNT(*) as total FROM fichas WHERE (fichas.atendimentofinalizado = true) AND fichas.tempo_espera::date >='" + inicio + "' AND fichas.tempo_espera::date <='" + fim + "' group by fichas.caixa";
         rs = stm.executeQuery(sql);
         return rs;
     }
-    
-    
-     public ResultSet retriveAtendenteQuantidade(java.util.Date inicio, java.util.Date fim) throws SQLException {
+
+    public ResultSet retriveAtendenteQuantidade(java.util.Date inicio, java.util.Date fim) throws SQLException {
         Statement stm = this.conexao.createStatement();
         ResultSet rs;
-        String sql = "SELECT fichas.tipo as tipo, AVG(fichas.tempo_espera::time) as media FROM fichas WHERE (fichas.tempo_espera::date) >='" + inicio + "' AND (fichas.tempo_espera::date) <='" + fim + "' group by fichas.tipo";
+        String sql = "SELECT funcionarios.nome as nome, COUNT(*) as total FROM fichas INNER JOIN funcionarios ON fichas.cod_func = funcionarios.cod  WHERE (fichas.atendimentofinalizado = true) AND fichas.tempo_espera::date >='" + inicio + "' AND fichas.tempo_espera::date <='" + fim + "' group by funcionarios.nome";
         rs = stm.executeQuery(sql);
         return rs;
     }
-    
-    
 
 }

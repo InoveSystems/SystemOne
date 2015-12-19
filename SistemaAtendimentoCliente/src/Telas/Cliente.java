@@ -512,7 +512,7 @@ public class Cliente extends javax.swing.JFrame {
                     config.jDateFim.setEnabled(false);
                     config.jComboTipo.setEnabled(false);
                     config.jComboFiltro.setEnabled(false);
-                    config.jComboPeriodo.setEnabled(false);
+                  //  config.jComboPeriodo.setEnabled(false);
                     config.jNovoGrafico.setEnabled(true);
                     config.jGerar.setEnabled(false);
                     config.jcancelar.setEnabled(false);
