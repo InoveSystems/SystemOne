@@ -624,6 +624,7 @@ public class Cliente extends javax.swing.JFrame {
         jbConvencionalPrint.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jbConvencionalPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/normal48.png"))); // NOI18N
         jbConvencionalPrint.setText("C");
+        jbConvencionalPrint.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbConvencionalPrint.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jbConvencionalPrint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -641,6 +642,7 @@ public class Cliente extends javax.swing.JFrame {
         jbPrioritariaPrint.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jbPrioritariaPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/idoso48.png"))); // NOI18N
         jbPrioritariaPrint.setText("P");
+        jbPrioritariaPrint.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbPrioritariaPrint.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jbPrioritariaPrint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -658,6 +660,7 @@ public class Cliente extends javax.swing.JFrame {
         jbPopularPrint.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jbPopularPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/popular.fw.png"))); // NOI18N
         jbPopularPrint.setText("F");
+        jbPopularPrint.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbPopularPrint.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jbPopularPrint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -719,6 +722,7 @@ public class Cliente extends javax.swing.JFrame {
 
         jbConvencional.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jbConvencional.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Masculino.png"))); // NOI18N
+        jbConvencional.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbConvencional.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jbConvencional.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -728,6 +732,7 @@ public class Cliente extends javax.swing.JFrame {
 
         jbPopular.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jbPopular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Feminino.png"))); // NOI18N
+        jbPopular.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbPopular.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jbPopular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -894,11 +899,13 @@ public class Cliente extends javax.swing.JFrame {
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/you32.png"))); // NOI18N
         jLabel15.setToolTipText("Inove Systems - Video Aulas");
+        jLabel15.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jLabel16.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/3D.png"))); // NOI18N
         jLabel16.setToolTipText("Inove Systems - Home Page");
+        jLabel16.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel16.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel16MouseClicked(evt);
@@ -909,6 +916,7 @@ public class Cliente extends javax.swing.JFrame {
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Setings 32.png"))); // NOI18N
         jLabel14.setToolTipText("Inove Systems - Suporte");
+        jLabel14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel14MouseClicked(evt);

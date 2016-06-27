@@ -184,6 +184,9 @@
               <Image iconType="3" name="/Imagens/normal48.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="C"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor em Forma de M&#xe3;o"/>
+            </Property>
             <Property name="horizontalTextPosition" type="int" value="4"/>
           </Properties>
           <Events>
@@ -218,6 +221,9 @@
               <Image iconType="3" name="/Imagens/idoso48.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="P"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor em Forma de M&#xe3;o"/>
+            </Property>
             <Property name="horizontalTextPosition" type="int" value="4"/>
           </Properties>
           <Events>
@@ -252,6 +258,9 @@
               <Image iconType="3" name="/Imagens/popular.fw.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="F"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor em Forma de M&#xe3;o"/>
+            </Property>
             <Property name="horizontalTextPosition" type="int" value="4"/>
           </Properties>
           <Events>
@@ -363,6 +372,9 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/Imagens/Masculino.png"/>
             </Property>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor em Forma de M&#xe3;o"/>
+            </Property>
             <Property name="horizontalTextPosition" type="int" value="4"/>
           </Properties>
           <Events>
@@ -376,6 +388,9 @@
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/Imagens/Feminino.png"/>
+            </Property>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor em Forma de M&#xe3;o"/>
             </Property>
             <Property name="horizontalTextPosition" type="int" value="4"/>
           </Properties>
@@ -674,6 +689,9 @@
               <Image iconType="3" name="/Imagens/you32.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Inove Systems - Video Aulas"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor em Forma de M&#xe3;o"/>
+            </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel16">
@@ -686,6 +704,9 @@
               <Image iconType="3" name="/Imagens/3D.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Inove Systems - Home Page"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor em Forma de M&#xe3;o"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel16MouseClicked"/>
@@ -701,6 +722,9 @@
               <Image iconType="3" name="/Imagens/Setings 32.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Inove Systems - Suporte"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor em Forma de M&#xe3;o"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel14MouseClicked"/>
