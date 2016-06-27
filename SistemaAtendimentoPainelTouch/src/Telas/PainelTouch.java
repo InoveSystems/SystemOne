@@ -789,7 +789,7 @@ public class PainelTouch extends javax.swing.JFrame {
 
     private void jConfigIPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jConfigIPMouseClicked
         String ipconexao;
-        int resposta = 0;
+        int resposta = 0;        
         ipconexao = JOptionPane.showInputDialog(null, "QUAL O IP DO SERVIDOR?", "3D Soluções Tecnológicas - Configuração", 3);
         try {
             if ((!ipconexao.equals(null)) && (!ipconexao.equals(""))) {
