@@ -47,7 +47,7 @@ public class Server {
     ServidorDAO servidorDAO = new ServidorDAO();
     ServidorBean servidorBean = new ServidorBean();
     static Image image = Toolkit.getDefaultToolkit().getImage("C:/Users/EngComp/Documents/NetBeansProjects/Sanar/SistemaAtendimentoCliente/src/Imagens/3D.png");
-    static TrayIcon trayIcon = new TrayIcon(image, "..:: Inove Systems ::.. Status: ATIVO!");
+    static TrayIcon trayIcon = new TrayIcon(image, "..:: Altessmann - Sistemas ::.. Status: ATIVO!");
     private Socket socket;
     private ServerSocket serverSocket;
     private Map<String, ObjectOutputStream> mapOnlines = new HashMap<String, ObjectOutputStream>();
@@ -713,7 +713,7 @@ public class Server {
                 try {
                     String diretorioUsuario = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
                     FileInputStream fis = null;
-                    fis = new FileInputStream(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "SENHAS.pdf");
+                    fis = new FileInputStream(diretorioUsuario + File.separator + "Altessmann" + File.separator + "Config" + File.separator + "SENHAS.pdf");
                     try {
                         try {
                             Thread.currentThread().sleep(1000);
@@ -1114,7 +1114,7 @@ public class Server {
             trayIcon.setImageAutoSize(true);
             trayIcon.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    trayIcon.displayMessage("Inove Systems - www.inovesystems.com.br", "Servidor ONLINE!", TrayIcon.MessageType.INFO);
+                    trayIcon.displayMessage("Altessmann - www.altessmann.com.br", "Servidor ONLINE!", TrayIcon.MessageType.INFO);
                 }
             }
             );

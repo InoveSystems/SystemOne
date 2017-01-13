@@ -23,7 +23,7 @@ import javax.swing.filechooser.FileSystemView;
 public class Imprimir {
 
     private PrinterJob pjob = null;
-    static String imp = "3DSTimp";
+    static String imp = "AltessmannImp";
     private PrintService impressora = null;
 
     public void main(String[] args) throws IOException, PrinterException {
