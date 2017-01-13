@@ -29,7 +29,7 @@ public class ConnectionFactory {
                 System.out.println("org.postgresql.Driver nao encontrado. Entre em contado com o administrador do sistema!");
             }
             try {
-                con = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/Inovesystems", "postgres", "ibanez2017");
+                con = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/postgres", "postgres", "ibanez2017");
              //  JOptionPane.showMessageDialog(null, "Conexão efetuada com sucesso! \nInicializando o Sistema... \nInove Systems - www.inovesystems.com.br", "Inove Systems - Informação", JOptionPane.INFORMATION_MESSAGE);
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Erro ao conectar com o banco de dados! \nEntre em contado com o administrador do sistema! \nAltessmann  - www.altessmann.com.br", "Altessmann Sistemas - Informação", JOptionPane.ERROR_MESSAGE);
