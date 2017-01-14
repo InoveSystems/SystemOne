@@ -1,0 +1,18 @@
+--- 
+name: "ROME: RSS and Atom Utilities 0.9 Binary"
+platform_id: all
+platform_version: all
+distribution_file_uuid_string: openlogic-rome-0.9-all-bin-1
+platform_vendor: all
+version_visibility: public
+description: "ROME: RSS and Atom Utilities 0.9 Binary"
+platform_arch: all
+distribution_file_uuid: 5f89f6295cd8f0d9d6f52a5e9da2c99e7da10c3aa26b64e93e4a30903d0b261f
+distribution_version: 1
+distribution_flavor: ""
+distribution_raw_file: rome-0.9.tar.gz
+package_version: "0.9"
+package_id: rome
+release_date: "2008-08-18"
+distribution_notes: ""
+distribution_type: bin
