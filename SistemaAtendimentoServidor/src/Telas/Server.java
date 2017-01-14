@@ -713,7 +713,7 @@ public class Server {
                 try {
                     String diretorioUsuario = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
                     FileInputStream fis = null;
-                    fis = new FileInputStream(diretorioUsuario + File.separator + "Altessmann" + File.separator + "Config" + File.separator + "SENHAS.pdf");
+                    fis = new FileInputStream(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "SENHAS.pdf");
                     try {
                         try {
                             Thread.currentThread().sleep(1000);
@@ -738,15 +738,17 @@ public class Server {
                                     enviar.create(Envios);
                                     bloquear_atendimento = "no";
                                 } catch (SQLException ex) {
-
+                                   System.out.println("bug aqui sql"); // teste de bug
                                 }
                             }
                         }.start();
 
                     } catch (FileNotFoundException ex) {
+                        System.out.println("bug aqui file");// teste de burg
 
                     } catch (IOException ex) {
-
+                    System.out.println("bug aqui ex");//teste de bug
+                    
                     } catch (PrinterException ex) {
                         if (bloquear_atendimento.equals("no")) {
                             bloquear_atendimento = "yes";

@@ -25,12 +25,12 @@ public class PdfCriar {
         Document document = new Document(PageSize.B4, 10, 10, 10, 10);
         try {
             String diretorioUsuario = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
-            FileOutputStream fis = new FileOutputStream(diretorioUsuario + File.separator + "Altessmann" + File.separator + "Config" + File.separator + "SENHAS.pdf");
+            FileOutputStream fis = new FileOutputStream(diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Config" + File.separator + "SENHAS.pdf");
             PdfWriter.getInstance(document, fis);
             document.open();
             // adicionando um parágrafo ao documento 
             Font f = new Font(FontFamily.HELVETICA, 15, Font.NORMAL);
-            document.add(new Paragraph("    ..:: Climed ::..", f));
+            document.add(new Paragraph("    ..:: Sanar Farmacias ::..", f));
             Font g = new Font(FontFamily.HELVETICA, 15, Font.NORMAL);
             document.add(new Paragraph("                   SENHA ", g));
             Font H = new Font(FontFamily.HELVETICA, 40, Font.BOLD);
