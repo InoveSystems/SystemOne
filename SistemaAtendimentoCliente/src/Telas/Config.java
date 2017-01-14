@@ -469,7 +469,7 @@ public class Config extends javax.swing.JFrame {
         ButtonCancelar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Inove Systems - Configurações");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -1941,7 +1941,7 @@ public class Config extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 //       
-      //  if (!config) {
+        if (!config) {
             new Thread() {
                 @Override
                 public void run() {
@@ -1949,10 +1949,10 @@ public class Config extends javax.swing.JFrame {
                 }
             }.
                     start();
-       // } else {
-//            jPanes.setEnabledAt(0, false);
-//            jPanes.setEnabledAt(1, false);
-       // }
+        } else {
+            jPanes.setEnabledAt(0, false);
+            jPanes.setEnabledAt(1, false);
+        }
 
         graficolabel.setIcon(new javax.swing.ImageIcon((diretorioUsuario + File.separator + "InoveSystems" + File.separator + "Graficos" + File.separator + "gif.gif")));
 
@@ -2992,7 +2992,7 @@ public class Config extends javax.swing.JFrame {
     private javax.swing.JTextField jCod;
     private javax.swing.JComboBox jComboEstado;
     public javax.swing.JComboBox jComboFiltro;
-    public javax.swing.JComboBox jComboPeriodo;
+    private javax.swing.JComboBox jComboPeriodo;
     private javax.swing.JComboBox jComboPesquisar;
     public javax.swing.JComboBox jComboTipo;
     private javax.swing.JTextField jComplemento;
