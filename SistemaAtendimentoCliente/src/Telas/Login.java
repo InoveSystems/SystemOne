@@ -269,7 +269,7 @@ public class Login extends javax.swing.JFrame {
                     jLogin.grabFocus();
                 } else {
                     try {
-                        if ((jLogin.getText().trim().equals("config")) && (jSenha.getText().trim().equals("inove+1052"))) {
+                        if ((jLogin.getText().trim().equals("config")) && (jSenha.getText().trim().equals("ibanez0101022016+"))) {
                             Config config = new Config(true);
                             config.jPanes.setSelectedIndex(2);
                             config.setVisible(true);

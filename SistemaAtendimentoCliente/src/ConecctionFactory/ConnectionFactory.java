@@ -30,7 +30,7 @@ public class ConnectionFactory {
             } catch (ClassNotFoundException ex) {
                 System.out.println("org.postgresql.Driver nao encontrado. Entre em contado com o administrador do sistema!");
             }
-            con = DriverManager.getConnection("jdbc:postgresql://" + ip + ":5433/Inovesystems", "postgres", "inove+1052");
+            con = DriverManager.getConnection("jdbc:postgresql://" + ip + ":5432/postgres", "postgres", "ibanez2017");
         }
         return con;
     }
